@@ -28,6 +28,13 @@ namespace Testownik
         public string appName = AppIdentity.AppName;
 
         public TestController testController;
+        public TestController TestController {
+            get => testController;
+            set {
+                testController = value;
+                RaisePropertyChanged(nameof(TestController));
+            }
+        }
 
         public KeyValuePair<string, IQuestion> textQuestion;
         public KeyValuePair<string, IQuestion> TextQuestion {
@@ -35,6 +42,15 @@ namespace Testownik
             set {
                 textQuestion = value;
                 RaisePropertyChanged(nameof(TextQuestion));
+            }
+        }
+
+        public int reoccurrencesOfQuestion;
+        public int ReoccurrencesOfQuestion {
+            get => reoccurrencesOfQuestion;
+            set {
+                reoccurrencesOfQuestion = value;
+                RaisePropertyChanged(nameof(ReoccurrencesOfQuestion));
             }
         }
 
@@ -47,13 +63,16 @@ namespace Testownik
         private async void Co()
         {
             var co = await QuestionsReader.ReadQuestions();
-            testController = new TestController(co);
-            TextQuestion = testController.RandQuestion();
+            TestController = new TestController(co);
+            TextQuestion = TestController.RandQuestion();
         }
 
         private void ButtonNextQuestion_Click(object sender, RoutedEventArgs e)
         {
-            TextQuestion = testController.RandQuestion();
+            var selectedAnswers = AnswersGridView.SelectedItems.Cast<IAnswer>().Select(i => i.Key);
+            TestController.CheckAnswer(TextQuestion.Key, selectedAnswers);
+            TextQuestion = TestController.RandQuestion();
+            ReoccurrencesOfQuestion = TestController.ReoccurrencesOfQuestion(TextQuestion.Key);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

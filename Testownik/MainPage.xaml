@@ -86,7 +86,8 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
                     <TextBlock Style="{ThemeResource ReoccurrenceTextBlockStyle}">Ponowne wystąpienia:</TextBlock>
-                    <TextBlock Style="{ThemeResource ReoccurrenceValueTextBlockStyle}">2</TextBlock>
+                    <TextBlock Style="{ThemeResource ReoccurrenceValueTextBlockStyle}"
+                               Text="{x:Bind ReoccurrencesOfQuestion}"></TextBlock>
                 </StackPanel>
             </Border>
 
@@ -95,6 +96,7 @@
                 Grid.Row="1">
 
                 <GridView
+                    x:Name="AnswersGridView"
                     VerticalAlignment="Top"
                     Style="{ThemeResource AnswersGridView}"
                     ItemsSource="{x:Bind TextQuestion.Value.Answers, Mode=OneWay}"
@@ -153,8 +155,8 @@
                             Udzielone odpowiedzi
                         </TextBlock>
                         <ProgressBar 
-                            Value="44" 
-                            Maximum="55"
+                            Value="{x:Bind TestController.NumberOfCorrectAnswers, Mode=OneWay}" 
+                            Maximum="{x:Bind TestController.NumberOfAnswers, Mode=OneWay}"
                             Foreground="{ThemeResource PrimaryColor}"
                             Style="{StaticResource RoundedProgressBar}"
                             Height="8" 
@@ -162,13 +164,17 @@
                         <Grid
                             Margin="48 0" >
                             <TextBlock
+                            Text="{x:Bind TestController.NumberOfCorrectAnswers, Mode=OneWay}"
+                        
                                 Style="{ThemeResource ProgressBarCaptionTextBlockStyle}">
-                                42
+                                
                             </TextBlock>
                             <TextBlock 
                                 TextAlignment="Right"
+                            Text="{x:Bind TestController.NumberOfBadAnswers, Mode=OneWay}"
+                        
                                 Style="{ThemeResource ProgressBarCaptionTextBlockStyle}">
-                                13
+                                
                             </TextBlock>
                         </Grid>
                     </StackPanel>
@@ -181,8 +187,8 @@
                             Opanowane pytania
                         </TextBlock>
                         <ProgressBar 
-                            Value="21" 
-                            Maximum="33"
+                            Value="{x:Bind TestController.NumberOfLearnedQuestions, Mode=OneWay}" 
+                            Maximum="{x:Bind TestController.NumberOfQuestions, Mode=OneWay}"
                             Foreground="{ThemeResource PrimaryColor}"
                             Style="{StaticResource RoundedProgressBar}"
                             Height="8" 
@@ -190,13 +196,15 @@
                         <Grid
                             Margin="48 0">
                             <TextBlock
+                                Text="{x:Bind TestController.NumberOfLearnedQuestions, Mode=OneWay}"
                                 Style="{ThemeResource ProgressBarCaptionTextBlockStyle}">
-                                21
+                                
                             </TextBlock>
                             <TextBlock 
                                 TextAlignment="Right"
+                                Text="{x:Bind TestController.NumberOfRemainingQuestions, Mode=OneWay}"
                                 Style="{ThemeResource ProgressBarCaptionTextBlockStyle}">
-                                12
+                                
                             </TextBlock>
                         </Grid>
                     </StackPanel>
@@ -209,8 +217,9 @@
                         Liczba pytań
                         </TextBlock>
                         <TextBlock
+                            Text="{x:Bind TestController.NumberOfQuestions, Mode=OneWay}"
                         Style="{ThemeResource StatisticsContentTextBlockStyle}">
-                        33
+                        
                         </TextBlock>
                     </StackPanel>
 
