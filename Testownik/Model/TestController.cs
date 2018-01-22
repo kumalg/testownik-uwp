@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Windows.System.Threading;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 
 namespace Testownik.Model
 {
@@ -19,14 +24,34 @@ namespace Testownik.Model
         public int NumberOfBadAnswers { get; private set; } = 0;
         public int NumberOfLearnedQuestions { get; private set; } = 0;
         public int NumberOfRemainingQuestions { get; private set; } = 0;
+        public long Time { get; private set; } = 0;
+        public string TimeString { get; private set; } = "00:00:00";
+        private long startTime;
+        private DispatcherTimer timer;
 
         public TestController(IDictionary<string, IQuestion> questions)
         {
             Questions = questions;
             NumberOfQuestions = questions.Count;
             NumberOfRemainingQuestions = NumberOfQuestions - NumberOfLearnedQuestions;
-            //RaisePropertyChanged(nameof(NumberOfQuestions));
             Reoccurrences = questions.ToDictionary(node => node.Key, node => 2);
+
+            startTime = DateTime.Now.Ticks;
+            timer = new DispatcherTimer {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            timer.Tick += (s, e) => {
+                Time = DateTime.Now.Ticks - startTime;
+                TimeSpan t = TimeSpan.FromTicks(Time);
+                TimeString = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                                t.Hours,
+                                t.Minutes,
+                                t.Seconds,
+                                t.Milliseconds);
+                RaisePropertyChanged(nameof(Time));
+                RaisePropertyChanged(nameof(TimeString));
+            };
+            timer.Start();
         }
 
         public TestController(string path)
@@ -43,8 +68,11 @@ namespace Testownik.Model
         {
             NumberOfAnswers++;
             RaisePropertyChanged(nameof(NumberOfAnswers));
+            if (!Questions.ContainsKey(key))
+            {
 
-            if (Questions[key].CorrectAnswerKeys.OrderBy(i => i).SequenceEqual(answerKeys.OrderBy(i => i))){
+            }
+            else if (Questions[key].CorrectAnswerKeys.OrderBy(i => i).SequenceEqual(answerKeys.OrderBy(i => i))){
                 Reoccurrences[key] -= 1;
                 NumberOfCorrectAnswers++;
                 RaisePropertyChanged(nameof(NumberOfCorrectAnswers));
@@ -55,7 +83,7 @@ namespace Testownik.Model
                 NumberOfBadAnswers++;
                 RaisePropertyChanged(nameof(NumberOfBadAnswers));
             }
-            if (Reoccurrences[key] == 0)
+            if (Reoccurrences.ContainsKey(key) && Reoccurrences[key] == 0)
             {
                 NumberOfLearnedQuestions++;
                 RaisePropertyChanged(nameof(NumberOfLearnedQuestions));
@@ -69,13 +97,16 @@ namespace Testownik.Model
             return Reoccurrences.All(i => i.Value == 0);
         }
 
-        public int ReoccurrencesOfQuestion(string key) => Reoccurrences[key];
+        public int ReoccurrencesOfQuestion(string key) => (Reoccurrences.ContainsKey(key))
+            ? Reoccurrences[key]
+            : 0;
 
         public KeyValuePair<string, IQuestion> RandQuestion()
         {
-            var question = Questions.ElementAt(random.Next(Questions.Count));
-            question.Value.Answers = question.Value.Answers.OrderBy(a => Guid.NewGuid()).ToList();
-            return question;
+            var remainingQuestions = Questions.Where(q => Reoccurrences[q.Key] != 0);
+            if (!remainingQuestions.Any())
+                return new KeyValuePair<string, IQuestion>(string.Empty, new TextQuestion());
+            return remainingQuestions.ElementAt(random.Next(remainingQuestions.Count())); 
         }
 
         internal static TestController GenerateRand() {

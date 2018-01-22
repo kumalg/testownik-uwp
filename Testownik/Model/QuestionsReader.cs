@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +46,8 @@ namespace Testownik.Model
             DataReader reader = DataReader.FromBuffer(buffer);
             byte[] fileContent = new byte[reader.UnconsumedBufferLength];
             reader.ReadBytes(fileContent);
-            return Encoding.UTF8.GetString(fileContent, 0, fileContent.Length);
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            return Encoding.GetEncoding(1250).GetString(fileContent, 0, fileContent.Length);
         }
 
         public static async Task<IQuestion> ReadQuestion(StorageFile file)

@@ -1,20 +1,13 @@
 ﻿using Testownik.Model;
 using Testownik.Model.Helpers;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Windows.UI;
+using System;
 
 //Szablon elementu Pusta strona jest udokumentowany na stronie https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x415
 
@@ -26,6 +19,15 @@ namespace Testownik
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
         public string appName = AppIdentity.AppName;
+
+        public List<AnswerBlock> answers;
+        public List<AnswerBlock> Answers {
+            get => answers;
+            set {
+                answers = value;
+                RaisePropertyChanged(nameof(Answers));
+            }
+        }
 
         public TestController testController;
         public TestController TestController {
@@ -64,15 +66,64 @@ namespace Testownik
         {
             var co = await QuestionsReader.ReadQuestions();
             TestController = new TestController(co);
-            TextQuestion = TestController.RandQuestion();
+            NextQuestion();
+        }
+
+        private void ShowAcceptAnswerButton()
+        {
+            ButtonAcceptAnswer.Visibility = Visibility.Visible;
+            ButtonNextQuestion.Visibility = Visibility.Collapsed;
+        }
+
+        private void ShowNextQuestionButton()
+        {
+            ButtonAcceptAnswer.Visibility = Visibility.Collapsed;
+            ButtonNextQuestion.Visibility = Visibility.Visible;
+        }
+
+        private void ButtonAcceptAnswer_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedAnswers = AnswersGridView.SelectedItems.Cast<AnswerBlock>().Select(i => i.Answer.Key);
+            TestController.CheckAnswer(TextQuestion.Key, selectedAnswers);
+            
+            var gridViewItems = AnswersGridView
+                .Items
+                .Cast<AnswerBlock>()
+                .Where(i => textQuestion.Value.CorrectAnswerKeys.Contains(i.Answer.Key));
+            foreach (var item in gridViewItems)
+                item.MarkAsCorrect();
+
+            ShowNextQuestionButton();
         }
 
         private void ButtonNextQuestion_Click(object sender, RoutedEventArgs e)
         {
-            var selectedAnswers = AnswersGridView.SelectedItems.Cast<IAnswer>().Select(i => i.Key);
-            TestController.CheckAnswer(TextQuestion.Key, selectedAnswers);
+            if (TestController.IsTestCompleted())
+            {
+                var contentDialog = new ContentDialog
+                {
+                    Content = "Test zakończony!",
+                    PrimaryButtonText = "Spoko",
+                    SecondaryButtonText = "Anuluj"
+                };
+                var result = contentDialog.ShowAsync();
+            }
+            else
+            {
+                NextQuestion();
+            }
+        }
+
+        private void NextQuestion()
+        {
             TextQuestion = TestController.RandQuestion();
+            Answers = TextQuestion.Value.Answers
+                .Select(i => new AnswerBlock { Answer = i })
+                .OrderBy(a => Guid.NewGuid())
+                .ToList();
+            
             ReoccurrencesOfQuestion = TestController.ReoccurrencesOfQuestion(TextQuestion.Key);
+            ShowAcceptAnswerButton();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

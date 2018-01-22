@@ -1,4 +1,7 @@
-﻿namespace Testownik.Model
+﻿using Windows.UI;
+using Windows.UI.Xaml.Media;
+
+namespace Testownik.Model
 {
     public class TextAnswer : IAnswer
     {

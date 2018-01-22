@@ -1,4 +1,6 @@
-﻿namespace Testownik.Model
+﻿using Windows.UI.Xaml.Media;
+
+namespace Testownik.Model
 {
     public interface IAnswer
     {

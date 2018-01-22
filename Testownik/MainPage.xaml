@@ -9,10 +9,17 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:model="using:Testownik.Model"
+    xmlns:conv="using:Testownik.Converters"
+    xmlns:elements="using:Testownik.Elements"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource AppBackgroundColor}">
+
+        <Grid.Resources>
+            <conv:LongToTimeStringConverter
+                x:Name="LongToTimeStringConverter" />
+        </Grid.Resources>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -87,7 +94,7 @@
                     HorizontalAlignment="Center">
                     <TextBlock Style="{ThemeResource ReoccurrenceTextBlockStyle}">Ponowne wystąpienia:</TextBlock>
                     <TextBlock Style="{ThemeResource ReoccurrenceValueTextBlockStyle}"
-                               Text="{x:Bind ReoccurrencesOfQuestion}"></TextBlock>
+                               Text="{x:Bind ReoccurrencesOfQuestion, Mode=OneWay}"></TextBlock>
                 </StackPanel>
             </Border>
 
@@ -99,10 +106,17 @@
                     x:Name="AnswersGridView"
                     VerticalAlignment="Top"
                     Style="{ThemeResource AnswersGridView}"
-                    ItemsSource="{x:Bind TextQuestion.Value.Answers, Mode=OneWay}"
+                    ItemsSource="{x:Bind Answers, Mode=OneWay}"
                     Margin="32"
                     SelectionMode="Multiple">
                     <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="model:IAnswer">
+                            <!--<GridViewItem Style="{ThemeResource AnswersGridView}">-->
+                                <elements:Answer/>
+                            <!--</GridViewItem>-->
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <!--<GridView.ItemTemplate>
                         <DataTemplate x:DataType="model:IAnswer">
                             <controls:DropShadowPanel BlurRadius="32"
                                   ShadowOpacity="0.1"
@@ -123,7 +137,7 @@
                                 </Grid>
                             </controls:DropShadowPanel>
                         </DataTemplate>
-                    </GridView.ItemTemplate>
+                    </GridView.ItemTemplate>-->
 
                 </GridView>
             </ScrollViewer>
@@ -167,14 +181,14 @@
                             Text="{x:Bind TestController.NumberOfCorrectAnswers, Mode=OneWay}"
                         
                                 Style="{ThemeResource ProgressBarCaptionTextBlockStyle}">
-                                
+
                             </TextBlock>
                             <TextBlock 
                                 TextAlignment="Right"
                             Text="{x:Bind TestController.NumberOfBadAnswers, Mode=OneWay}"
                         
                                 Style="{ThemeResource ProgressBarCaptionTextBlockStyle}">
-                                
+
                             </TextBlock>
                         </Grid>
                     </StackPanel>
@@ -198,13 +212,13 @@
                             <TextBlock
                                 Text="{x:Bind TestController.NumberOfLearnedQuestions, Mode=OneWay}"
                                 Style="{ThemeResource ProgressBarCaptionTextBlockStyle}">
-                                
+
                             </TextBlock>
                             <TextBlock 
                                 TextAlignment="Right"
                                 Text="{x:Bind TestController.NumberOfRemainingQuestions, Mode=OneWay}"
                                 Style="{ThemeResource ProgressBarCaptionTextBlockStyle}">
-                                
+
                             </TextBlock>
                         </Grid>
                     </StackPanel>
@@ -219,7 +233,7 @@
                         <TextBlock
                             Text="{x:Bind TestController.NumberOfQuestions, Mode=OneWay}"
                         Style="{ThemeResource StatisticsContentTextBlockStyle}">
-                        
+
                         </TextBlock>
                     </StackPanel>
 
@@ -231,8 +245,8 @@
                         Czas nauki
                         </TextBlock>
                         <TextBlock
+                            Text="{x:Bind TestController.TimeString, Mode=OneWay}"
                         Style="{ThemeResource StatisticsContentTextBlockStyle}">
-                        00:21:35
                         </TextBlock>
                     </StackPanel>
                 </StackPanel>
@@ -251,7 +265,7 @@
                 <Grid>
                     <Button 
                         x:Name="ButtonAcceptAnswer"
-                        Visibility="Collapsed"
+                        Click="ButtonAcceptAnswer_Click"
                         Style="{ThemeResource RoundedButton}"
                         Width="64"
                         Height="64">
@@ -259,6 +273,7 @@
                     </Button>
                     <Button 
                         x:Name="ButtonNextQuestion"
+                        Visibility="Collapsed"
                         Click="ButtonNextQuestion_Click"
                         Style="{ThemeResource RoundedButton}"
                         Width="64"
