@@ -1,0 +1,40 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Testownik.Styles">
+
+    <Style x:Key="StatisticsHeaderTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="16 4" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    
+    <Style x:Key="StatisticsContentTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="16 0" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{ThemeResource PrimaryColor}" />
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontWeight" Value="SemiLight" />
+    </Style>
+
+    <Style x:Key="ProgressBarCaptionTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+
+    <Style x:Key="ReoccurrenceTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{ThemeResource TextColor}" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    
+    <Style x:Key="ReoccurrenceValueTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="8 0 0 0" />
+        <Setter Property="Foreground" Value="{ThemeResource PrimaryColor}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    
+</ResourceDictionary>
