@@ -5,6 +5,14 @@
 
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Default">
+            <SolidColorBrush x:Key="SystemControlPageBackgroundBaseMediumBrush" Color="#9939b54a" />
+            <SolidColorBrush x:Key="SystemBaseMediumColor " Color="#9939b54a" />
+            <SolidColorBrush x:Key="ContentDialogDimmingThemeBrush " Color="#9939b54a" />
+            
+            <SolidColorBrush x:Key="GreenColor" Color="#39b54a" />
+            <SolidColorBrush x:Key="GreenColorLighter" Color="#4dc65d" />
+            <SolidColorBrush x:Key="GreenColorLightest" Color="#69e07a" />
+            
             <SolidColorBrush x:Key="PrimaryColor" Color="#39b54a" />
             <SolidColorBrush x:Key="PrimaryColorLighter" Color="#4dc65d" />
             <SolidColorBrush x:Key="PrimaryColorLightest" Color="#69e07a" />
@@ -20,13 +28,27 @@
             <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
 
             <AcrylicBrush x:Key="MyAcrylicBrush"
-            BackgroundSource="HostBackdrop"
-            TintColor="#FF363636"
-            TintOpacity="0.8"
-            FallbackColor="#FF363636"/>
+                BackgroundSource="HostBackdrop"
+                TintColor="#FF363636"
+                TintOpacity="0.8"
+                FallbackColor="#FF363636"/>
+
+            <AcrylicBrush x:Key="MyInAppAcrylicBrush"
+                BackgroundSource="Backdrop"
+                TintColor="#FFffffff"
+                TintOpacity="0.4"
+                FallbackColor="#FFffffff"/>
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="HighContrast">
+            <SolidColorBrush x:Key="SystemControlPageBackgroundBaseMediumBrush" Color="#9939b54a" />
+            <SolidColorBrush x:Key="SystemBaseMediumColor " Color="#9939b54a" />
+            <SolidColorBrush x:Key="ContentDialogDimmingThemeBrush " Color="#9939b54a" />
+            
+            <SolidColorBrush x:Key="GreenColor" Color="#39b54a" />
+            <SolidColorBrush x:Key="GreenColorLighter" Color="#4dc65d" />
+            <SolidColorBrush x:Key="GreenColorLightest" Color="#69e07a" />
+
             <SolidColorBrush x:Key="PrimaryColor" Color="#39b54a" />
             <SolidColorBrush x:Key="PrimaryColorLighter" Color="#4dc65d" />
             <SolidColorBrush x:Key="PrimaryColorLightest" Color="#69e07a" />
@@ -42,10 +64,20 @@
             <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
 
             <SolidColorBrush x:Key="MyAcrylicBrush"
-            Color="{ThemeResource SystemColorWindowColor}"/>
+                Color="{ThemeResource SystemColorWindowColor}"/>
+            <SolidColorBrush x:Key="MyInAppAcrylicBrush"
+                Color="{ThemeResource SystemColorWindowColor}"/>
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="Light">
+            <SolidColorBrush x:Key="SystemControlPageBackgroundBaseMediumBrush" Color="#9939b54a" />
+            <SolidColorBrush x:Key="SystemBaseMediumColor " Color="#9939b54a" />
+            <SolidColorBrush x:Key="ContentDialogDimmingThemeBrush " Color="#9939b54a" />
+            
+            <SolidColorBrush x:Key="GreenColor" Color="#39b54a" />
+            <SolidColorBrush x:Key="GreenColorLighter" Color="#4dc65d" />
+            <SolidColorBrush x:Key="GreenColorLightest" Color="#69e07a" />
+
             <SolidColorBrush x:Key="PrimaryColor" Color="#39b54a" />
             <SolidColorBrush x:Key="PrimaryColorLighter" Color="#4dc65d" />
             <SolidColorBrush x:Key="PrimaryColorLightest" Color="#69e07a" />
@@ -60,11 +92,18 @@
             <SolidColorBrush x:Key="AppButtonPressed" Color="#ffffff" Opacity="0.2"/>           
             <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
 
-            <AcrylicBrush x:Key="MyAcrylicBrush"
-            BackgroundSource="HostBackdrop"
-            TintColor="#FF363636"
-            TintOpacity="0.8"
-            FallbackColor="#FF363636"/>
+            <AcrylicBrush 
+                x:Key="MyAcrylicBrush"
+                BackgroundSource="HostBackdrop"
+                TintColor="#FF363636"
+                TintOpacity="0.8"
+                FallbackColor="#FF363636"/>
+
+            <AcrylicBrush x:Key="MyInAppAcrylicBrush"
+                BackgroundSource="Backdrop"
+                TintColor="#FFffffff"
+                TintOpacity="0.4"
+                FallbackColor="#FFffffff"/>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 

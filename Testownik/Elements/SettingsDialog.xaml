@@ -1,0 +1,39 @@
+﻿<ContentDialog
+    x:Class="Testownik.Elements.SettingsDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Testownik.Elements"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Ustawienia"
+    PrimaryButtonText="Zapisz"
+    SecondaryButtonText="Anuluj"
+    Loaded="ContentDialog_Loaded"
+    Background="{ThemeResource MyInAppAcrylicBrush}"
+    BorderThickness="0"
+    BorderBrush="Transparent"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+
+    <StackPanel>
+        <TextBlock>Liczba powtórzeń pytania na poczatku</TextBlock>
+        <ComboBox
+            x:Name="ReoccurrencesOnStartComboBox"
+            ItemsSource="{x:Bind ReoccurrencesOnStart, Mode=OneTime}">
+        </ComboBox>
+
+        <TextBlock>Liczba dodatkowych powtórzeń przy błędnej odpowiedzi</TextBlock>
+        <ComboBox
+            x:Name="ReoccurrencesIfBadComboBox"
+            ItemsSource="{x:Bind ReoccurrencesIfBad, Mode=OneTime}">
+        </ComboBox>
+
+        <TextBlock>Maksymalna liczba powtórzeń</TextBlock>
+        <ComboBox
+            x:Name="MaxReoccurrencesComboBox"
+            ItemsSource="{x:Bind MaxReoccurrences, Mode=OneTime}">
+        </ComboBox>
+    </StackPanel>
+    
+</ContentDialog>

@@ -8,6 +8,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
 using System;
+using Windows.ApplicationModel.Core;
+using Testownik.Elements;
 
 //Szablon elementu Pusta strona jest udokumentowany na stronie https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x415
 
@@ -59,14 +61,32 @@ namespace Testownik
         public MainPage()
         {
             this.InitializeComponent();
+            SettingsHelper.SetSettings();
             Co();
         }
 
         private async void Co()
         {
             var co = await QuestionsReader.ReadQuestions();
-            TestController = new TestController(co);
-            NextQuestion();
+            if (co == null || !co.Any())
+            {
+                var dialog = new ContentDialog()
+                {
+                    Content = "Nie wybrano pliku bądź baza jest pusta",
+                    PrimaryButtonText = "Wyjdź z aplikacji",
+                    SecondaryButtonText = "Powtórz"
+                };
+                var result = await dialog.ShowAsync();
+                if (result == ContentDialogResult.Secondary)
+                    Co();
+                else
+                    CoreApplication.Exit();
+            }
+            else
+            {
+                TestController = new TestController(co);
+                NextQuestion();
+            }
         }
 
         private void ShowAcceptAnswerButton()
@@ -131,6 +151,12 @@ namespace Testownik
         {
             var handler = PropertyChanged;
             handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        
+        private async void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SettingsDialog();
+            await dialog.ShowAsync();
         }
     }
 }

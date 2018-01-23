@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
 namespace Testownik.Model
@@ -16,7 +17,7 @@ namespace Testownik.Model
         
         public void MarkAsCorrect()
         {
-            Brush = new SolidColorBrush(Colors.LightGreen);
+            Brush = (SolidColorBrush)Application.Current.Resources["GreenColorLightest"];
             RaisePropertyChanged(nameof(Brush));
         }
 

@@ -103,6 +103,9 @@
     <Compile Include="Elements\Answer.xaml.cs">
       <DependentUpon>Answer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Elements\SettingsDialog.xaml.cs">
+      <DependentUpon>SettingsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -111,6 +114,7 @@
     <Compile Include="Model\IAnswer.cs" />
     <Compile Include="Model\IQuestion.cs" />
     <Compile Include="Model\QuestionsReader.cs" />
+    <Compile Include="Model\Helpers\SettingsHelper.cs" />
     <Compile Include="Model\TestController.cs" />
     <Compile Include="Model\TextAnswer.cs" />
     <Compile Include="Model\TextQuestion.cs" />
@@ -140,6 +144,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Elements\Answer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Elements\SettingsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

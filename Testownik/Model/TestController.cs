@@ -34,7 +34,7 @@ namespace Testownik.Model
             Questions = questions;
             NumberOfQuestions = questions.Count;
             NumberOfRemainingQuestions = NumberOfQuestions - NumberOfLearnedQuestions;
-            Reoccurrences = questions.ToDictionary(node => node.Key, node => 2);
+            Reoccurrences = questions.ToDictionary(node => node.Key, node => SettingsHelper.ReoccurrencesOnStart);
 
             startTime = DateTime.Now.Ticks;
             timer = new DispatcherTimer {
@@ -79,7 +79,10 @@ namespace Testownik.Model
             }
             else
             {
-                Reoccurrences[key] += 2;
+                Reoccurrences[key] += SettingsHelper.ReoccurrencesIfBad;
+                if (Reoccurrences[key] > SettingsHelper.MaxReoccurrences)
+                    Reoccurrences[key] = SettingsHelper.MaxReoccurrences;
+
                 NumberOfBadAnswers++;
                 RaisePropertyChanged(nameof(NumberOfBadAnswers));
             }
