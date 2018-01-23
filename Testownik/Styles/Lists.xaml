@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:local="using:Testownik.Styles">
 
     <!-- ItemContainerStyle -->
@@ -19,11 +20,8 @@
         <Setter Property="ItemsPanel" >
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <WrapGrid Orientation="Horizontal"
-                          HorizontalAlignment="Center"
-                          MaximumRowsOrColumns="2"
-                          HorizontalChildrenAlignment="Center" >
-                    </WrapGrid>
+                    <controls:WrapPanel 
+                        HorizontalAlignment="Center"/>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>

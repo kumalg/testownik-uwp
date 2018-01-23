@@ -109,15 +109,16 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\AnswerBlock.cs" />
     <Compile Include="Model\Helpers\AppIdentity.cs" />
     <Compile Include="Model\IAnswer.cs" />
     <Compile Include="Model\IQuestion.cs" />
+    <Compile Include="Model\MultiQuestion.cs" />
+    <Compile Include="Model\Question.cs" />
     <Compile Include="Model\QuestionsReader.cs" />
     <Compile Include="Model\Helpers\SettingsHelper.cs" />
     <Compile Include="Model\TestController.cs" />
-    <Compile Include="Model\TextAnswer.cs" />
-    <Compile Include="Model\TextQuestion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

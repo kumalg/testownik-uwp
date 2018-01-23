@@ -36,7 +36,7 @@
             <AcrylicBrush x:Key="MyInAppAcrylicBrush"
                 BackgroundSource="Backdrop"
                 TintColor="#FFffffff"
-                TintOpacity="0.4"
+                TintOpacity="0.6"
                 FallbackColor="#FFffffff"/>
         </ResourceDictionary>
 
@@ -102,7 +102,7 @@
             <AcrylicBrush x:Key="MyInAppAcrylicBrush"
                 BackgroundSource="Backdrop"
                 TintColor="#FFffffff"
-                TintOpacity="0.4"
+                TintOpacity="0.6"
                 FallbackColor="#FFffffff"/>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>

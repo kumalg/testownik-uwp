@@ -2,7 +2,7 @@
 
 namespace Testownik.Model
 {
-    public class TextQuestion : IQuestion
+    public class Question : IQuestion
     {
         public object Content { get; set; }
         public IList<IAnswer> Answers { get; set; }

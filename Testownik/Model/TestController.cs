@@ -108,37 +108,37 @@ namespace Testownik.Model
         {
             var remainingQuestions = Questions.Where(q => Reoccurrences[q.Key] != 0);
             if (!remainingQuestions.Any())
-                return new KeyValuePair<string, IQuestion>(string.Empty, new TextQuestion());
+                return new KeyValuePair<string, IQuestion>(string.Empty, new Question());
             return remainingQuestions.ElementAt(random.Next(remainingQuestions.Count())); 
         }
 
         internal static TestController GenerateRand() {
             var questions = new Dictionary<string, IQuestion> {
-                {"001.txt", new TextQuestion {
+                {"001.txt", new Question {
                         Content = "Pierwsze pytanie",
                         Answers = new List<IAnswer>() {
-                            new TextAnswer { Content = "Jedno", Key = 1 },
-                            new TextAnswer { Content = "Drugie", Key = 2 }
+                            new Answer { Content = "Jedno", Key = 1 },
+                            new Answer { Content = "Drugie", Key = 2 }
                         },
                         CorrectAnswerKeys = new[] { 2 }.ToList()
                     }
                 },
-                {"002.txt", new TextQuestion {
+                {"002.txt", new Question {
                         Content = "Czy weszło drugie pytanie?",
                         Answers = new List<IAnswer>() {
-                            new TextAnswer { Content = "Jedno", Key = 1 },
-                            new TextAnswer { Content = "Drugie", Key = 2 },
-                            new TextAnswer { Content = "Trzecie", Key = 3 }
+                            new Answer { Content = "Jedno", Key = 1 },
+                            new Answer { Content = "Drugie", Key = 2 },
+                            new Answer { Content = "Trzecie", Key = 3 }
                         },
                         CorrectAnswerKeys = new[] { 2 }.ToList()
                     }
                 },
-                {"003.txt", new TextQuestion {
+                {"003.txt", new Question {
                         Content = "Czy weszło trzecie pytanie?",
                         Answers = new List<IAnswer>() {
-                            new TextAnswer { Content = "Jedno", Key = 1 },
-                            new TextAnswer { Content = "Drugie", Key = 2 },
-                            new TextAnswer { Content = "Trzecie", Key = 3 }
+                            new Answer { Content = "Jedno", Key = 1 },
+                            new Answer { Content = "Drugie", Key = 2 },
+                            new Answer { Content = "Trzecie", Key = 3 }
                         },
                         CorrectAnswerKeys = new[] { 2 }.ToList()
                     }

@@ -15,18 +15,28 @@
         OffsetX="0"
         OffsetY="4"
         Color="Black"
-        VerticalAlignment="Top"
+        VerticalAlignment="Stretch"
         HorizontalContentAlignment="Stretch">
         <Grid
             x:Name="GridBlock"
             Background="{Binding Brush, Mode=OneWay}"
             MinHeight="64">
-            <TextBlock 
+            <!--<TextBlock 
                 Text="{Binding Answer.Content, Mode=OneWay}"
+                Margin="16 8"
+                TextWrapping="Wrap"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center" 
-                TextAlignment="Center">
-            </TextBlock>
+                TextAlignment="Center">-->
+            <ContentPresenter
+                Margin="16 8"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" 
+                Foreground="{ThemeResource TextColor}"
+                Content="{Binding Answer.Content, Mode=OneWay}"
+                TextWrapping="Wrap"
+                AutomationProperties.AccessibilityView="Raw"/>
+            <!--</TextBlock>-->
         </Grid>
     </controls:DropShadowPanel>
     

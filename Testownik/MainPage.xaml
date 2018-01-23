@@ -67,13 +67,21 @@
                     <StackPanel
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                        <TextBlock
+                        <ContentPresenter
+                                Margin="64 0"
+                                HorizontalAlignment="Center"
+                                HorizontalContentAlignment="Center"
+                                Foreground="{ThemeResource TextColor}"
+                                Content="{x:Bind TextQuestion.Value.Content, Mode=OneWay}"
+                                TextWrapping="WrapWholeWords"
+                                AutomationProperties.AccessibilityView="Raw"/>
+                        <!--<TextBlock
                             Margin="64 0"
                             Foreground="{ThemeResource TextColor}"
                             TextAlignment="Center"
                             TextWrapping="WrapWholeWords"
-                            Text="{x:Bind TextQuestion.Value.Content, Mode=OneWay}">
-                        </TextBlock>
+                            Text="{x:Bind TextQuestion.Value.Content, Mode=OneWay}">-->
+                        <!--</TextBlock>-->
                     </StackPanel>
                 </Grid>
             </controls:DropShadowPanel>
@@ -101,7 +109,6 @@
             <ScrollViewer
                 VerticalScrollBarVisibility="Auto"
                 Grid.Row="1">
-
                 <GridView
                     x:Name="AnswersGridView"
                     VerticalAlignment="Top"
@@ -112,7 +119,7 @@
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="model:IAnswer">
                             <!--<GridViewItem Style="{ThemeResource AnswersGridView}">-->
-                                <elements:Answer/>
+                            <elements:Answer/>
                             <!--</GridViewItem>-->
                         </DataTemplate>
                     </GridView.ItemTemplate>
