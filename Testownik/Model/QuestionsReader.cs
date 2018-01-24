@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,7 +41,9 @@ namespace Testownik.Model
                     list.Add(item.Name, question);
                 }
             }
-            catch (Exception) { };
+            catch (Exception e) {
+                var co = e;
+            };
 
             return list;
         }
@@ -83,51 +84,39 @@ namespace Testownik.Model
 
             var content = await ParseContent(lines.Skip(1).First(), allFiles);
 
-            //var answers = lines
-            //    .Skip(2)
-            //    .Select((i, index) => CreateAnswer(i, index, allFiles))
-            //    .ToList();
-            var answers = new List<IAnswer>();
-            var answersLines = lines.Skip(2);
-            for (var i = 0; i < answersLines.Count(); i++) {
-                var answer = new Answer {
-                    Key = i
-                };
-
-                Task<object> task2 = Task<object>.Factory.StartNew(() => {
-                    return ParseContent(answersLines.ElementAt(i), allFiles);
-                });
-
-                answer.Content = task2.Result;
-                answers.Add(answer);
-            }
+            var answers = lines
+                .Skip(2)
+                .Select(async (i, index) => await CreateAnswer(i, index, allFiles))
+                .ToList();
 
             return new Question {
                 Content = content,
-                Answers = answers,
+                Answers = await Task.WhenAll(answers),
                 CorrectAnswerKeys = correctAnswerKeys
             };
         }
 
-        private static IAnswer CreateAnswer(string content, int key, IReadOnlyList<StorageFile> allFiles) {
-            var answer = new Answer {
-                Key = key
+        private static async Task<IAnswer> CreateAnswer(string content, int key, IReadOnlyList<StorageFile> allFiles)
+        {
+            return new Answer
+            {
+                Key = key,
+                Content = await ParseContent(content, allFiles)
             };
-
-            Task<object> task2 = Task<object>.Factory.StartNew(() => {
-                return ParseContent(content, allFiles);
-            });
-
-            answer.Content = task2.Result;
-            return answer as IAnswer;
         }
 
         private static async Task<object> ParseContent(string content, IReadOnlyList<StorageFile> allFiles) {
             if (content.StartsWith("[img]")) {
                 var image = new Image();
 
-                var name = content.ToLower().Replace("[img]", "").Replace("[/img]", "");
-                StorageFile file = allFiles.FirstOrDefault(i => i.Name == name);
+                var name = content.ToLower();
+                var startIndex = name.IndexOf("[img]") + "[img]".Length;
+                var endIndex = name.IndexOf("[/img]");
+                name = name.Substring(startIndex, endIndex - startIndex);
+
+                StorageFile file = allFiles.FirstOrDefault(i => i.Name.ToLower() == name);
+                if (file == null)
+                    return image;
                 var bitmap = new BitmapImage();
                 bitmap.SetSource(await file.OpenAsync(FileAccessMode.Read));
                 image.Source = bitmap;
