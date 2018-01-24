@@ -41,22 +41,38 @@ namespace Testownik
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.ButtonBackgroundColor = Colors.Transparent;
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-
+            
             // Set active window colors
-            titleBar.ForegroundColor = Windows.UI.Colors.White;
+            titleBar.ForegroundColor = Colors.White;
             //titleBar.BackgroundColor = Windows.UI.Colors.Green;
-            titleBar.ButtonForegroundColor = Windows.UI.Colors.White;
+            titleBar.ButtonForegroundColor = Colors.White;
             //titleBar.ButtonBackgroundColor = Windows.UI.Colors.SeaGreen;
-            titleBar.ButtonHoverForegroundColor = Windows.UI.Colors.White;
+            titleBar.ButtonHoverForegroundColor = Colors.White;
             //titleBar.ButtonHoverBackgroundColor = Windows.UI.Colors.DarkSeaGreen;
-            titleBar.ButtonPressedForegroundColor = Windows.UI.Colors.Gray;
+            titleBar.ButtonPressedForegroundColor = Colors.Gray;
             //titleBar.ButtonPressedBackgroundColor = Windows.UI.Colors.LightGreen;
 
             // Set inactive window colors
-            titleBar.InactiveForegroundColor = Windows.UI.Colors.Gray;
+            titleBar.InactiveForegroundColor = Colors.Gray;
             //titleBar.InactiveBackgroundColor = Windows.UI.Colors.SeaGreen;
-            titleBar.ButtonInactiveForegroundColor = Windows.UI.Colors.Gray;
+            titleBar.ButtonInactiveForegroundColor = Colors.Gray;
             //titleBar.ButtonInactiveBackgroundColor = Windows.UI.Colors.SeaGreen;
+        }
+
+        private void App_BackRequested(object sender,
+   Windows.UI.Core.BackRequestedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame == null)
+                return;
+
+            // Navigate back if possible, and if the event has not 
+            // already been handled .
+            if (rootFrame.CanGoBack && e.Handled == false)
+            {
+                e.Handled = true;
+                rootFrame.GoBack();
+            }
         }
 
         /// <summary>
@@ -84,6 +100,7 @@ namespace Testownik
 
                 // Umieść ramkę w bieżącym oknie
                 Window.Current.Content = rootFrame;
+                Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             }
 
             if (e.PrelaunchActivated == false)
@@ -93,7 +110,7 @@ namespace Testownik
                     // Kiedy stos nawigacji nie jest przywrócony, przejdź do pierwszej strony,
                     // konfigurując nową stronę przez przekazanie wymaganych informacji jako
                     // parametr
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(SelectPage), e.Arguments);
                 }
                 // Upewnij się, ze bieżące okno jest aktywne
                 Window.Current.Activate();       

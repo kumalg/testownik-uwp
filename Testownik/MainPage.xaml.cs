@@ -10,6 +10,8 @@ using Windows.UI;
 using System;
 using Windows.ApplicationModel.Core;
 using Testownik.Elements;
+using Windows.UI.Xaml.Navigation;
+using Windows.UI.Core;
 
 //Szablon elementu Pusta strona jest udokumentowany na stronie https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x415
 
@@ -62,32 +64,56 @@ namespace Testownik
         {
             this.InitializeComponent();
             SettingsHelper.SetSettings();
-            Co();
+            //Co();
         }
 
-        private async void Co()
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var co = await QuestionsReader.ReadQuestions();
-            if (co == null || !co.Any())
+            if (e.Parameter is TestController)
             {
-                var dialog = new ContentDialog()
-                {
-                    Content = "Nie wybrano pliku bądź baza jest pusta",
-                    PrimaryButtonText = "Wyjdź z aplikacji",
-                    SecondaryButtonText = "Powtórz"
-                };
-                var result = await dialog.ShowAsync();
-                if (result == ContentDialogResult.Secondary)
-                    Co();
-                else
-                    CoreApplication.Exit();
+                TestController = (TestController)e.Parameter;
+                NextQuestion();
+            }
+
+            if (Frame.CanGoBack)
+            {
+                // Show UI in title bar if opted-in and in-app backstack is not empty.
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                    AppViewBackButtonVisibility.Visible;
             }
             else
             {
-                TestController = new TestController(co);
-                NextQuestion();
+                // Remove the UI from the title bar if in-app back stack is empty.
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                    AppViewBackButtonVisibility.Collapsed;
             }
+
+            base.OnNavigatedTo(e);
         }
+
+        //private async void Co()
+        //{
+        //    var co = await QuestionsReader.ReadQuestions();
+        //    if (co == null || !co.Any())
+        //    {
+        //        var dialog = new ContentDialog()
+        //        {
+        //            Content = "Nie wybrano pliku bądź baza jest pusta",
+        //            PrimaryButtonText = "Wyjdź z aplikacji",
+        //            SecondaryButtonText = "Powtórz"
+        //        };
+        //        var result = await dialog.ShowAsync();
+        //        if (result == ContentDialogResult.Secondary)
+        //            Co();
+        //        else
+        //            CoreApplication.Exit();
+        //    }
+        //    else
+        //    {
+        //        TestController = new TestController(co);
+        //        NextQuestion();
+        //    }
+        //}
 
         private void ShowAcceptAnswerButton()
         {
@@ -136,6 +162,9 @@ namespace Testownik
 
         private void NextQuestion()
         {
+            if (TestController == null)
+                return;
+
             TextQuestion = TestController.RandQuestion();
             Answers = TextQuestion.Value.Answers
                 .Select(i => new AnswerBlock { Answer = i })

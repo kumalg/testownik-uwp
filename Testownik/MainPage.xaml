@@ -11,8 +11,19 @@
     xmlns:model="using:Testownik.Model"
     xmlns:conv="using:Testownik.Converters"
     xmlns:elements="using:Testownik.Elements"
+    Background="{ThemeResource MyAcrylicBrush}"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d">
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <CommonNavigationTransitionInfo/>
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
 
     <Grid Background="{ThemeResource AppBackgroundColor}">
 
@@ -36,6 +47,7 @@
         <!-- TitleBar -->
         <Grid
             Height="31"
+            Padding="50 0 0 0"
             Grid.ColumnSpan="2"            
             Background="{ThemeResource AppBackgroundLighterColor}" 
             Canvas.ZIndex="998">
