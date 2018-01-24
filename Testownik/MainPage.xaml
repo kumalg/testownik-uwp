@@ -13,6 +13,7 @@
     xmlns:elements="using:Testownik.Elements"
     Background="{ThemeResource MyAcrylicBrush}"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+                    KeyDown="AnswersGridView_KeyDown"
     mc:Ignorable="d">
 
     <Page.Transitions>

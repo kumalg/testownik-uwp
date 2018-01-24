@@ -5,13 +5,11 @@ using System.ComponentModel;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using Windows.UI;
 using System;
-using Windows.ApplicationModel.Core;
 using Testownik.Elements;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Core;
+using Windows.System;
 
 //Szablon elementu Pusta strona jest udokumentowany na stronie https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x415
 
@@ -64,7 +62,6 @@ namespace Testownik
         {
             this.InitializeComponent();
             SettingsHelper.SetSettings();
-            //Co();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -90,31 +87,7 @@ namespace Testownik
 
             base.OnNavigatedTo(e);
         }
-
-        //private async void Co()
-        //{
-        //    var co = await QuestionsReader.ReadQuestions();
-        //    if (co == null || !co.Any())
-        //    {
-        //        var dialog = new ContentDialog()
-        //        {
-        //            Content = "Nie wybrano pliku bądź baza jest pusta",
-        //            PrimaryButtonText = "Wyjdź z aplikacji",
-        //            SecondaryButtonText = "Powtórz"
-        //        };
-        //        var result = await dialog.ShowAsync();
-        //        if (result == ContentDialogResult.Secondary)
-        //            Co();
-        //        else
-        //            CoreApplication.Exit();
-        //    }
-        //    else
-        //    {
-        //        TestController = new TestController(co);
-        //        NextQuestion();
-        //    }
-        //}
-
+        
         private void ShowAcceptAnswerButton()
         {
             ButtonAcceptAnswer.Visibility = Visibility.Visible;
@@ -186,6 +159,30 @@ namespace Testownik
         {
             var dialog = new SettingsDialog();
             await dialog.ShowAsync();
+        }
+
+        private void AnswersGridView_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key >= VirtualKey.Number1 && e.Key <= VirtualKey.Number9)
+            {
+                var index = e.Key - VirtualKey.Number1;
+
+                var actualSelected = AnswersGridView.SelectedItems;
+                if (index < 0 || index >= AnswersGridView.Items.Count)
+                    return;
+                var itemToChangeSelection = AnswersGridView.Items[index];
+                if (actualSelected.Contains(itemToChangeSelection))
+                    actualSelected.Remove(itemToChangeSelection);
+                else
+                    actualSelected.Add(itemToChangeSelection);
+            }
+            else if (e.Key == VirtualKey.X)
+            {
+                if (ButtonAcceptAnswer.Visibility == Visibility.Visible)
+                    ButtonAcceptAnswer_Click(ButtonAcceptAnswer, null);
+                else if (ButtonNextQuestion.Visibility == Visibility.Visible)
+                    ButtonNextQuestion_Click(ButtonNextQuestion, null);
+            }
         }
     }
 }

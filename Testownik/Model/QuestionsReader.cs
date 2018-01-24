@@ -38,7 +38,8 @@ namespace Testownik.Model
                         continue;
 
                     var question = await ReadQuestion(item, sortedFiles);
-                    list.Add(item.Name, question);
+                    if (question != null)
+                        list.Add(item.Name, question);
                 }
             }
             catch (Exception e) {
@@ -71,8 +72,12 @@ namespace Testownik.Model
 
         public static async Task<IQuestion> ReadQuestion(StorageFile file, IReadOnlyList<StorageFile> allFiles) {
             string text = await ReadTextAsync(file);
+
             var lines = text
                 .Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+            if (!lines.First().StartsWith("X"))
+                return null;
 
             var correctAnswerKeys = lines
                 .First()
