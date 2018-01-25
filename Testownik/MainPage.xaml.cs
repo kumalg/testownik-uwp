@@ -115,17 +115,21 @@ namespace Testownik
             ShowNextQuestionButton();
         }
 
-        private void ButtonNextQuestion_Click(object sender, RoutedEventArgs e)
+        private async void ButtonNextQuestion_Click(object sender, RoutedEventArgs e)
         {
             if (TestController.IsTestCompleted())
             {
                 var contentDialog = new ContentDialog
                 {
                     Content = "Test zakończony!",
-                    PrimaryButtonText = "Spoko",
-                    SecondaryButtonText = "Anuluj"
+                    PrimaryButtonText = "OK",
+                    SecondaryButtonText = "Wyjdź"
                 };
-                var result = contentDialog.ShowAsync();
+                var result = await contentDialog.ShowAsync();
+                if (result == ContentDialogResult.Secondary)
+                {
+                    Frame.GoBack();
+                }
             }
             else
             {

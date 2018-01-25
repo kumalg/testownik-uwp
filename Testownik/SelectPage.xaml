@@ -18,13 +18,25 @@
             </NavigationThemeTransition>
         </TransitionCollection>
     </Page.Transitions>
-    
-    <Grid Background="{ThemeResource MyAcrylicBrush}">
+
+    <Grid Background="{ThemeResource MyAcrylicBrush}"
+    KeyDown="Page_KeyDown">
 
         <StackPanel VerticalAlignment="Center"
                     HorizontalAlignment="Center">
-            <TextBlock HorizontalAlignment="Center">Testownik Ultra</TextBlock>
-            <Button Click="Button_Click">Wybierz folder z bazą pytań</Button>
+            <TextBlock 
+                FontSize="32"
+                FontWeight="SemiLight"
+                Margin="8"
+                HorizontalAlignment="Center">
+                Testownik
+            </TextBlock>
+            <Button 
+                Margin="8"
+                Click="Button_Click"
+                HorizontalAlignment="Center">
+                Wybierz folder z bazą pytań
+            </Button>
         </StackPanel>
 
         <Grid

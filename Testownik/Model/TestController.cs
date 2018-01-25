@@ -115,40 +115,36 @@ namespace Testownik.Model
         internal static TestController GenerateRand() {
             var questions = new Dictionary<string, IQuestion> {
                 {"001.txt", new Question {
-                        Content = "Pierwsze pytanie",
+                        Content = "First question",
                         Answers = new List<IAnswer>() {
-                            new Answer { Content = "Jedno", Key = 1 },
-                            new Answer { Content = "Drugie", Key = 2 }
+                            new Answer { Content = "First answer", Key = 1 },
+                            new Answer { Content = "Second answer (Correct)", Key = 2 }
                         },
                         CorrectAnswerKeys = new[] { 2 }.ToList()
                     }
                 },
                 {"002.txt", new Question {
-                        Content = "Czy weszło drugie pytanie?",
+                        Content = "Second question",
                         Answers = new List<IAnswer>() {
-                            new Answer { Content = "Jedno", Key = 1 },
-                            new Answer { Content = "Drugie", Key = 2 },
-                            new Answer { Content = "Trzecie", Key = 3 }
+                            new Answer { Content = "First answer", Key = 1 },
+                            new Answer { Content = "Second answer", Key = 2 },
+                            new Answer { Content = "Third answer (Correct)", Key = 3 }
                         },
-                        CorrectAnswerKeys = new[] { 2 }.ToList()
+                        CorrectAnswerKeys = new[] { 3 }.ToList()
                     }
                 },
                 {"003.txt", new Question {
-                        Content = "Czy weszło trzecie pytanie?",
+                        Content = "Third question",
                         Answers = new List<IAnswer>() {
-                            new Answer { Content = "Jedno", Key = 1 },
-                            new Answer { Content = "Drugie", Key = 2 },
-                            new Answer { Content = "Trzecie", Key = 3 }
+                            new Answer { Content = "First answer (Correct)", Key = 1 },
+                            new Answer { Content = "Second answer", Key = 2 },
+                            new Answer { Content = "Third answer", Key = 3 }
                         },
-                        CorrectAnswerKeys = new[] { 2 }.ToList()
+                        CorrectAnswerKeys = new[] { 1 }.ToList()
                     }
                 },
             };
-            var reoqurrences = new Dictionary<string, int>() {
-                { "001.txt", 2},
-                { "002.txt", 2}
-            };
-            return new TestController { Questions = questions, Reoccurrences = reoqurrences };
+            return new TestController(questions);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

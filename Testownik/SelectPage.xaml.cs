@@ -2,6 +2,7 @@
 using System.Linq;
 using Testownik.Model;
 using Windows.ApplicationModel.Core;
+using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -43,24 +44,22 @@ namespace Testownik
         {
             ProgressGrid.Visibility = Visibility.Visible;
             var co = await QuestionsReader.ReadQuestions();
+            ProgressGrid.Visibility = Visibility.Collapsed;
             if (co == null || !co.Any())
             {
                 var dialog = new ContentDialog()
                 {
                     Content = "Nie wybrano pliku bądź baza jest pusta",
-                    PrimaryButtonText = "Wyjdź z aplikacji",
+                    PrimaryButtonText = "Zamknij",
                     SecondaryButtonText = "Powtórz"
                 };
                 var result = await dialog.ShowAsync();
                 if (result == ContentDialogResult.Secondary)
                     SelectFolder();
-                else
-                    CoreApplication.Exit();
             }
             else
             {
                 var testController = new TestController(co);
-                ProgressGrid.Visibility = Visibility.Collapsed;
                 this.Frame.Navigate(typeof(MainPage), testController);
             }
         }
@@ -68,6 +67,15 @@ namespace Testownik
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SelectFolder();
+        }
+
+        private void Page_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key != VirtualKey.T)
+                return;
+
+            var testController = TestController.GenerateRand();
+            this.Frame.Navigate(typeof(MainPage), testController);
         }
     }
 }
