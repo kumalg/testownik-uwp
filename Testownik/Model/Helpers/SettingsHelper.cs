@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Storage;
+﻿using Windows.Storage;
 
-namespace Testownik.Model
-{
-    public class SettingsHelper
-    {
+namespace Testownik.Model {
+    public class SettingsHelper {
         private static readonly ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
 
-        public static void SetSettings()
-        {
+        public static void SetSettings() {
             if (LocalSettings.Values["reoccurrencesIfBad"] == null)
                 LocalSettings.Values["reoccurrencesIfBad"] = 2;
 

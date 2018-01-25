@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -7,34 +9,29 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
 
-namespace Testownik
-{
+namespace Testownik {
     /// <summary>
     /// Zapewnia zachowanie specyficzne dla aplikacji, aby uzupełnić domyślną klasę aplikacji.
     /// </summary>
-    sealed partial class App : Application
-    {
+    sealed partial class App : Application {
         /// <summary>
         /// Inicjuje pojedynczy obiekt aplikacji. Jest to pierwszy wiersz napisanego kodu
         /// wykonywanego i jest logicznym odpowiednikiem metod main() lub WinMain().
         /// </summary>
-        public App()
-        {
+        public App() {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             AppCenter.Start("07b9dcb3-38f6-4413-9587-961e01b296df", typeof(Analytics));
         }
 
         /// Extend acrylic into the title bar. 
-        private void extendAcrylicIntoTitleBar() {
+        private void extendAcrylicIntoTitleBar () {
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.ButtonBackgroundColor = Colors.Transparent;
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            
+
             // Set active window colors
             titleBar.ForegroundColor = Colors.White;
             //titleBar.BackgroundColor = Windows.UI.Colors.Green;
@@ -52,19 +49,17 @@ namespace Testownik
             //titleBar.ButtonInactiveBackgroundColor = Windows.UI.Colors.SeaGreen;
         }
 
-        private void App_BackRequested(object sender,
-   Windows.UI.Core.BackRequestedEventArgs e)
-        {
+        private void App_BackRequested (object sender,
+            Windows.UI.Core.BackRequestedEventArgs e) {
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame == null)
                 return;
 
             // Navigate back if possible, and if the event has not 
             // already been handled .
-            if (rootFrame.CanGoBack && e.Handled == false)
-            {
+            if (rootFrame.CanGoBack && e.Handled == false) {
                 e.Handled = true;
-                rootFrame.GoBack();
+                rootFrame.GoBack ();
             }
         }
 
@@ -73,21 +68,18 @@ namespace Testownik
         /// będą używane, kiedy aplikacja zostanie uruchomiona w celu otworzenia określonego pliku.
         /// </summary>
         /// <param name="e">Szczegóły dotyczące żądania uruchomienia i procesu.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
-        {
+        protected override void OnLaunched(LaunchActivatedEventArgs e) {
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Nie powtarzaj inicjowania aplikacji, gdy w oknie znajduje się już zawartość,
             // upewnij się tylko, że okno jest aktywne
-            if (rootFrame == null)
-            {
+            if (rootFrame == null) {
                 // Utwórz ramkę, która będzie pełnić funkcję kontekstu nawigacji, i przejdź do pierwszej strony
-                rootFrame = new Frame();
+                rootFrame = new Frame ();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
+                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated) {
                     //TODO: Załaduj stan z wstrzymanej wcześniej aplikacji
                 }
 
@@ -96,18 +88,16 @@ namespace Testownik
                 Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             }
 
-            if (e.PrelaunchActivated == false)
-            {
-                if (rootFrame.Content == null)
-                {
+            if (e.PrelaunchActivated == false) {
+                if (rootFrame.Content == null) {
                     // Kiedy stos nawigacji nie jest przywrócony, przejdź do pierwszej strony,
                     // konfigurując nową stronę przez przekazanie wymaganych informacji jako
                     // parametr
                     rootFrame.Navigate(typeof(SelectPage), e.Arguments);
                 }
                 // Upewnij się, ze bieżące okno jest aktywne
-                Window.Current.Activate();       
-                
+                Window.Current.Activate();
+
                 // Extend acrylic
                 extendAcrylicIntoTitleBar();
             }
@@ -118,8 +108,7 @@ namespace Testownik
         /// </summary>
         /// <param name="sender">Ramka, do której nawigacja nie powiodła się</param>
         /// <param name="e">Szczegóły dotyczące niepowodzenia nawigacji</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
-        {
+        void OnNavigationFailed(object sender, NavigationFailedEventArgs e) {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 
@@ -130,9 +119,8 @@ namespace Testownik
         /// </summary>
         /// <param name="sender">Źródło żądania wstrzymania.</param>
         /// <param name="e">Szczegóły żądania wstrzymania.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
-        {
-            var deferral = e.SuspendingOperation.GetDeferral();
+        private void OnSuspending(object sender, SuspendingEventArgs e) {
+            var deferral = e.SuspendingOperation.GetDeferral ();
             //TODO: Zapisz stan aplikacji i zatrzymaj wszelkie aktywności w tle
             deferral.Complete();
         }

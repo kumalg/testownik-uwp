@@ -1,15 +1,13 @@
-﻿<UserControl
-    x:Class="Testownik.Elements.Answer"
+﻿<UserControl x:Class="Testownik.Elements.Answer"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Testownik.Elements"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:model="using:Testownik.Model"
-    mc:Ignorable="d">
+    xmlns:model="using:Testownik.Model" mc:Ignorable="d">
 
-    <controls:DropShadowPanel 
+    <controls:DropShadowPanel
         BlurRadius="32"
         ShadowOpacity="0.1"
         OffsetX="0"
@@ -21,17 +19,11 @@
             x:Name="GridBlock"
             Background="{Binding Brush, Mode=OneWay}"
             MinHeight="64">
-            <!--<TextBlock 
-                Text="{Binding Answer.Content, Mode=OneWay}"
-                Margin="16 8"
-                TextWrapping="Wrap"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center" 
-                TextAlignment="Center">-->
+            <!--<TextBlock Text="{Binding Answer.Content, Mode=OneWay}" Margin="16 8" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center">-->
             <ContentPresenter
                 Margin="16 8"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center" 
+                VerticalAlignment="Center"
                 Foreground="{ThemeResource TextColor}"
                 Content="{Binding Answer.Content, Mode=OneWay}"
                 TextWrapping="Wrap"

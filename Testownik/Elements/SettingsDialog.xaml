@@ -1,5 +1,4 @@
-﻿<ContentDialog
-    x:Class="Testownik.Elements.SettingsDialog"
+﻿<ContentDialog x:Class="Testownik.Elements.SettingsDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Testownik.Elements"
@@ -35,5 +34,5 @@
             ItemsSource="{x:Bind MaxReoccurrences, Mode=OneTime}">
         </ComboBox>
     </StackPanel>
-    
+
 </ContentDialog>

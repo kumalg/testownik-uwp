@@ -2,18 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Windows.System.Threading;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 
-namespace Testownik.Model
-{
-    public class TestController : INotifyPropertyChanged
-    {
+namespace Testownik.Model {
+    public class TestController : INotifyPropertyChanged {
         private Random random = new Random();
         public IDictionary<string, IQuestion> Questions { get; set; }
         public IDictionary<string, int> Reoccurrences { get; set; }
@@ -29,56 +21,48 @@ namespace Testownik.Model
         private long startTime;
         private DispatcherTimer timer;
 
-        public TestController(IDictionary<string, IQuestion> questions)
-        {
+        public TestController(IDictionary<string, IQuestion> questions) {
             Questions = questions;
             NumberOfQuestions = questions.Count;
             NumberOfRemainingQuestions = NumberOfQuestions - NumberOfLearnedQuestions;
             Reoccurrences = questions.ToDictionary(node => node.Key, node => SettingsHelper.ReoccurrencesOnStart);
 
             startTime = DateTime.Now.Ticks;
-            timer = new DispatcherTimer {
-                Interval = TimeSpan.FromSeconds(1)
-            };
-            timer.Tick += (s, e) => {
-                Time = DateTime.Now.Ticks - startTime;
-                TimeSpan t = TimeSpan.FromTicks(Time);
-                TimeString = string.Format("{0:D2}:{1:D2}:{2:D2}",
-                                t.Hours,
-                                t.Minutes,
-                                t.Seconds,
-                                t.Milliseconds);
-                RaisePropertyChanged(nameof(Time));
-                RaisePropertyChanged(nameof(TimeString));
-            };
-            timer.Start();
+            timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            timer.Tick += (s, e) => { RefreshTimer(); };
+            timer.Start ();
         }
 
-        public TestController(string path)
-        {
-
+        private void RefreshTimer() {
+            Time = DateTime.Now.Ticks - startTime;
+            TimeSpan t = TimeSpan.FromTicks(Time);
+            TimeString = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                t.Hours,
+                t.Minutes,
+                t.Seconds,
+                t.Milliseconds);
+            RaisePropertyChanged(nameof(Time));
+            RaisePropertyChanged(nameof(TimeString));
         }
 
-        public TestController()
-        {
+        public TestController(string path) {
 
         }
 
-        public void CheckAnswer(string key, IEnumerable<int> answerKeys)
-        {
+        public TestController() {
+
+        }
+
+        public void CheckAnswer(string key, IEnumerable<int> answerKeys) {
             NumberOfAnswers++;
             RaisePropertyChanged(nameof(NumberOfAnswers));
-            if (!Questions.ContainsKey(key))
-            {
+            if (!Questions.ContainsKey(key)) {
 
-            }
-            else if (Questions[key].CorrectAnswerKeys.OrderBy(i => i).SequenceEqual(answerKeys.OrderBy(i => i))){
+            } else if (Questions[key].CorrectAnswerKeys.OrderBy(i => i).SequenceEqual(answerKeys.OrderBy(i => i))) {
                 Reoccurrences[key] -= 1;
                 NumberOfCorrectAnswers++;
                 RaisePropertyChanged(nameof(NumberOfCorrectAnswers));
-            }
-            else
-            {
+            } else {
                 Reoccurrences[key] += SettingsHelper.ReoccurrencesIfBad;
                 if (Reoccurrences[key] > SettingsHelper.MaxReoccurrences)
                     Reoccurrences[key] = SettingsHelper.MaxReoccurrences;
@@ -86,8 +70,7 @@ namespace Testownik.Model
                 NumberOfBadAnswers++;
                 RaisePropertyChanged(nameof(NumberOfBadAnswers));
             }
-            if (Reoccurrences.ContainsKey(key) && Reoccurrences[key] == 0)
-            {
+            if (Reoccurrences.ContainsKey(key) && Reoccurrences[key] == 0) {
                 NumberOfLearnedQuestions++;
                 RaisePropertyChanged(nameof(NumberOfLearnedQuestions));
                 NumberOfRemainingQuestions--;
@@ -95,63 +78,64 @@ namespace Testownik.Model
             }
         }
 
-        public bool IsTestCompleted()
-        {
+        public bool IsTestCompleted() {
             return Reoccurrences.All(i => i.Value == 0);
         }
 
-        public int ReoccurrencesOfQuestion(string key) => (Reoccurrences.ContainsKey(key))
-            ? Reoccurrences[key]
+        public int ReoccurrencesOfQuestion(string key) => (Reoccurrences.ContainsKey(key)) 
+            ? Reoccurrences[key] 
             : 0;
 
-        public KeyValuePair<string, IQuestion> RandQuestion()
-        {
+        public KeyValuePair<string, IQuestion> RandQuestion() {
             var remainingQuestions = Questions.Where(q => Reoccurrences[q.Key] != 0);
             if (!remainingQuestions.Any())
                 return new KeyValuePair<string, IQuestion>(string.Empty, new Question());
-            return remainingQuestions.ElementAt(random.Next(remainingQuestions.Count())); 
+            return remainingQuestions.ElementAt(random.Next(remainingQuestions.Count()));
         }
 
         internal static TestController GenerateRand() {
             var questions = new Dictionary<string, IQuestion> {
-                {"001.txt", new Question {
+                {
+                    "001.txt",
+                    new Question {
                         Content = "First question",
-                        Answers = new List<IAnswer>() {
+                        Answers = new List<IAnswer> () {
                             new Answer { Content = "First answer", Key = 1 },
                             new Answer { Content = "Second answer (Correct)", Key = 2 }
                         },
-                        CorrectAnswerKeys = new[] { 2 }.ToList()
+                        CorrectAnswerKeys = new [] { 2 }.ToList ()
                     }
-                },
-                {"002.txt", new Question {
+                }, {
+                    "002.txt",
+                    new Question {
                         Content = "Second question",
-                        Answers = new List<IAnswer>() {
+                        Answers = new List<IAnswer> () {
                             new Answer { Content = "First answer", Key = 1 },
                             new Answer { Content = "Second answer", Key = 2 },
                             new Answer { Content = "Third answer (Correct)", Key = 3 }
                         },
-                        CorrectAnswerKeys = new[] { 3 }.ToList()
+                        CorrectAnswerKeys = new [] { 3 }.ToList ()
                     }
-                },
-                {"003.txt", new Question {
+                }, {
+                    "003.txt",
+                    new Question {
                         Content = "Third question",
-                        Answers = new List<IAnswer>() {
+                        Answers = new List<IAnswer> () {
                             new Answer { Content = "First answer (Correct)", Key = 1 },
                             new Answer { Content = "Second answer", Key = 2 },
                             new Answer { Content = "Third answer", Key = 3 }
                         },
-                        CorrectAnswerKeys = new[] { 1 }.ToList()
+                        CorrectAnswerKeys = new [] { 1 }.ToList ()
                     }
                 },
             };
-            return new TestController(questions);
+            return new TestController (questions);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string propertyName)
-        {
+        private void RaisePropertyChanged (string propertyName) {
             var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            handler?.Invoke (this, new PropertyChangedEventArgs (propertyName));
         }
     }
 }

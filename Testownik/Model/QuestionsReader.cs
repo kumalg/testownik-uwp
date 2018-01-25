@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,41 +9,31 @@ using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace Testownik.Model
-{
-    class QuestionsReader
-    {
-        public static async Task<StorageFolder> FindFolderByPath(string path)
-        {
+namespace Testownik.Model {
+    class QuestionsReader {
+        public static async Task<StorageFolder> FindFolderByPath(string path) {
             var folder = await StorageFolder.GetFolderFromPathAsync(path);
             return folder;
         }
 
-        public static async Task<StorageFolder> ShowFolderPicker()
-        {
+        public static async Task<StorageFolder> ShowFolderPicker() {
             var folderPicker = new FolderPicker {
-                SuggestedStartLocation = PickerLocationId.Desktop
+                SuggestedStartLocation = PickerLocationId.Desktop,
             };
             folderPicker.FileTypeFilter.Add("*");
 
-            var folder = await folderPicker.PickSingleFolderAsync();
-
-            return folder;
+            return await folderPicker.PickSingleFolderAsync();
         }
 
-        public static async Task<IReadOnlyCollection<StorageFile>> ReadFiles(StorageFolder folder)
-        {
-            return await folder.GetFilesAsync();
+        public static async Task<IReadOnlyCollection<StorageFile>> ReadFiles(StorageFolder folder) {
+            return await folder.GetFilesAsync ();
         }
 
-        public async static Task<IDictionary<string, IQuestion>> ReadQuestions(IReadOnlyCollection<StorageFile> sortedFiles)
-        {
+        public async static Task<IDictionary<string, IQuestion>> ReadQuestions(IReadOnlyCollection<StorageFile> sortedFiles) {
             var list = new Dictionary<string, IQuestion>();
 
-            try
-            {
-                foreach (StorageFile item in sortedFiles)
-                {
+            try {
+                foreach (StorageFile item in sortedFiles) {
                     if (item.FileType != ".txt")
                         continue;
 
@@ -52,10 +41,8 @@ namespace Testownik.Model
                     if (question != null)
                         list.Add(item.Name, question);
                 }
-            }
-            catch (Exception e)
-            {
-                var co = e;
+            } catch(Exception e) {
+
             };
 
             return list;
@@ -79,7 +66,7 @@ namespace Testownik.Model
             if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            return Encoding.GetEncoding(1250);
+            return Encoding.GetEncoding (1250);
         }
 
         public static async Task<IQuestion> ReadQuestion(StorageFile file, IReadOnlyCollection<StorageFile> allFiles) {
@@ -108,23 +95,21 @@ namespace Testownik.Model
 
             return new Question {
                 Content = content,
-                Answers = await Task.WhenAll(answers),
-                CorrectAnswerKeys = correctAnswerKeys
+                    Answers = await Task.WhenAll(answers),
+                    CorrectAnswerKeys = correctAnswerKeys
             };
         }
 
-        private static async Task<IAnswer> CreateAnswer(string content, int key, IReadOnlyCollection<StorageFile> allFiles)
-        {
-            return new Answer
-            {
+        private static async Task<IAnswer> CreateAnswer(string content, int key, IReadOnlyCollection<StorageFile> allFiles) {
+            return new Answer {
                 Key = key,
-                Content = await ParseContent(content, allFiles)
+                    Content = await ParseContent(content, allFiles)
             };
         }
 
         private static async Task<object> ParseContent(string content, IReadOnlyCollection<StorageFile> allFiles) {
             if (content.StartsWith("[img]")) {
-                var image = new Image();
+                var image = new Image ();
 
                 var name = content.ToLower();
                 var startIndex = name.IndexOf("[img]") + "[img]".Length;
@@ -140,12 +125,11 @@ namespace Testownik.Model
                 image.Stretch = Windows.UI.Xaml.Media.Stretch.None;
 
                 return image;
-            }
-            else {
+            } else {
                 return new TextBlock {
                     Text = content,
-                    TextAlignment = Windows.UI.Xaml.TextAlignment.Center,
-                    TextWrapping = Windows.UI.Xaml.TextWrapping.WrapWholeWords
+                        TextAlignment = Windows.UI.Xaml.TextAlignment.Center,
+                        TextWrapping = Windows.UI.Xaml.TextWrapping.WrapWholeWords
                 };
             }
         }
