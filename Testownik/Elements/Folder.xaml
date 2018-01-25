@@ -8,10 +8,10 @@
     mc:Ignorable="d">
 
     <controls:DropShadowPanel
-        BlurRadius="8"
+        BlurRadius="32"
         ShadowOpacity="0.2"
         OffsetX="0"
-        OffsetY="4"
+        OffsetY="8"
         Color="Black"
         VerticalAlignment="Stretch"
         HorizontalContentAlignment="Stretch">

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Testownik.Elements;
+using Testownik.Dialogs;
 using Testownik.Model;
 using Testownik.Model.Helpers;
 using Windows.System;

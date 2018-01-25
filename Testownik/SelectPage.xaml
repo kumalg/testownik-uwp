@@ -8,6 +8,8 @@
     xmlns:elements="using:Testownik.Elements"
     xmlns:model="using:Testownik.Model"
     NavigationCacheMode="Enabled"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"  
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     mc:Ignorable="d">
 
     <Page.Transitions>
@@ -24,7 +26,6 @@
         Background="{ThemeResource MyAcrylicLightBrush}"
         DragOver="Grid_DragOver"
         DragLeave="Grid_DragLeave"
-        DragEnter="Grid_DragEnter"
         AllowDrop="True"
         Drop="Button_Drop">
 
@@ -38,14 +39,44 @@
                 HorizontalAlignment="Center">
                 Testownik
             </TextBlock>
-            <Button
-                Margin="4 16"
-                Style="{ThemeResource FolderButton}"
-                Click="Button_Click"
-                HorizontalAlignment="Center">
-                Wybierz folder z bazą pytań
-            </Button>
+            
+            <StackPanel
+                Orientation="Horizontal"
+                Margin="16 0"
+                HorizontalAlignment="Right">
+                <Button
+                    Click="Button_Click"
+                    RequestedTheme="Dark"
+                    Margin="4 16"
+                    Style="{ThemeResource FolderButton}"
+                    Width="176"
+                    Background="{ThemeResource PrimaryColor}"
+                    Foreground="White"
+                    HorizontalAlignment="Center">
+                    <SymbolIcon Symbol="NewFolder"/>
+                </Button>
+
+                <Button
+                    Margin="4 16"
+                    Style="{ThemeResource FolderButton}"
+                    Width="64"
+                    HorizontalAlignment="Center">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;"/>
+                </Button>
+                
+                <Button
+                    Click="SettingsButton_Click"
+                    Margin="4 16"
+                    Style="{ThemeResource FolderButton}"
+                    Width="64"
+                    HorizontalAlignment="Center">
+                    <SymbolIcon Symbol="Setting"/>
+                </Button>
+            </StackPanel>
+
             <ListView
+                Padding="16 8 16 24"
+                HorizontalAlignment="Center"
                 SelectionMode="None"
                 ItemClick="ListView_ItemClick"
                 IsItemClickEnabled="True"
@@ -72,36 +103,55 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <!--<elements:Folder/>
-            <elements:Folder/>
-            <elements:Folder/>-->
         </StackPanel>
 
         <Grid x:Name="DragGrid"
-            Visibility="Collapsed"
-            Background="{ThemeResource DragBackground}">
-            <TextBlock
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Foreground="White">
-                Upuść pliki
-            </TextBlock>
+            Visibility="Collapsed" >
+            <Grid x:Name="DragBlurGrid"/>
+            <Grid x:Name="DragInfo"
+                Background="{ThemeResource MessageBackground}">
+                <StackPanel
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+                    <FontIcon 
+                        FontSize="64"
+                        Foreground="{ThemeResource TextColor}"
+                        FontFamily="Segoe MDL2 Assets" 
+                        Glyph="&#xE8E5;"/>
+                    <TextBlock
+                        FontSize="32"
+                        Margin="0 16 0 0"
+                        FontWeight="SemiLight"
+                        Foreground="{ThemeResource TextColor}">
+                        Upuść pliki
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
         </Grid>
 
-        <Grid x:Name="ProgressGrid"
-            Visibility="Collapsed"
-            Width="128"
-            Height="128"
-            Background="{ThemeResource MyInAppAcrylicBrush}">
-            <StackPanel VerticalAlignment="Center">
-                <ProgressRing
+        <Grid x:Name="LoadingGrid"
+            Visibility="Collapsed">
+            <Grid x:Name="LoadingBlurGrid"/>
+            <Grid x:Name="LoadingInfo"
+                Background="{ThemeResource MessageBackground}">
+                <StackPanel
                     VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Width="64"
-                    Height="64"
-                    IsActive="True"/>
-                <TextBlock HorizontalAlignment="Center" Foreground="{ThemeResource TextColor}">Wczytywanie</TextBlock>
-            </StackPanel>
+                    HorizontalAlignment="Center">
+                    <ProgressRing x:Name="ProgressRing"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Foreground="{ThemeResource PrimaryColor}"
+                        Width="64"
+                        Height="64"
+                        IsActive="False"/>
+                    <TextBlock 
+                        Margin="0 16 0 0"
+                        HorizontalAlignment="Center" 
+                        Foreground="{ThemeResource TextColor}">
+                        Wczytywanie
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

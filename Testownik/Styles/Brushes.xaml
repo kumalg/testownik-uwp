@@ -23,14 +23,16 @@
 
             <SolidColorBrush x:Key="AppBackgroundColor" Color="#ebebeb" />
             <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#ffffff" />
+
+            <SolidColorBrush x:Key="MessageBackground" Color="#40FFFFFF" />
+
             <SolidColorBrush x:Key="AppButtonForeground" Color="#ffffff" Opacity="0.75"/>
             <SolidColorBrush x:Key="AppButtonPointerOver" Color="#ffffff" Opacity="0.1"/>
             <SolidColorBrush x:Key="AppButtonPressed" Color="#ffffff" Opacity="0.2"/>
             <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
 
             <AcrylicBrush x:Key="MyAcrylicBrush" BackgroundSource="HostBackdrop" TintColor="#FF363636" TintOpacity="0.8" FallbackColor="#FF363636"/>
-            <AcrylicBrush x:Key="MyAcrylicLightBrush" BackgroundSource="HostBackdrop" TintColor="#FFffffff" TintOpacity="0.7" FallbackColor="#FFffffff"/>
-            <AcrylicBrush x:Key="DragBackground" BackgroundSource="Backdrop" TintColor="#FF000000" TintOpacity="0.3" FallbackColor="#FF000000"/>
+            <AcrylicBrush x:Key="MyAcrylicLightBrush" BackgroundSource="HostBackdrop" TintColor="#FFebebeb" TintOpacity="0.8" FallbackColor="#FFebebeb"/>
             <AcrylicBrush x:Key="MyInAppAcrylicBrush" BackgroundSource="Backdrop" TintColor="#FFffffff" TintOpacity="0.6" FallbackColor="#FFffffff"/>
         </ResourceDictionary>
 
@@ -81,14 +83,16 @@
 
             <SolidColorBrush x:Key="AppBackgroundColor" Color="#ebebeb" />
             <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#ffffff" />
+
+            <SolidColorBrush x:Key="MessageBackground" Color="#40FFFFFF" />
+            
             <SolidColorBrush x:Key="AppButtonForeground" Color="#ffffff" Opacity="0.75"/>
             <SolidColorBrush x:Key="AppButtonPointerOver" Color="#ffffff" Opacity="0.1"/>
             <SolidColorBrush x:Key="AppButtonPressed" Color="#ffffff" Opacity="0.2"/>
             <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
             
             <AcrylicBrush x:Key="MyAcrylicBrush" BackgroundSource="HostBackdrop" TintColor="#FF363636" TintOpacity="0.8" FallbackColor="#FF363636"/>
-            <AcrylicBrush x:Key="MyAcrylicLightBrush" BackgroundSource="HostBackdrop" TintColor="#FFffffff" TintOpacity="0.7" FallbackColor="#FFffffff"/>
-            <AcrylicBrush x:Key="DragBackground" BackgroundSource="Backdrop" TintColor="#FF000000" TintOpacity="0.3" FallbackColor="#FF000000"/>
+            <AcrylicBrush x:Key="MyAcrylicLightBrush" BackgroundSource="HostBackdrop" TintColor="#FFebebeb" TintOpacity="0.8" FallbackColor="#FFebebeb"/>
             <AcrylicBrush x:Key="MyInAppAcrylicBrush" BackgroundSource="Backdrop" TintColor="#FFffffff" TintOpacity="0.6" FallbackColor="#FFffffff"/>
         </ResourceDictionary>
 

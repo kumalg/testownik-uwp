@@ -26,14 +26,14 @@ namespace Testownik {
         }
 
         /// Extend acrylic into the title bar. 
-        private void extendAcrylicIntoTitleBar () {
+        private void ExtendAcrylicIntoTitleBar () {
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.ButtonBackgroundColor = Colors.Transparent;
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
             // Set active window colors
-            titleBar.ForegroundColor = Colors.White;
+            titleBar.ForegroundColor = Colors.Gray;
             //titleBar.BackgroundColor = Windows.UI.Colors.Green;
             titleBar.ButtonForegroundColor = Colors.White;
             //titleBar.ButtonBackgroundColor = Windows.UI.Colors.SeaGreen;
@@ -99,7 +99,7 @@ namespace Testownik {
                 Window.Current.Activate();
 
                 // Extend acrylic
-                extendAcrylicIntoTitleBar();
+                ExtendAcrylicIntoTitleBar();
             }
         }
 

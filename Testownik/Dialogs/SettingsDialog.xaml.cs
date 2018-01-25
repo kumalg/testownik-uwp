@@ -3,7 +3,7 @@ using System.Linq;
 using Testownik.Model;
 using Windows.UI.Xaml.Controls;
 
-namespace Testownik.Elements {
+namespace Testownik.Dialogs {
     public sealed partial class SettingsDialog : ContentDialog {
         public IList<int> ReoccurrencesOnStart { get; } = new [] { 1, 2, 3, 4, 5 }.ToList();
         public IList<int> ReoccurrencesIfBad { get; } = new [] { 0, 1, 2, 3, 4 }.ToList();
