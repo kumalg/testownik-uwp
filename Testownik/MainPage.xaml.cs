@@ -61,7 +61,6 @@ namespace Testownik
         public MainPage()
         {
             this.InitializeComponent();
-            SettingsHelper.SetSettings();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -122,7 +121,6 @@ namespace Testownik
                 var contentDialog = new ContentDialog
                 {
                     Content = "Test zakończony!",
-                    PrimaryButtonText = "OK",
                     SecondaryButtonText = "Wyjdź"
                 };
                 var result = await contentDialog.ShowAsync();

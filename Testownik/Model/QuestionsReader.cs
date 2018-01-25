@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,27 +14,37 @@ namespace Testownik.Model
 {
     class QuestionsReader
     {
-        public async static Task<IDictionary<string, IQuestion>> ReadQuestions()
+        public static async Task<StorageFolder> FindFolderByPath(string path)
+        {
+            var folder = await StorageFolder.GetFolderFromPathAsync(path);
+            return folder;
+        }
+
+        public static async Task<StorageFolder> ShowFolderPicker()
+        {
+            var folderPicker = new FolderPicker {
+                SuggestedStartLocation = PickerLocationId.Desktop
+            };
+            folderPicker.FileTypeFilter.Add("*");
+
+            var folder = await folderPicker.PickSingleFolderAsync();
+
+            return folder;
+        }
+
+        public static async Task<IReadOnlyCollection<StorageFile>> ReadFiles(StorageFolder folder)
+        {
+            return await folder.GetFilesAsync();
+        }
+
+        public async static Task<IDictionary<string, IQuestion>> ReadQuestions(IReadOnlyCollection<StorageFile> sortedFiles)
         {
             var list = new Dictionary<string, IQuestion>();
 
             try
             {
-                var folderPicker = new FolderPicker
+                foreach (StorageFile item in sortedFiles)
                 {
-                    SuggestedStartLocation = PickerLocationId.Desktop
-                };
-                folderPicker.FileTypeFilter.Add("*");
-
-                StorageFolder folder = await folderPicker.PickSingleFolderAsync();
-
-                List<string> fileTypeFilter = new List<string>
-            {
-                ".txt"
-            };
-
-                IReadOnlyList<StorageFile> sortedFiles = await folder.GetFilesAsync();
-                foreach (StorageFile item in sortedFiles) {
                     if (item.FileType != ".txt")
                         continue;
 
@@ -42,7 +53,8 @@ namespace Testownik.Model
                         list.Add(item.Name, question);
                 }
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 var co = e;
             };
 
@@ -70,7 +82,7 @@ namespace Testownik.Model
             return Encoding.GetEncoding(1250);
         }
 
-        public static async Task<IQuestion> ReadQuestion(StorageFile file, IReadOnlyList<StorageFile> allFiles) {
+        public static async Task<IQuestion> ReadQuestion(StorageFile file, IReadOnlyCollection<StorageFile> allFiles) {
             string text = await ReadTextAsync(file);
 
             var lines = text
@@ -101,7 +113,7 @@ namespace Testownik.Model
             };
         }
 
-        private static async Task<IAnswer> CreateAnswer(string content, int key, IReadOnlyList<StorageFile> allFiles)
+        private static async Task<IAnswer> CreateAnswer(string content, int key, IReadOnlyCollection<StorageFile> allFiles)
         {
             return new Answer
             {
@@ -110,7 +122,7 @@ namespace Testownik.Model
             };
         }
 
-        private static async Task<object> ParseContent(string content, IReadOnlyList<StorageFile> allFiles) {
+        private static async Task<object> ParseContent(string content, IReadOnlyCollection<StorageFile> allFiles) {
             if (content.StartsWith("[img]")) {
                 var image = new Image();
 

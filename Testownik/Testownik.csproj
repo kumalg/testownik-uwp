@@ -20,7 +20,7 @@
     <PackageCertificateKeyFile>Testownik_StoreKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>545F67E24744F569CD4F2C8F95AF9E88D1C09B75</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Auto</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -103,6 +103,9 @@
     <Compile Include="Elements\Answer.xaml.cs">
       <DependentUpon>Answer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Elements\Folder.xaml.cs">
+      <DependentUpon>Folder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Elements\SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
@@ -111,6 +114,7 @@
     </Compile>
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\AnswerBlock.cs" />
+    <Compile Include="Model\FolderPath.cs" />
     <Compile Include="Model\Helpers\AppIdentity.cs" />
     <Compile Include="Model\IAnswer.cs" />
     <Compile Include="Model\IQuestion.cs" />
@@ -148,6 +152,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Elements\Answer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Elements\Folder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

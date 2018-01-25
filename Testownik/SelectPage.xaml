@@ -5,7 +5,9 @@
     xmlns:local="using:Testownik"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-   RequestedTheme="Dark"
+   RequestedTheme="Light"
+    xmlns:elements="using:Testownik.Elements"
+    xmlns:model="using:Testownik.Model"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -19,8 +21,12 @@
         </TransitionCollection>
     </Page.Transitions>
 
-    <Grid Background="{ThemeResource MyAcrylicBrush}"
-    KeyDown="Page_KeyDown">
+    <Grid Background="{ThemeResource MyAcrylicLightBrush}"
+          DragOver="Grid_DragOver"
+          DragLeave="Grid_DragLeave"
+          DragEnter="Grid_DragEnter"
+          AllowDrop="True"
+          Drop="Button_Drop">
 
         <StackPanel VerticalAlignment="Center"
                     HorizontalAlignment="Center">
@@ -31,13 +37,51 @@
                 HorizontalAlignment="Center">
                 Testownik
             </TextBlock>
-            <Button 
-                Margin="8"
+            <Button
+                Margin="4 16"
+                Style="{ThemeResource FolderButton}"
                 Click="Button_Click"
                 HorizontalAlignment="Center">
                 Wybierz folder z bazą pytań
             </Button>
+            <ListView
+                SelectionMode="None"
+                ItemClick="ListView_ItemClick"
+                IsItemClickEnabled="True"
+                ItemsSource="{x:Bind FolderPaths, Mode=OneWay}">
+
+                <ListView.ItemContainerStyle>
+                    <Style
+                        TargetType="ListViewItem">
+                        <Setter
+                            Property="HorizontalContentAlignment"
+                            Value="Stretch" />
+                        <Setter
+                            Property="Padding"
+                            Value="0" />
+                        <Setter
+                            Property="Margin"
+                            Value="4"/>
+                    </Style>
+
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:FolderPath">
+                        <elements:Folder/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--<elements:Folder/>
+            <elements:Folder/>
+            <elements:Folder/>-->
         </StackPanel>
+
+        <Grid
+            x:Name="DragGrid"
+            Visibility="Collapsed"
+            Background="{ThemeResource DragBackground}">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" >Upuść pliki</TextBlock>
+        </Grid>
 
         <Grid
             Visibility="Collapsed"

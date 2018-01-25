@@ -33,6 +33,18 @@
                 TintOpacity="0.8"
                 FallbackColor="#FF363636"/>
 
+            <AcrylicBrush x:Key="MyAcrylicLightBrush"
+                BackgroundSource="HostBackdrop"
+                TintColor="#FFffffff"
+                TintOpacity="0.7"
+                FallbackColor="#FFffffff"/>
+
+            <AcrylicBrush x:Key="DragBackground"
+                BackgroundSource="Backdrop"
+                TintColor="#FF000000"
+                TintOpacity="0.3"
+                FallbackColor="#FF000000"/>
+
             <AcrylicBrush x:Key="MyInAppAcrylicBrush"
                 BackgroundSource="Backdrop"
                 TintColor="#FFffffff"
@@ -41,6 +53,8 @@
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="HighContrast">
+            <SolidColorBrush x:Key="DragBackground" Color="Black" Opacity="0.7"/>
+            
             <SolidColorBrush x:Key="SystemControlPageBackgroundBaseMediumBrush" Color="#9939b54a" />
             <SolidColorBrush x:Key="SystemBaseMediumColor " Color="#9939b54a" />
             <SolidColorBrush x:Key="ContentDialogDimmingThemeBrush " Color="#9939b54a" />
@@ -70,6 +84,7 @@
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="Light">
+
             <SolidColorBrush x:Key="SystemControlPageBackgroundBaseMediumBrush" Color="#9939b54a" />
             <SolidColorBrush x:Key="SystemBaseMediumColor " Color="#9939b54a" />
             <SolidColorBrush x:Key="ContentDialogDimmingThemeBrush " Color="#9939b54a" />
@@ -99,6 +114,18 @@
                 TintOpacity="0.8"
                 FallbackColor="#FF363636"/>
 
+            <AcrylicBrush x:Key="MyAcrylicLightBrush"
+                BackgroundSource="HostBackdrop"
+                TintColor="#FFffffff"
+                TintOpacity="0.7"
+                FallbackColor="#FFffffff"/>
+
+            <AcrylicBrush x:Key="DragBackground"
+                BackgroundSource="Backdrop"
+                TintColor="#FF000000"
+                TintOpacity="0.3"
+                FallbackColor="#FF000000"/>
+            
             <AcrylicBrush x:Key="MyInAppAcrylicBrush"
                 BackgroundSource="Backdrop"
                 TintColor="#FFffffff"
