@@ -19,7 +19,6 @@ namespace Testownik.Model {
         public int NumberOfRemainingQuestions { get; private set; } = 0;
         public long Time { get; private set; } = 0;
         public string TimeString { get; private set; } = "00:00:00";
-        private long startTime;
         private DispatcherTimer timer;
 
         public TestController(IDictionary<string, IQuestion> questions, string folderToken = "", IDictionary<string, int> previousState = null) {
@@ -28,23 +27,32 @@ namespace Testownik.Model {
             NumberOfQuestions = questions.Count;
             NumberOfRemainingQuestions = NumberOfQuestions - NumberOfLearnedQuestions;
             Reoccurrences = previousState ?? questions.ToDictionary(node => node.Key, node => SettingsHelper.ReoccurrencesOnStart);
+            PrepareTimer();
+        }
 
-            startTime = DateTime.Now.Ticks;
+        public void PrepareTimer() {
             timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             timer.Tick += (s, e) => { RefreshTimer(); };
-            timer.Start ();
+        }
+
+        public void Start() {
+            timer.Start();
         }
 
         private void RefreshTimer() {
-            Time = DateTime.Now.Ticks - startTime;
+            Time += TimeSpan.FromSeconds(1).Ticks;
+            TimeString = StringFromTime(Time);
+            RaisePropertyChanged(nameof(Time));
+            RaisePropertyChanged(nameof(TimeString));
+        }
+
+        private string StringFromTime(long ticks) {
             TimeSpan t = TimeSpan.FromTicks(Time);
-            TimeString = string.Format("{0:D2}:{1:D2}:{2:D2}",
+            return string.Format("{0:D2}:{1:D2}:{2:D2}",
                 t.Hours,
                 t.Minutes,
                 t.Seconds,
                 t.Milliseconds);
-            RaisePropertyChanged(nameof(Time));
-            RaisePropertyChanged(nameof(TimeString));
         }
 
         public TestController(string path) {
@@ -89,7 +97,7 @@ namespace Testownik.Model {
             : 0;
 
         public KeyValuePair<string, IQuestion> RandQuestion() {
-            var remainingQuestions = Questions.Where(q => Reoccurrences[q.Key] != 0);
+            var remainingQuestions = Questions.Where(q => ReoccurrencesOfQuestion(q.Key) != 0);
             if (!remainingQuestions.Any())
                 return new KeyValuePair<string, IQuestion>(string.Empty, new Question());
             return remainingQuestions.ElementAt(random.Next(remainingQuestions.Count()));
@@ -132,6 +140,38 @@ namespace Testownik.Model {
                 },
             };
             return new TestController (questions);
+        }
+
+        public JsonTestController ToJson() {
+            var test = new JsonTestController {
+                Reoccurrences = Reoccurrences,
+                NumberOfQuestions = NumberOfQuestions,
+                NumberOfAnswers = NumberOfAnswers,
+                NumberOfCorrectAnswers = NumberOfCorrectAnswers,
+                NumberOfBadAnswers = NumberOfBadAnswers,
+                NumberOfLearnedQuestions = NumberOfLearnedQuestions,
+                NumberOfRemainingQuestions = NumberOfRemainingQuestions,
+                Time = Time
+            };
+            return test;
+        }
+
+        public static TestController FromJson(JsonTestController jsonTestController, IDictionary<string, IQuestion> questions, string token) {
+            //TODO should recalculate integers instead of get from json
+            var test = new TestController {
+                FolderToken = token,
+                Questions = questions,
+                Reoccurrences = jsonTestController.Reoccurrences, //TODO only reoccurrences where key is in questions
+                NumberOfQuestions = jsonTestController.NumberOfQuestions,
+                NumberOfAnswers = jsonTestController.NumberOfAnswers,
+                NumberOfCorrectAnswers = jsonTestController.NumberOfCorrectAnswers,
+                NumberOfBadAnswers = jsonTestController.NumberOfBadAnswers,
+                NumberOfLearnedQuestions = jsonTestController.NumberOfLearnedQuestions,
+                NumberOfRemainingQuestions = jsonTestController.NumberOfRemainingQuestions,
+                Time = jsonTestController.Time
+            };
+            test.PrepareTimer();
+            return test;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

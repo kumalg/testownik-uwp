@@ -130,7 +130,9 @@ namespace Testownik {
             var previousState = await SavedStatesHelper.GetSavedStateOfTest(token);
             HideLoadingView();
 
-            var testController = new TestController(questions, token, previousState);
+            var testController =  previousState != null
+                ? TestController.FromJson(previousState, questions, token) 
+                : new TestController(questions, token);
             Frame.Navigate(typeof(MainPage), testController);
         }
 

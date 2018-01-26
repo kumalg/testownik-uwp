@@ -121,6 +121,7 @@
     <Compile Include="Model\Helpers\SavedStatesHelper.cs" />
     <Compile Include="Model\IAnswer.cs" />
     <Compile Include="Model\IQuestion.cs" />
+    <Compile Include="Model\JsonTestController.cs" />
     <Compile Include="Model\MultiQuestion.cs" />
     <Compile Include="Model\Question.cs" />
     <Compile Include="Model\QuestionsReader.cs" />

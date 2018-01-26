@@ -72,6 +72,7 @@ namespace Testownik {
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             if (e.Parameter is TestController) {
                 TestController = (TestController)e.Parameter;
+                TestController.Start();
                 NextQuestion();
             }
 
