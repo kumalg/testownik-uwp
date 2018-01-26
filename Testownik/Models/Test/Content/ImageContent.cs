@@ -24,7 +24,7 @@ namespace Testownik.Models {
         private Image image;
         private BitmapImage bitmapImage;
         private async void SetNewBitmapImage() {
-            if (bitmapImage != null)
+            if (bitmapImage != null || File == null)
                 return;
 
             bitmapImage = new BitmapImage();
