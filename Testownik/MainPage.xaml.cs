@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Testownik.Dialogs;
 using Testownik.Model;
 using Testownik.Model.Helpers;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -14,7 +16,7 @@ using Windows.UI.Xaml.Navigation;
 namespace Testownik {
     public sealed partial class MainPage : Page, INotifyPropertyChanged {
         public string appName = AppIdentity.AppName;
-
+        
         public List<AnswerBlock> answers;
         public List<AnswerBlock> Answers {
             get => answers;
@@ -51,8 +53,20 @@ namespace Testownik {
             }
         }
 
-        public MainPage () {
-            this.InitializeComponent ();
+        public MainPage() {
+            this.InitializeComponent();
+        }
+
+        protected override async void OnNavigatedFrom(NavigationEventArgs e) {
+            var dialog = new ContentDialog {
+                Title = "Czy chcesz zapisać aktualny stan?",
+                PrimaryButtonText = "Tak",
+                SecondaryButtonText = "Nie"
+            };
+            var result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+                SavedStatesHelper.SaveActualState(TestController);
+            base.OnNavigatedFrom(e);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
@@ -127,12 +141,6 @@ namespace Testownik {
             ShowAcceptAnswerButton();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string propertyName) {
-            var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private async void SettingsButton_Click(object sender, RoutedEventArgs e) {
             var dialog = new SettingsDialog();
             await dialog.ShowAsync();
@@ -156,6 +164,13 @@ namespace Testownik {
                 else if (ButtonNextQuestion.Visibility == Visibility.Visible)
                     ButtonNextQuestion_Click(ButtonNextQuestion, null);
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void RaisePropertyChanged(string propertyName)
+        {
+            var handler = PropertyChanged;
+            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

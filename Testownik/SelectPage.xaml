@@ -8,6 +8,7 @@
     xmlns:elements="using:Testownik.Elements"
     xmlns:model="using:Testownik.Model"
     NavigationCacheMode="Enabled"
+    AllowDrop="True"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"  
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     mc:Ignorable="d">
@@ -23,11 +24,7 @@
     </Page.Transitions>
 
     <Grid
-        Background="{ThemeResource MyAcrylicLightBrush}"
-        DragOver="Grid_DragOver"
-        DragLeave="Grid_DragLeave"
-        AllowDrop="True"
-        Drop="Button_Drop">
+        Background="{ThemeResource MyAcrylicLightBrush}">
 
         <StackPanel
             VerticalAlignment="Center"
@@ -45,7 +42,7 @@
                 Margin="16 0"
                 HorizontalAlignment="Right">
                 <Button
-                    Click="Button_Click"
+                    Click="FolderPickerButton_Click"
                     RequestedTheme="Dark"
                     Margin="4 16"
                     Style="{ThemeResource FolderButton}"
@@ -78,7 +75,7 @@
                 Padding="16 8 16 24"
                 HorizontalAlignment="Center"
                 SelectionMode="None"
-                ItemClick="ListView_ItemClick"
+                ItemClick="RecentFolder_Click"
                 IsItemClickEnabled="True"
                 ItemsSource="{x:Bind FolderPaths, Mode=OneWay}">
 

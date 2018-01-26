@@ -7,20 +7,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Testownik.Dialogs;
 using Testownik.Model;
-using Windows.ApplicationModel.Core;
+using Testownik.Model.Helpers;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.System;
-using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace Testownik {
     public sealed partial class SelectPage : Page, INotifyPropertyChanged {
-        public ObservableCollection<FolderPath> folderPaths = new ObservableCollection<FolderPath>();
+        public ObservableCollection<FolderPath> folderPaths = new ObservableCollection<FolderPath>(MostRecentlyUsedListHelper.AsFolderPathIEnumerable());
         public ObservableCollection<FolderPath> FolderPaths {
             get => folderPaths;
             set {
@@ -28,98 +26,41 @@ namespace Testownik {
                 RaisePropertyChanged(nameof(FolderPaths));
             }
         }
-        
-        protected override void OnNavigatedTo(NavigationEventArgs e) {
-            if (Frame.CanGoBack) {
-                // Show UI in title bar if opted-in and in-app backstack is not empty.
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                    AppViewBackButtonVisibility.Visible;
-            } else {
-                // Remove the UI from the title bar if in-app back stack is empty.
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                    AppViewBackButtonVisibility.Collapsed;
-            }
-
-            base.OnNavigatedTo(e);
-        }
 
         public SelectPage() {
-            this.InitializeComponent();
+            InitializeComponent();
             SettingsHelper.SetSettings();
-            ReadFolderPathsFromJsonFile();
             Window.Current.Dispatcher.AcceleratorKeyActivated += (d, e) => {
                 if (e.VirtualKey != VirtualKey.T || Frame.CurrentSourcePageType == typeof(MainPage))
                     return;
 
                 var testController = TestController.GenerateRand();
-                this.Frame.Navigate(typeof(MainPage), testController);
+                Frame.Navigate(typeof(MainPage), testController);
             };
         }
-
-        private void ReadFolderPathsFromJsonFile() {
-            var mru = Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList;
-            FolderPaths = new ObservableCollection<FolderPath>(mru.Entries.Select(i => new FolderPath { Path = i.Metadata, Token = i.Token }));
+        
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                AppViewBackButtonVisibility.Collapsed;
+            base.OnNavigatedTo(e);
         }
 
-        private static async Task<string> DeserializeFileAsync(string fileName) {
-            StorageFile localFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
-            return await FileIO.ReadTextAsync(localFile);
-        }
 
-        private async void SelectFolder(StorageFolder folder = null) {
-            if (folder == null)
-                folder = await QuestionsReader.ShowFolderPicker();
-            if (folder == null)
-                return;
+        // Drag&Drop Section
 
-            ShowLoadingView();
-            var files = await QuestionsReader.ReadFiles(folder);
-            var questions = await QuestionsReader.ReadQuestions(files);
-            if (questions == null || !questions.Any()) {
-                HideLoadingView();
-                var dialog = new ContentDialog() {
-                    Title = "Brak pytań w bazie",
-                    PrimaryButtonText = "Zamknij"
-                };
-                await dialog.ShowAsync();
-                return;
-            }
-
-            UpdateMRU(folder);
-            HideLoadingView();
-
-            var testController = new TestController(questions);
-            Frame.Navigate(typeof(MainPage), testController);
-        }
-
-        private void UpdateMRU(IStorageItem folder) {
-            var mru = Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList;
-            var folderPathItem = new FolderPath {
-                Path = folder.Path,
-                Token = mru.Add(folder, folder.Path)
-            };
-
-            var toRemove = FolderPaths.FirstOrDefault(i => i.Path == folderPathItem.Path);
-            FolderPaths.Remove(toRemove);
-            FolderPaths.Insert(0, folderPathItem);
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e) => SelectFolder();
-
-        private async void Button_Drop(object sender, DragEventArgs e) {
-            HideDragItemView();
+        protected override async void OnDrop(DragEventArgs e) {
+            HideDragView();
 
             if (e.DataView.Contains(StandardDataFormats.StorageItems)) {
                 ShowLoadingView();
 
                 var storageItems = await e.DataView.GetStorageItemsAsync();
-                IReadOnlyCollection<StorageFile> prepared;
                 IDictionary<string, IQuestion> questions;
 
                 var folder = storageItems.FirstOrDefault(i => i is IStorageFolder);
                 if (folder != null) {
-                    prepared = await ((StorageFolder)folder).GetFilesAsync();
-                    questions = await QuestionsReader.ReadQuestions(prepared);
+                    var files = await ((StorageFolder)folder).GetFilesAsync();
+                    questions = await QuestionsReader.ReadQuestions(files);
                 } else {
                     questions = await QuestionsReader.ReadQuestions(storageItems.Where(i => i is IStorageFile).Cast<StorageFile>().ToList());
                 }
@@ -127,82 +68,34 @@ namespace Testownik {
                 HideLoadingView();
 
                 if (questions == null || !questions.Any()) {
-                    var dialog = new ContentDialog() {
-                        Title = "Brak pytań w bazie",
-                        PrimaryButtonText = "Zamknij"
-                    };
-                    await dialog.ShowAsync();
+                    DialogsHelper.ShowBasicMessageDialog("Brak pytań w bazie");
                     return;
                 }
 
+                string token = string.Empty;
                 if (folder != null)
-                    UpdateMRU(folder);
+                    token = UpdateRecentlyUsedFoldersList(folder);
 
-                var testController = new TestController(questions);
-                this.Frame.Navigate(typeof(MainPage), testController);
+                var testController = new TestController(questions, token);
+                Frame.Navigate(typeof(MainPage), testController);
             }
         }
 
-        private void Grid_DragOver(object sender, DragEventArgs e) {
+        protected override void OnDragOver(DragEventArgs e) {
             e.AcceptedOperation = DataPackageOperation.Copy;
-            ShowDragItemView();
+            ShowDragView();
         }
 
-        private void Grid_DragLeave(object sender, DragEventArgs e) {
-            HideDragItemView();
+        protected override void OnDragLeave(DragEventArgs e) {
+            HideDragView();
         }
 
-        private async void HideLoadingView()
-        {
-            LoadingInfo
-                .Fade(value: 0f, duration: 500, delay: 0)
-                .StartAsync();
-            await LoadingBlurGrid
-                .Blur(value: 0, duration: 500, delay: 0)
-                .StartAsync();
-            LoadingGrid.Visibility = Visibility.Collapsed;
-            ProgressRing.IsActive = false;
-        }
+        // End of Drag&Drop Section
 
-        private void ShowLoadingView()
-        {
-            LoadingGrid.Visibility = Visibility.Visible;
-            LoadingInfo
-                .Fade(value: 1f, duration: 500, delay: 0)
-                .StartAsync();
-            LoadingBlurGrid
-                .Blur(value: 10, duration: 500, delay: 0)
-                .StartAsync();
-            ProgressRing.IsActive = true;
-        }
 
-        private async void HideDragItemView() {
-            DragInfo
-                .Fade(value: 0f, duration: 500, delay: 0)
-                .StartAsync();
-            await DragBlurGrid
-                .Blur(value: 0, duration: 500, delay: 0)
-                .StartAsync();
-            DragGrid.Visibility = Visibility.Collapsed;
-        }
+        private void FolderPickerButton_Click(object sender, RoutedEventArgs e) => SelectFolder();
 
-        private void ShowDragItemView() {
-            DragGrid.Visibility = Visibility.Visible;
-            DragInfo
-                .Fade(value: 1f, duration: 500, delay: 0)
-                .StartAsync();
-            DragBlurGrid
-                .Blur(value: 10, duration: 500, delay: 0)
-                .StartAsync();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string propertyName) {
-            var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private async void ListView_ItemClick(object sender, ItemClickEventArgs e) {
+        private async void RecentFolder_Click(object sender, ItemClickEventArgs e) {
             if (!(e.ClickedItem is FolderPath))
                 return;
 
@@ -217,6 +110,83 @@ namespace Testownik {
         private async void SettingsButton_Click(object sender, RoutedEventArgs e) {
             var dialog = new SettingsDialog();
             await dialog.ShowAsync();
+        }
+
+        private async void SelectFolder(StorageFolder folder = null) {
+            folder = folder ?? await QuestionsReader.ShowFolderPicker();
+            if (folder == null)
+                return;
+
+            ShowLoadingView();
+            var files = await QuestionsReader.ReadFiles(folder);
+            var questions = await QuestionsReader.ReadQuestions(files);
+            if (questions == null || !questions.Any()) {
+                HideLoadingView();
+                DialogsHelper.ShowBasicMessageDialog("Brak pytań w bazie");
+                return;
+            }
+
+            var token = UpdateRecentlyUsedFoldersList(folder);
+            var previousState = await SavedStatesHelper.GetSavedStateOfTest(token);
+            HideLoadingView();
+
+            var testController = new TestController(questions, token, previousState);
+            Frame.Navigate(typeof(MainPage), testController);
+        }
+
+        private string UpdateRecentlyUsedFoldersList(IStorageItem folder) {
+            var folderPath = MostRecentlyUsedListHelper.Add(folder);
+
+            var toRemove = FolderPaths.FirstOrDefault(i => i.Path == folderPath.Path);
+            FolderPaths.Remove(toRemove);
+            FolderPaths.Insert(0, folderPath);
+
+            return folderPath.Token;
+        }
+        
+
+        // Overlay Views Section     
+
+        private async void HideLoadingView() {
+            await HideView(LoadingGrid, LoadingInfo, LoadingBlurGrid);
+            ProgressRing.IsActive = false;
+        }
+
+        private async void ShowLoadingView() {
+            ProgressRing.IsActive = true;
+            await ShowView(LoadingGrid, LoadingInfo, LoadingBlurGrid);
+        }
+
+        private async void HideDragView() => await HideView(DragGrid, DragInfo, DragBlurGrid);
+        private async void ShowDragView() => await ShowView(DragGrid, DragInfo, DragBlurGrid);
+
+        private async Task HideView(Grid view, Grid info, Grid blur) {
+            info
+                .Fade(value: 0f, duration: 500, delay: 0)
+                .StartAsync();
+            await blur
+                .Blur(value: 0, duration: 500, delay: 0)
+                .StartAsync();
+            view.Visibility = Visibility.Collapsed;
+        }
+
+        private async Task ShowView(Grid view, Grid info, Grid blur) {
+            view.Visibility = Visibility.Visible;
+            info
+                .Fade(value: 1f, duration: 500, delay: 0)
+                .StartAsync();
+            await blur
+                .Blur(value: 10, duration: 500, delay: 0)
+                .StartAsync();
+        }
+
+        // End of Overlay Views Section     
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void RaisePropertyChanged(string propertyName) {
+            var handler = PropertyChanged;
+            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

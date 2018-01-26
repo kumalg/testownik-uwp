@@ -10,6 +10,7 @@ namespace Testownik.Model {
         public IDictionary<string, IQuestion> Questions { get; set; }
         public IDictionary<string, int> Reoccurrences { get; set; }
 
+        public string FolderToken { get; private set; } = "";
         public int NumberOfQuestions { get; private set; } = 0;
         public int NumberOfAnswers { get; private set; } = 0;
         public int NumberOfCorrectAnswers { get; private set; } = 0;
@@ -21,11 +22,12 @@ namespace Testownik.Model {
         private long startTime;
         private DispatcherTimer timer;
 
-        public TestController(IDictionary<string, IQuestion> questions) {
+        public TestController(IDictionary<string, IQuestion> questions, string folderToken = "", IDictionary<string, int> previousState = null) {
+            FolderToken = folderToken;
             Questions = questions;
             NumberOfQuestions = questions.Count;
             NumberOfRemainingQuestions = NumberOfQuestions - NumberOfLearnedQuestions;
-            Reoccurrences = questions.ToDictionary(node => node.Key, node => SettingsHelper.ReoccurrencesOnStart);
+            Reoccurrences = previousState ?? questions.ToDictionary(node => node.Key, node => SettingsHelper.ReoccurrencesOnStart);
 
             startTime = DateTime.Now.Ticks;
             timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };

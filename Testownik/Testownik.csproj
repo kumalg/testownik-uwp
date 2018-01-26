@@ -116,6 +116,9 @@
     <Compile Include="Model\AnswerBlock.cs" />
     <Compile Include="Model\FolderPath.cs" />
     <Compile Include="Model\Helpers\AppIdentity.cs" />
+    <Compile Include="Model\Helpers\DialogsHelper.cs" />
+    <Compile Include="Model\Helpers\MostRecentlyUsedListHelper.cs" />
+    <Compile Include="Model\Helpers\SavedStatesHelper.cs" />
     <Compile Include="Model\IAnswer.cs" />
     <Compile Include="Model\IQuestion.cs" />
     <Compile Include="Model\MultiQuestion.cs" />
