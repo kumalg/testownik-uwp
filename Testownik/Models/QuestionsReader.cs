@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Testownik.Models;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
@@ -107,30 +108,39 @@ namespace Testownik.Model {
             };
         }
 
-        private static async Task<object> ParseContent(string content, IReadOnlyCollection<StorageFile> allFiles) {
+        private static async Task<IContent> ParseContent(string content, IReadOnlyCollection<StorageFile> allFiles) {
             if (content.StartsWith("[img]")) {
-                var image = new Image ();
-
                 var name = content.ToLower();
                 var startIndex = name.IndexOf("[img]") + "[img]".Length;
                 var endIndex = name.IndexOf("[/img]");
                 name = name.Substring(startIndex, endIndex - startIndex);
 
                 StorageFile file = allFiles.FirstOrDefault(i => i.Name.ToLower() == name);
-                if (file == null)
-                    return image;
-                var bitmap = new BitmapImage();
-                bitmap.SetSource(await file.OpenAsync(FileAccessMode.Read));
-                image.Source = bitmap;
-                image.Stretch = Windows.UI.Xaml.Media.Stretch.None;
+                return new ImageContent(file);
 
-                return image;
+                //var image = new Image ();
+
+                //var name = content.ToLower();
+                //var startIndex = name.IndexOf("[img]") + "[img]".Length;
+                //var endIndex = name.IndexOf("[/img]");
+                //name = name.Substring(startIndex, endIndex - startIndex);
+
+                //StorageFile file = allFiles.FirstOrDefault(i => i.Name.ToLower() == name);
+                //if (file == null)
+                //    return image;
+                //var bitmap = new BitmapImage();
+                //bitmap.SetSource(await file.OpenAsync(FileAccessMode.Read));
+                //image.Source = bitmap;
+                //image.Stretch = Windows.UI.Xaml.Media.Stretch.None;
+
+                //return image;
             } else {
-                return new TextBlock {
-                    Text = content,
-                        TextAlignment = Windows.UI.Xaml.TextAlignment.Center,
-                        TextWrapping = Windows.UI.Xaml.TextWrapping.WrapWholeWords
-                };
+                return new TextContent(content);
+                //return new TextBlock {
+                //    Text = content,
+                //        TextAlignment = Windows.UI.Xaml.TextAlignment.Center,
+                //        TextWrapping = Windows.UI.Xaml.TextWrapping.WrapWholeWords
+                //};
             }
         }
     }

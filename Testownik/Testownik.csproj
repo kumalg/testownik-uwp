@@ -112,25 +112,29 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Answer.cs" />
-    <Compile Include="Model\AnswerBlock.cs" />
-    <Compile Include="Model\FolderPath.cs" />
-    <Compile Include="Model\Helpers\AppIdentity.cs" />
-    <Compile Include="Model\Helpers\DialogsHelper.cs" />
-    <Compile Include="Model\Helpers\MostRecentlyUsedListHelper.cs" />
-    <Compile Include="Model\Helpers\SavedStatesHelper.cs" />
-    <Compile Include="Model\IAnswer.cs" />
-    <Compile Include="Model\IQuestion.cs" />
-    <Compile Include="Model\JsonTestController.cs" />
-    <Compile Include="Model\MultiQuestion.cs" />
-    <Compile Include="Model\Question.cs" />
-    <Compile Include="Model\QuestionsReader.cs" />
-    <Compile Include="Model\Helpers\SettingsHelper.cs" />
-    <Compile Include="Model\TestController.cs" />
+    <Compile Include="Models\Test\Answer\Answer.cs" />
+    <Compile Include="Models\AnswerBlock.cs" />
+    <Compile Include="Models\FolderPath.cs" />
+    <Compile Include="Models\Helpers\AppIdentity.cs" />
+    <Compile Include="Models\Helpers\DialogsHelper.cs" />
+    <Compile Include="Models\Helpers\MostRecentlyUsedListHelper.cs" />
+    <Compile Include="Models\Helpers\SavedStatesHelper.cs" />
+    <Compile Include="Models\Test\Answer\IAnswer.cs" />
+    <Compile Include="Models\Test\Content\IContent.cs" />
+    <Compile Include="Models\Test\Content\ImageContent.cs" />
+    <Compile Include="Models\Test\Question\IQuestion.cs" />
+    <Compile Include="Models\JsonTestController.cs" />
+    <Compile Include="Models\Test\Question\MultiQuestion.cs" />
+    <Compile Include="Models\Test\Question\Question.cs" />
+    <Compile Include="Models\QuestionsReader.cs" />
+    <Compile Include="Models\Helpers\SettingsHelper.cs" />
+    <Compile Include="Models\Test\TestController.cs" />
+    <Compile Include="Models\Test\Content\TextContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelectPage.xaml.cs">
       <DependentUpon>SelectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\PlatformApiService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -179,11 +183,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Styles\Fall\Brushes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\Lists.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Styles.xaml">
+    <Page Include="Styles\Custom.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

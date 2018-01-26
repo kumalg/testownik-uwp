@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Testownik.Models;
 using Windows.UI.Xaml;
 
 namespace Testownik.Model {
@@ -108,32 +109,32 @@ namespace Testownik.Model {
                 {
                     "001.txt",
                     new Question {
-                        Content = "First question",
+                        Content = new TextContent("First question"),
                         Answers = new List<IAnswer> () {
-                            new Answer { Content = "First answer", Key = 1 },
-                            new Answer { Content = "Second answer (Correct)", Key = 2 }
+                            new Answer { Content = new TextContent("First answer"), Key = 1 },
+                            new Answer { Content = new TextContent("Second answer (Correct)"), Key = 2 }
                         },
                         CorrectAnswerKeys = new [] { 2 }.ToList ()
                     }
                 }, {
                     "002.txt",
                     new Question {
-                        Content = "Second question",
+                        Content = new TextContent("Second question"),
                         Answers = new List<IAnswer> () {
-                            new Answer { Content = "First answer", Key = 1 },
-                            new Answer { Content = "Second answer", Key = 2 },
-                            new Answer { Content = "Third answer (Correct)", Key = 3 }
+                            new Answer { Content = new TextContent("First answer"), Key = 1 },
+                            new Answer { Content = new TextContent( "Second answer"), Key = 2 },
+                            new Answer { Content = new TextContent("Third answer (Correct)"), Key = 3 }
                         },
                         CorrectAnswerKeys = new [] { 3 }.ToList ()
                     }
                 }, {
                     "003.txt",
                     new Question {
-                        Content = "Third question",
+                        Content = new TextContent("Third question"),
                         Answers = new List<IAnswer> () {
-                            new Answer { Content = "First answer (Correct)", Key = 1 },
-                            new Answer { Content = "Second answer", Key = 2 },
-                            new Answer { Content = "Third answer", Key = 3 }
+                            new Answer { Content = new TextContent("First answer (Correct)"), Key = 1 },
+                            new Answer { Content = new TextContent("Second answer"), Key = 2 },
+                            new Answer { Content = new TextContent("Third answer"), Key = 3 }
                         },
                         CorrectAnswerKeys = new [] { 1 }.ToList ()
                     }

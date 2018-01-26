@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
+using Testownik.Services;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -21,7 +22,6 @@ namespace Testownik {
         /// </summary>
         public App() {
             this.InitializeComponent();
-            this.Suspending += OnSuspending;
             AppCenter.Start("07b9dcb3-38f6-4413-9587-961e01b296df", typeof(Analytics));
         }
 
@@ -69,6 +69,7 @@ namespace Testownik {
         /// </summary>
         /// <param name="e">Szczegóły dotyczące żądania uruchomienia i procesu.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e) {
+            SetupStyles();
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Nie powtarzaj inicjowania aplikacji, gdy w oknie znajduje się już zawartość,
@@ -101,6 +102,19 @@ namespace Testownik {
                 // Extend acrylic
                 ExtendAcrylicIntoTitleBar();
             }
+        }
+        
+        private void SetupStyles() {
+            var prefix = PlatformApiService.IsAcrylicBrushAvailable ? "Fall/" : string.Empty;
+            var brushUri = new Uri($"ms-appx:///Styles/{prefix}Brushes.xaml", UriKind.Absolute);
+            var textsUri = new Uri($"ms-appx:///Styles/Texts.xaml", UriKind.Absolute);
+            var listsUri = new Uri($"ms-appx:///Styles/Lists.xaml", UriKind.Absolute);
+            var customUri = new Uri($"ms-appx:///Styles/Custom.xaml", UriKind.Absolute);
+
+            Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = brushUri });
+            Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = textsUri });
+            Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = listsUri });
+            Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = customUri });
         }
 
         /// <summary>

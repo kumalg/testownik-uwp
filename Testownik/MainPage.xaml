@@ -82,7 +82,7 @@
                             HorizontalAlignment="Center"
                             HorizontalContentAlignment="Center"
                             Foreground="{ThemeResource TextColor}"
-                            Content="{x:Bind TextQuestion.Value.Content, Mode=OneWay}"
+                            Content="{x:Bind TextQuestion.Value.Content.Value, Mode=OneWay}"
                             TextWrapping="WrapWholeWords"
                             AutomationProperties.AccessibilityView="Raw"/>
                         <!--<TextBlock

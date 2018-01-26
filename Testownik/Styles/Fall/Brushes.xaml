@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Testownik.Styles">
 
     <ResourceDictionary.ThemeDictionaries>
@@ -31,9 +31,9 @@
             <SolidColorBrush x:Key="AppButtonPressed" Color="#ffffff" Opacity="0.2"/>
             <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
 
-            <SolidColorBrush x:Key="MyAcrylicBrush" Color="#FF363636" />
-            <SolidColorBrush x:Key="MyAcrylicLightBrush" Color="#FFebebeb" />
-            <SolidColorBrush x:Key="MyInAppAcrylicBrush" Color="#FFffffff" />
+            <AcrylicBrush x:Key="MyAcrylicBrush" BackgroundSource="HostBackdrop" TintColor="#FF363636" TintOpacity="0.8" FallbackColor="#FF363636"/>
+            <AcrylicBrush x:Key="MyAcrylicLightBrush" BackgroundSource="HostBackdrop" TintColor="#FFebebeb" TintOpacity="0.8" FallbackColor="#FFebebeb"/>
+            <AcrylicBrush x:Key="MyInAppAcrylicBrush" BackgroundSource="Backdrop" TintColor="#FFffffff" TintOpacity="0.6" FallbackColor="#FFffffff"/>
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="HighContrast">
@@ -92,9 +92,9 @@
             <SolidColorBrush x:Key="AppButtonPressed" Color="#ffffff" Opacity="0.2"/>
             <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
 
-            <SolidColorBrush x:Key="MyAcrylicBrush" Color="#FF363636" />
-            <SolidColorBrush x:Key="MyAcrylicLightBrush" Color="#FFebebeb" />
-            <SolidColorBrush x:Key="MyInAppAcrylicBrush" Color="#FFffffff" />
+            <AcrylicBrush x:Key="MyAcrylicBrush" BackgroundSource="HostBackdrop" TintColor="#FF363636" TintOpacity="0.8" FallbackColor="#FF363636"/>
+            <AcrylicBrush x:Key="MyAcrylicLightBrush" BackgroundSource="HostBackdrop" TintColor="#FFebebeb" TintOpacity="0.8" FallbackColor="#FFebebeb"/>
+            <AcrylicBrush x:Key="MyInAppAcrylicBrush" BackgroundSource="Backdrop" TintColor="#FFffffff" TintOpacity="0.6" FallbackColor="#FFffffff"/>
         </ResourceDictionary>
 
     </ResourceDictionary.ThemeDictionaries>

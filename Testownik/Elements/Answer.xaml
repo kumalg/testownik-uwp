@@ -25,7 +25,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Foreground="{ThemeResource TextColor}"
-                Content="{Binding Answer.Content, Mode=OneWay}"
+                Content="{Binding Answer.Content.Value, Mode=OneWay}"
                 TextWrapping="Wrap"
                 AutomationProperties.AccessibilityView="Raw"/>
             <!--</TextBlock>-->
