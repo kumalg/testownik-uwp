@@ -59,11 +59,11 @@ namespace Testownik {
 
                 var folder = storageItems.FirstOrDefault(i => i is IStorageFolder);
                 if (folder != null) {
-                    var files = await ((StorageFolder)folder).GetFilesAsync();
-                    questions = await QuestionsReader.ReadQuestions(files);
-                } else {
-                    questions = await QuestionsReader.ReadQuestions(storageItems.Where(i => i is IStorageFile).Cast<StorageFile>().ToList());
+                    SelectFolder((StorageFolder)folder);
+                    return;
                 }
+
+                questions = await QuestionsReader.ReadQuestions(storageItems.Where(i => i is IStorageFile).Cast<StorageFile>().ToList());
 
                 HideLoadingView();
 
@@ -72,11 +72,7 @@ namespace Testownik {
                     return;
                 }
 
-                string token = string.Empty;
-                if (folder != null)
-                    token = UpdateRecentlyUsedFoldersList(folder);
-
-                var testController = new TestController(questions, token);
+                var testController = new TestController(questions);
                 Frame.Navigate(typeof(MainPage), testController);
             }
         }
@@ -100,11 +96,9 @@ namespace Testownik {
                 return;
 
             var folderPath = e.ClickedItem as FolderPath;
-            var mru = Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList;
-            var folder = await mru.GetFolderAsync(folderPath.Token);
-            if (folder == null)
-                return;
-            SelectFolder(folder);
+            var folder = await MostRecentlyUsedListHelper.GetFolderAsync(folderPath.Token);
+            if (folder != null)
+                SelectFolder(folder);
         }
 
         private async void SettingsButton_Click(object sender, RoutedEventArgs e) {
@@ -163,23 +157,15 @@ namespace Testownik {
         private async void ShowDragView() => await ShowView(DragGrid, DragInfo, DragBlurGrid);
 
         private async Task HideView(Grid view, Grid info, Grid blur) {
-            info
-                .Fade(value: 0f, duration: 500, delay: 0)
-                .StartAsync();
-            await blur
-                .Blur(value: 0, duration: 500, delay: 0)
-                .StartAsync();
+            info.Fade(value: 0f, duration: 500, delay: 0).StartAsync();
+            await blur.Blur(value: 0, duration: 500, delay: 0).StartAsync();
             view.Visibility = Visibility.Collapsed;
         }
 
         private async Task ShowView(Grid view, Grid info, Grid blur) {
             view.Visibility = Visibility.Visible;
-            info
-                .Fade(value: 1f, duration: 500, delay: 0)
-                .StartAsync();
-            await blur
-                .Blur(value: 10, duration: 500, delay: 0)
-                .StartAsync();
+            info.Fade(value: 1f, duration: 500, delay: 0).StartAsync();
+            await blur.Blur(value: 10, duration: 500, delay: 0).StartAsync();
         }
 
         // End of Overlay Views Section     

@@ -1,12 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Testownik.Dialogs;
 using Testownik.Model;
 using Testownik.Model.Helpers;
-using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -54,18 +52,20 @@ namespace Testownik {
         }
 
         public MainPage() {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         protected override async void OnNavigatedFrom(NavigationEventArgs e) {
-            var dialog = new ContentDialog {
-                Title = "Czy chcesz zapisać aktualny stan?",
-                PrimaryButtonText = "Tak",
-                SecondaryButtonText = "Nie"
-            };
-            var result = await dialog.ShowAsync();
-            if (result == ContentDialogResult.Primary)
-                SavedStatesHelper.SaveActualState(TestController);
+            if (!string.IsNullOrEmpty(TestController.FolderToken)) {
+                var dialog = new ContentDialog {
+                    Title = "Czy chcesz zapisać aktualny stan?",
+                    PrimaryButtonText = "Tak",
+                    SecondaryButtonText = "Nie"
+                };
+                var result = await dialog.ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                    SavedStatesHelper.SaveActualState(TestController);
+            }
             base.OnNavigatedFrom(e);
         }
 
@@ -168,8 +168,7 @@ namespace Testownik {
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string propertyName)
-        {
+        private void RaisePropertyChanged(string propertyName) {
             var handler = PropertyChanged;
             handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
