@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Testownik.Models;
+using Testownik.Model;
 using Windows.UI.Xaml;
 
-namespace Testownik.Model {
+namespace Testownik.Models.Test {
     public class TestController : INotifyPropertyChanged {
+        private static TimeSpan timerInterval = TimeSpan.FromSeconds(1);
         private Random random = new Random();
+
         public IDictionary<string, IQuestion> Questions { get; set; }
         public IDictionary<string, int> Reoccurrences { get; set; }
 
@@ -32,7 +34,7 @@ namespace Testownik.Model {
         }
 
         public void PrepareTimer() {
-            timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            timer = new DispatcherTimer { Interval = timerInterval };
             timer.Tick += (s, e) => { RefreshTimer(); };
         }
 
@@ -41,7 +43,7 @@ namespace Testownik.Model {
         }
 
         private void RefreshTimer() {
-            Time += TimeSpan.FromSeconds(1).Ticks;
+            Time += timerInterval.Ticks;
             TimeString = StringFromTime(Time);
             RaisePropertyChanged(nameof(Time));
             RaisePropertyChanged(nameof(TimeString));

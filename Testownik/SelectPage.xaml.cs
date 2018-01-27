@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Testownik.Dialogs;
 using Testownik.Model;
 using Testownik.Model.Helpers;
+using Testownik.Models.Test;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.System;

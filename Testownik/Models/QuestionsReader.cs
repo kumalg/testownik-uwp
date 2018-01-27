@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Testownik.Models;
+using Testownik.Models.Test;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace Testownik.Model {
     class QuestionsReader {
@@ -87,28 +85,28 @@ namespace Testownik.Model {
                 .Where(tuple => tuple.Item1 == '1')
                 .Select(tuple => tuple.Item2).ToList();
 
-            var content = await ParseContent(lines.Skip(1).First(), allFiles);
+            var content = ParseContent(lines.Skip(1).First(), allFiles);
 
             var answers = lines
                 .Skip(2)
-                .Select(async (i, index) => await CreateAnswer(i, index, allFiles))
+                .Select((i, index) => CreateAnswer(i, index, allFiles))
                 .ToList();
 
             return new Question {
                 Content = content,
-                    Answers = await Task.WhenAll(answers),
+                    Answers = answers,
                     CorrectAnswerKeys = correctAnswerKeys
             };
         }
 
-        private static async Task<IAnswer> CreateAnswer(string content, int key, IReadOnlyCollection<StorageFile> allFiles) {
+        private static IAnswer CreateAnswer(string content, int key, IReadOnlyCollection<StorageFile> allFiles) {
             return new Answer {
                 Key = key,
-                    Content = await ParseContent(content, allFiles)
+                Content = ParseContent(content, allFiles)
             };
         }
 
-        private static async Task<IContent> ParseContent(string content, IReadOnlyCollection<StorageFile> allFiles) {
+        private static IContent ParseContent(string content, IReadOnlyCollection<StorageFile> allFiles) {
             if (content.StartsWith("[img]")) {
                 var name = content.ToLower();
                 var startIndex = name.IndexOf("[img]") + "[img]".Length;
@@ -117,30 +115,9 @@ namespace Testownik.Model {
 
                 StorageFile file = allFiles.FirstOrDefault(i => i.Name.ToLower() == name);
                 return new ImageContent(file);
-
-                //var image = new Image ();
-
-                //var name = content.ToLower();
-                //var startIndex = name.IndexOf("[img]") + "[img]".Length;
-                //var endIndex = name.IndexOf("[/img]");
-                //name = name.Substring(startIndex, endIndex - startIndex);
-
-                //StorageFile file = allFiles.FirstOrDefault(i => i.Name.ToLower() == name);
-                //if (file == null)
-                //    return image;
-                //var bitmap = new BitmapImage();
-                //bitmap.SetSource(await file.OpenAsync(FileAccessMode.Read));
-                //image.Source = bitmap;
-                //image.Stretch = Windows.UI.Xaml.Media.Stretch.None;
-
-                //return image;
-            } else {
+            }
+            else {
                 return new TextContent(content);
-                //return new TextBlock {
-                //    Text = content,
-                //        TextAlignment = Windows.UI.Xaml.TextAlignment.Center,
-                //        TextWrapping = Windows.UI.Xaml.TextWrapping.WrapWholeWords
-                //};
             }
         }
     }

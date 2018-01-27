@@ -5,6 +5,7 @@ using System.Linq;
 using Testownik.Dialogs;
 using Testownik.Model;
 using Testownik.Model.Helpers;
+using Testownik.Models.Test;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -133,10 +134,11 @@ namespace Testownik {
                 return;
 
             TextQuestion = TestController.RandQuestion();
-            Answers = TextQuestion.Value.Answers
-                .Select(i => new AnswerBlock { Answer = i })
-                .OrderBy (a => Guid.NewGuid ())
-                .ToList();
+            if (TextQuestion.Value is Question)
+                Answers = (TextQuestion.Value as Question).Answers
+                    .Select(i => new AnswerBlock { Answer = i })
+                    .OrderBy(a => Guid.NewGuid())
+                    .ToList();
 
             ReoccurrencesOfQuestion = TestController.ReoccurrencesOfQuestion(TextQuestion.Key);
             ShowAcceptAnswerButton();

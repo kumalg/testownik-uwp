@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml.Controls;
 
-namespace Testownik.Models {
+namespace Testownik.Models.Test {
     public class TextContent : IContent {
 
         public object Value { get => textBlock; }

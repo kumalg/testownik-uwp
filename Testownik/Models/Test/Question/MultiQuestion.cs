@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace Testownik.Model {
-    class MultiQuestion {
-        public object Content { get; set; }
-        public IList<IList<IAnswer>> Choices { get; set; }
+namespace Testownik.Models.Test {
+    class MultiQuestion : IQuestion {
+        public IContent Content { get; set; }
+        public IList<IList<IAnswer>> Answers { get; set; }
         public IList<int> CorrectAnswerKeys { get; set; }
     }
 }

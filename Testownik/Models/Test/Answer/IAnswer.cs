@@ -1,6 +1,4 @@
-﻿using Testownik.Models;
-
-namespace Testownik.Model {
+﻿namespace Testownik.Models.Test {
     public interface IAnswer {
         IContent Content { get; set; }
         int Key { get; set; }

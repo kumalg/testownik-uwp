@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:model="using:Testownik.Model"
+    xmlns:models="using:Testownik.Models"
+    xmlns:test="using:Testownik.Models.Test"
     xmlns:conv="using:Testownik.Converters"
     xmlns:elements="using:Testownik.Elements"
     Background="{ThemeResource MyAcrylicBrush}"
@@ -131,7 +132,7 @@
                     SelectionMode="Multiple">
 
                     <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="model:IAnswer">
+                        <DataTemplate x:DataType="test:IAnswer">
                             <elements:Answer/>
                         </DataTemplate>
                     </GridView.ItemTemplate>
