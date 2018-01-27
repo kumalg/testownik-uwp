@@ -114,7 +114,7 @@ namespace Testownik {
             if (question.Value is Question)
                 selectedAnswers = AnswersGridView.SelectedItems.Cast<AnswerBlock>().Select(i => i.Answer.Key);
             else if (question.Value is MultiQuestion)
-                selectedAnswers = AnswersListView.Items.Cast<ComboBox>().Select(i => i.SelectedValue == null ? "" : (i.SelectedValue as ComboBoxItem).Tag.ToString());
+                selectedAnswers = MultiAnswers.Select(i => i.SelectedValue == null ? "" : (i.SelectedValue as ComboBoxItem).Tag.ToString());
             else selectedAnswers = new List<string>();
 
             TestController.CheckAnswer(Question.Key, selectedAnswers);
