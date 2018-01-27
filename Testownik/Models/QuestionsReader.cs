@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Testownik.Models.Test;
 using Windows.Storage;
@@ -74,32 +75,64 @@ namespace Testownik.Model {
             var lines = text
                 .Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-            if (!lines.First().StartsWith("X"))
-                return null;
+            if (lines.First().StartsWith("X"))
+                return ParseQuestion(lines, allFiles);
+            else if (lines.First().StartsWith("Y"))
+                return ParseMultiQuestion(lines, allFiles);
+            else return null;
+        }
 
+        private static Question ParseQuestion(string[] lines, IReadOnlyCollection<StorageFile> allFiles) {
             var correctAnswerKeys = lines
                 .First()
                 .Replace("X", "")
                 .ToCharArray()
                 .Select((i, index) => (i, index))
                 .Where(tuple => tuple.Item1 == '1')
-                .Select(tuple => tuple.Item2).ToList();
+                .Select(tuple => tuple.Item2.ToString()).ToList();
 
             var content = ParseContent(lines.Skip(1).First(), allFiles);
 
             var answers = lines
                 .Skip(2)
-                .Select((i, index) => CreateAnswer(i, index, allFiles))
+                .Select((i, index) => CreateAnswer(i, index.ToString(), allFiles))
                 .ToList();
 
-            return new Question {
+            return new Question
+            {
                 Content = content,
-                    Answers = answers,
-                    CorrectAnswerKeys = correctAnswerKeys
+                Answers = answers,
+                CorrectAnswerKeys = correctAnswerKeys
             };
         }
 
-        private static IAnswer CreateAnswer(string content, int key, IReadOnlyCollection<StorageFile> allFiles) {
+        private static MultiQuestion ParseMultiQuestion(string[] lines, IReadOnlyCollection<StorageFile> allFiles) {
+            var correctAnswerKeys = lines
+                .First()
+                .ToCharArray()
+                .Skip(2)
+                .Select((i, index) => $"{index}_{i}")
+                .ToList();
+
+            var content = ParseContent(lines.Skip(1).First(), allFiles);
+
+            var answers = lines
+                .Skip(2)
+                .Select((i, index) => Regex.Split(i, @";;")
+                                        .Where(s => s != String.Empty)
+                                        //.Select((subI, subIndex) => CreateAnswer(subI, $"{index}_{subIndex + 1}", allFiles))
+                                        .Select((subI, subIndex) => new Answer { Content = new ComboBoxContent(subI), Key = $"{index}_{subIndex + 1}" } as IAnswer)
+                                        .ToList())
+                .ToList();
+
+            return new MultiQuestion {
+                Content = content,
+                Answers = answers,
+                CorrectAnswerKeys = correctAnswerKeys
+            };
+        }
+
+        private static IAnswer CreateAnswer(string content, string key, IReadOnlyCollection<StorageFile> allFiles) {
             return new Answer {
                 Key = key,
                 Content = ParseContent(content, allFiles)

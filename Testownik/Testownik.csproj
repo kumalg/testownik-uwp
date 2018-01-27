@@ -120,6 +120,7 @@
     <Compile Include="Models\Helpers\MostRecentlyUsedListHelper.cs" />
     <Compile Include="Models\Helpers\SavedStatesHelper.cs" />
     <Compile Include="Models\Test\Answer\IAnswer.cs" />
+    <Compile Include="Models\Test\Content\ComboBoxContent.cs" />
     <Compile Include="Models\Test\Content\IContent.cs" />
     <Compile Include="Models\Test\Content\ImageContent.cs" />
     <Compile Include="Models\Test\Question\IQuestion.cs" />

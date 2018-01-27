@@ -83,7 +83,7 @@
                             HorizontalAlignment="Center"
                             HorizontalContentAlignment="Center"
                             Foreground="{ThemeResource TextColor}"
-                            Content="{x:Bind TextQuestion.Value.Content.Value, Mode=OneWay}"
+                            Content="{x:Bind Question.Value.Content.Value, Mode=OneWay}"
                             TextWrapping="WrapWholeWords"
                             AutomationProperties.AccessibilityView="Raw"/>
                         <!--<TextBlock
@@ -124,19 +124,35 @@
             <ScrollViewer
                 VerticalScrollBarVisibility="Auto"
                 Grid.Row="1">
-                <GridView x:Name="AnswersGridView"
-                    VerticalAlignment="Top"
-                    Style="{ThemeResource AnswersGridView}"
-                    ItemsSource="{x:Bind Answers, Mode=OneWay}"
-                    Margin="32"
-                    SelectionMode="Multiple">
+                
+                <Grid>
+                    <GridView x:Name="AnswersGridView"
+                        VerticalAlignment="Top"
+                        Style="{ThemeResource AnswersGridView}"
+                        ItemsSource="{x:Bind Answers, Mode=OneWay}"
+                        Margin="32"
+                        SelectionMode="Multiple">
 
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="test:IAnswer">
-                            <elements:Answer/>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="test:IAnswer">
+                                <elements:Answer/>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+
+                    <ListView x:Name="AnswersListView"
+                        VerticalAlignment="Top"
+                        ItemsSource="{x:Bind MultiAnswers, Mode=OneWay}"
+                        Margin="32"
+                        SelectionMode="None">
+
+                        <!--<ListView.ItemTemplate>
+                            <DataTemplate >
+                                <ComboBox ItemsSource="{Binding}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>-->
+                    </ListView>
+                </Grid>
 
             </ScrollViewer>
         </Grid>

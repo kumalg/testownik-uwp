@@ -25,6 +25,15 @@ namespace Testownik {
             }
         }
 
+        public List<ComboBox> multiAnswers;
+        public List<ComboBox> MultiAnswers {
+            get => multiAnswers;
+            set {
+                multiAnswers = value;
+                RaisePropertyChanged(nameof(MultiAnswers));
+            }
+        }
+
         public TestController testController;
         public TestController TestController {
             get => testController;
@@ -34,12 +43,12 @@ namespace Testownik {
             }
         }
 
-        public KeyValuePair<string, IQuestion> textQuestion;
-        public KeyValuePair<string, IQuestion> TextQuestion {
-            get => textQuestion;
+        public KeyValuePair<string, IQuestion> question;
+        public KeyValuePair<string, IQuestion> Question {
+            get => question;
             set {
-                textQuestion = value;
-                RaisePropertyChanged(nameof(TextQuestion));
+                question = value;
+                RaisePropertyChanged(nameof(Question));
             }
         }
 
@@ -101,13 +110,19 @@ namespace Testownik {
         }
 
         private void ButtonAcceptAnswer_Click(object sender, RoutedEventArgs e) {
-            var selectedAnswers = AnswersGridView.SelectedItems.Cast<AnswerBlock>().Select(i => i.Answer.Key);
-            TestController.CheckAnswer(TextQuestion.Key, selectedAnswers);
+            IEnumerable<string> selectedAnswers;
+            if (question.Value is Question)
+                selectedAnswers = AnswersGridView.SelectedItems.Cast<AnswerBlock>().Select(i => i.Answer.Key);
+            else if (question.Value is MultiQuestion)
+                selectedAnswers = AnswersListView.Items.Cast<ComboBox>().Select(i => i.SelectedValue == null ? "" : (i.SelectedValue as ComboBoxItem).Tag.ToString());
+            else selectedAnswers = new List<string>();
+
+            TestController.CheckAnswer(Question.Key, selectedAnswers);
 
             var gridViewItems = AnswersGridView
                 .Items
                 .Cast<AnswerBlock>()
-                .Where (i => textQuestion.Value.CorrectAnswerKeys.Contains(i.Answer.Key));
+                .Where (i => question.Value.CorrectAnswerKeys.Contains(i.Answer.Key));
             foreach (var item in gridViewItems)
                 item.MarkAsCorrect();
 
@@ -133,14 +148,22 @@ namespace Testownik {
             if (TestController == null)
                 return;
 
-            TextQuestion = TestController.RandQuestion();
-            if (TextQuestion.Value is Question)
-                Answers = (TextQuestion.Value as Question).Answers
+            Question = TestController.RandQuestion();
+            if (Question.Value is Question) {
+                MultiAnswers = null;
+                Answers = (Question.Value as Question).Answers
                     .Select(i => new AnswerBlock { Answer = i })
                     .OrderBy(a => Guid.NewGuid())
                     .ToList();
+            }
+            else if (Question.Value is MultiQuestion) {
+                Answers = null;
+                MultiAnswers = (Question.Value as MultiQuestion).Answers
+                    .Select( i => new ComboBox { ItemsSource = i.OrderBy(a => Guid.NewGuid()).Select(x => new ComboBoxItem { Content = x.Content.Value, Tag = x.Key }) } )
+                    .ToList();
+            }
 
-            ReoccurrencesOfQuestion = TestController.ReoccurrencesOfQuestion(TextQuestion.Key);
+            ReoccurrencesOfQuestion = TestController.ReoccurrencesOfQuestion(Question.Key);
             ShowAcceptAnswerButton();
         }
 

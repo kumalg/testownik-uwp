@@ -66,7 +66,7 @@ namespace Testownik.Models.Test {
 
         }
 
-        public void CheckAnswer(string key, IEnumerable<int> answerKeys) {
+        public void CheckAnswer(string key, IEnumerable<string> answerKeys) {
             NumberOfAnswers++;
             RaisePropertyChanged(nameof(NumberOfAnswers));
             if (!Questions.ContainsKey(key)) {
@@ -113,32 +113,32 @@ namespace Testownik.Models.Test {
                     new Question {
                         Content = new TextContent("First question"),
                         Answers = new List<IAnswer> () {
-                            new Answer { Content = new TextContent("First answer"), Key = 1 },
-                            new Answer { Content = new TextContent("Second answer (Correct)"), Key = 2 }
+                            new Answer { Content = new TextContent("First answer"), Key = "1" },
+                            new Answer { Content = new TextContent("Second answer (Correct)"), Key = "2" }
                         },
-                        CorrectAnswerKeys = new [] { 2 }.ToList ()
+                        CorrectAnswerKeys = new [] { "2" }.ToList()
                     }
                 }, {
                     "002.txt",
                     new Question {
                         Content = new TextContent("Second question"),
                         Answers = new List<IAnswer> () {
-                            new Answer { Content = new TextContent("First answer"), Key = 1 },
-                            new Answer { Content = new TextContent( "Second answer"), Key = 2 },
-                            new Answer { Content = new TextContent("Third answer (Correct)"), Key = 3 }
+                            new Answer { Content = new TextContent("First answer"), Key = "1" },
+                            new Answer { Content = new TextContent("Second answer"), Key = "2" },
+                            new Answer { Content = new TextContent("Third answer (Correct)"), Key = "3" }
                         },
-                        CorrectAnswerKeys = new [] { 3 }.ToList ()
+                        CorrectAnswerKeys = new [] { "3" }.ToList()
                     }
                 }, {
                     "003.txt",
                     new Question {
                         Content = new TextContent("Third question"),
                         Answers = new List<IAnswer> () {
-                            new Answer { Content = new TextContent("First answer (Correct)"), Key = 1 },
-                            new Answer { Content = new TextContent("Second answer"), Key = 2 },
-                            new Answer { Content = new TextContent("Third answer"), Key = 3 }
+                            new Answer { Content = new TextContent("First answer (Correct)"), Key = "1" },
+                            new Answer { Content = new TextContent("Second answer"), Key = "2" },
+                            new Answer { Content = new TextContent("Third answer"), Key = "3" }
                         },
-                        CorrectAnswerKeys = new [] { 1 }.ToList ()
+                        CorrectAnswerKeys = new [] { "1" }.ToList ()
                     }
                 },
             };
