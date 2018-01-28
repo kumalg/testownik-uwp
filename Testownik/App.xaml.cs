@@ -69,7 +69,6 @@ namespace Testownik {
         /// </summary>
         /// <param name="e">Szczegóły dotyczące żądania uruchomienia i procesu.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e) {
-            SetupStyles();
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Nie powtarzaj inicjowania aplikacji, gdy w oknie znajduje się już zawartość,
@@ -103,20 +102,7 @@ namespace Testownik {
                 ExtendAcrylicIntoTitleBar();
             }
         }
-        
-        private void SetupStyles() {
-            var prefix = PlatformApiService.IsAcrylicBrushAvailable ? "Fall/" : string.Empty;
-            var brushUri = new Uri($"ms-appx:///Styles/{prefix}Brushes.xaml", UriKind.Absolute);
-            var textsUri = new Uri($"ms-appx:///Styles/Texts.xaml", UriKind.Absolute);
-            var listsUri = new Uri($"ms-appx:///Styles/Lists.xaml", UriKind.Absolute);
-            var customUri = new Uri($"ms-appx:///Styles/Custom.xaml", UriKind.Absolute);
-
-            Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = brushUri });
-            Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = textsUri });
-            Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = listsUri });
-            Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = customUri });
-        }
-
+       
         /// <summary>
         /// Wywoływane, gdy nawigacja do konkretnej strony nie powiedzie się
         /// </summary>

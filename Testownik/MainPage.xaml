@@ -8,10 +8,10 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:models="using:Testownik.Models"
+      xmlns:helpers="using:Testownik.Helpers"
     xmlns:test="using:Testownik.Models.Test"
     xmlns:conv="using:Testownik.Converters"
     xmlns:elements="using:Testownik.Elements"
-    Background="{ThemeResource MyAcrylicBrush}"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     KeyDown="AnswersGridView_KeyDown"
     mc:Ignorable="d">
@@ -161,13 +161,16 @@
             Canvas.ZIndex="999"
             Grid.RowSpan="2"
             Grid.Column="1"
-            Background="{ThemeResource MyAcrylicBrush }"
             Width="256px">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+
+            <Border 
+                Grid.RowSpan="2" 
+                helpers:XAMLHostBackdropHelper.Background="{Binding Source={ThemeResource MyAcrylicBrush}, Mode=OneWay}"/>
 
             <ScrollViewer
                 VerticalScrollBarVisibility="Auto">

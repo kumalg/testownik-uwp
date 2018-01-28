@@ -31,9 +31,12 @@
             <SolidColorBrush x:Key="AppButtonPressed" Color="#ffffff" Opacity="0.2"/>
             <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
 
-            <SolidColorBrush x:Key="MyAcrylicBrush" Color="#FF363636" />
-            <SolidColorBrush x:Key="MyAcrylicLightBrush" Color="#FFebebeb" />
-            <SolidColorBrush x:Key="MyInAppAcrylicBrush" Color="#FFffffff" />
+            <Color x:Key="MyAcrylicBrush" >#CC363636</Color>
+            <Color x:Key="MyAcrylicLightBrush" >#CCebebeb</Color>
+            <Color x:Key="MyInAppAcrylicBrush" >#99ffffff</Color>
+            <!--<SolidColorBrush x:Key="MyAcrylicBrush" Color="#FF363636" />-->
+            <!--<SolidColorBrush x:Key="MyAcrylicLightBrush" Color="#FFebebeb" />-->
+            <!--<SolidColorBrush x:Key="MyInAppAcrylicBrush" Color="#FFffffff" />-->
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="HighContrast">
@@ -61,9 +64,12 @@
             <SolidColorBrush x:Key="AppButtonPressed" Color="#ffffff" Opacity="0.2"/>
             <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
 
-            <SolidColorBrush x:Key="MyAcrylicBrush" Color="{ThemeResource SystemColorWindowColor}"/>
+            <!--<SolidColorBrush x:Key="MyAcrylicBrush" Color="{ThemeResource SystemColorWindowColor}"/>
             <SolidColorBrush x:Key="MyAcrylicLightBrush" Color="{ThemeResource SystemColorWindowColor}"/>
-            <SolidColorBrush x:Key="MyInAppAcrylicBrush" Color="{ThemeResource SystemColorWindowColor}"/>
+            <SolidColorBrush x:Key="MyInAppAcrylicBrush" Color="{ThemeResource SystemColorWindowColor}"/>-->
+            <Color x:Key="MyAcrylicBrush" >#CC363636</Color>
+            <Color x:Key="MyAcrylicLightBrush" >#CCebebeb</Color>
+            <Color x:Key="MyInAppAcrylicBrush" >#99ffffff</Color>
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="Light">
@@ -92,9 +98,12 @@
             <SolidColorBrush x:Key="AppButtonPressed" Color="#ffffff" Opacity="0.2"/>
             <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
 
-            <SolidColorBrush x:Key="MyAcrylicBrush" Color="#FF363636" />
+            <!--<SolidColorBrush x:Key="MyAcrylicBrush" Color="#FF363636" />
             <SolidColorBrush x:Key="MyAcrylicLightBrush" Color="#FFebebeb" />
-            <SolidColorBrush x:Key="MyInAppAcrylicBrush" Color="#FFffffff" />
+            <SolidColorBrush x:Key="MyInAppAcrylicBrush" Color="#FFffffff" />-->
+            <Color x:Key="MyAcrylicBrush" >#CC363636</Color>
+            <Color x:Key="MyAcrylicLightBrush" >#CCebebeb</Color>
+            <Color x:Key="MyInAppAcrylicBrush" >#99ffffff</Color>
         </ResourceDictionary>
 
     </ResourceDictionary.ThemeDictionaries>

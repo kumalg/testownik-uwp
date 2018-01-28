@@ -9,6 +9,7 @@
     xmlns:model="using:Testownik.Model"
     NavigationCacheMode="Enabled"
     AllowDrop="True"
+    xmlns:helpers="using:Testownik.Helpers"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"  
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     mc:Ignorable="d">
@@ -23,8 +24,10 @@
         </TransitionCollection>
     </Page.Transitions>
 
-    <Grid
-        Background="{ThemeResource MyAcrylicLightBrush}">
+    <Grid Background="{ThemeResource MyAcrylicLightBrush}">
+        <!--<Border helpers:XAMLHelper.Background="{ThemeResource MyAcrylicLightBrush}"/>-->
+        <Border
+            helpers:XAMLHostBackdropHelper.Background="{Binding Source={ThemeResource MyAcrylicLightBrush}, Mode=OneWay}"/>
 
         <StackPanel
             VerticalAlignment="Center"
