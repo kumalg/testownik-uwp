@@ -9,7 +9,6 @@
     PrimaryButtonText="Zapisz"
     SecondaryButtonText="Anuluj"
     Loaded="ContentDialog_Loaded"
-    helpers:XAMLBackdropHelper.Background="{Binding Source={ThemeResource MyInAppAcrylicBrush}, Mode=OneWay}"
     BorderThickness="0"
     BorderBrush="Transparent"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">

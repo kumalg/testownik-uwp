@@ -4,7 +4,6 @@
     xmlns:local="using:Testownik"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    RequestedTheme="Light"
     xmlns:elements="using:Testownik.Elements"
     xmlns:model="using:Testownik.Model"
     NavigationCacheMode="Enabled"
@@ -24,10 +23,8 @@
         </TransitionCollection>
     </Page.Transitions>
 
-    <Grid Background="{ThemeResource MyAcrylicLightBrush}">
-        <!--<Border helpers:XAMLHelper.Background="{ThemeResource MyAcrylicLightBrush}"/>-->
-        <Border
-            helpers:XAMLHostBackdropHelper.Background="{Binding Source={ThemeResource MyAcrylicLightBrush}, Mode=OneWay}"/>
+    <Grid Background="Yellow">
+        <helpers:HostBackdropBackground BackdropColor="{ThemeResource MyAcrylicLightBrush}" />
 
         <StackPanel
             VerticalAlignment="Center"
@@ -57,6 +54,7 @@
                 </Button>
 
                 <Button
+                    Click="ApplicationInfoButton_Click"
                     Margin="4 16"
                     Style="{ThemeResource FolderButton}"
                     Width="64"

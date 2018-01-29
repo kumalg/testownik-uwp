@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
-using Testownik.Services;
+using Testownik.Models;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -75,7 +75,7 @@ namespace Testownik {
             // upewnij się tylko, że okno jest aktywne
             if (rootFrame == null) {
                 // Utwórz ramkę, która będzie pełnić funkcję kontekstu nawigacji, i przejdź do pierwszej strony
-                rootFrame = new Frame ();
+                rootFrame = new ThemeAwareFrame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 

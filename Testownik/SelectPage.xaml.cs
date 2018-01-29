@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Testownik.Dialogs;
 using Testownik.Model;
 using Testownik.Model.Helpers;
+using Testownik.Models;
 using Testownik.Models.Test;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
@@ -176,6 +177,14 @@ namespace Testownik {
         private void RaisePropertyChanged(string propertyName) {
             var handler = PropertyChanged;
             handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void ApplicationInfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Frame is ThemeAwareFrame) {
+                var frame = ((ThemeAwareFrame)Frame);
+                ((ThemeAwareFrame)Frame).AppTheme = frame.AppTheme == ElementTheme.Dark ? ElementTheme.Light : ElementTheme.Dark;
+            }
         }
     }
 }

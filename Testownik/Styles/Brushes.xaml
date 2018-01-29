@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:helpers="using:Testownik.Helpers"
     xmlns:local="using:Testownik.Styles">
 
     <ResourceDictionary.ThemeDictionaries>
@@ -34,9 +35,6 @@
             <Color x:Key="MyAcrylicBrush" >#CC363636</Color>
             <Color x:Key="MyAcrylicLightBrush" >#CCebebeb</Color>
             <Color x:Key="MyInAppAcrylicBrush" >#99ffffff</Color>
-            <!--<SolidColorBrush x:Key="MyAcrylicBrush" Color="#FF363636" />-->
-            <!--<SolidColorBrush x:Key="MyAcrylicLightBrush" Color="#FFebebeb" />-->
-            <!--<SolidColorBrush x:Key="MyInAppAcrylicBrush" Color="#FFffffff" />-->
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="HighContrast">
@@ -64,9 +62,6 @@
             <SolidColorBrush x:Key="AppButtonPressed" Color="#ffffff" Opacity="0.2"/>
             <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
 
-            <!--<SolidColorBrush x:Key="MyAcrylicBrush" Color="{ThemeResource SystemColorWindowColor}"/>
-            <SolidColorBrush x:Key="MyAcrylicLightBrush" Color="{ThemeResource SystemColorWindowColor}"/>
-            <SolidColorBrush x:Key="MyInAppAcrylicBrush" Color="{ThemeResource SystemColorWindowColor}"/>-->
             <Color x:Key="MyAcrylicBrush" >#CC363636</Color>
             <Color x:Key="MyAcrylicLightBrush" >#CCebebeb</Color>
             <Color x:Key="MyInAppAcrylicBrush" >#99ffffff</Color>
@@ -98,12 +93,40 @@
             <SolidColorBrush x:Key="AppButtonPressed" Color="#ffffff" Opacity="0.2"/>
             <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
 
-            <!--<SolidColorBrush x:Key="MyAcrylicBrush" Color="#FF363636" />
-            <SolidColorBrush x:Key="MyAcrylicLightBrush" Color="#FFebebeb" />
-            <SolidColorBrush x:Key="MyInAppAcrylicBrush" Color="#FFffffff" />-->
             <Color x:Key="MyAcrylicBrush" >#CC363636</Color>
             <Color x:Key="MyAcrylicLightBrush" >#CCebebeb</Color>
             <Color x:Key="MyInAppAcrylicBrush" >#99ffffff</Color>
+        </ResourceDictionary>
+        
+        <ResourceDictionary x:Key="Dark">
+            <SolidColorBrush x:Key="SystemControlPageBackgroundBaseMediumBrush" Color="#9939b54a" />
+            <SolidColorBrush x:Key="SystemBaseMediumColor " Color="#9939b54a" />
+
+            <SolidColorBrush x:Key="ContentDialogDimmingThemeBrush " Color="#9939b54a" />
+
+            <SolidColorBrush x:Key="GreenColor" Color="#39b54a" />
+            <SolidColorBrush x:Key="GreenColorLighter" Color="#4dc65d" />
+            <SolidColorBrush x:Key="GreenColorLightest" Color="#69e07a" />
+
+            <SolidColorBrush x:Key="PrimaryColor" Color="#39b54a" />
+            <SolidColorBrush x:Key="PrimaryColorLighter" Color="#4dc65d" />
+            <SolidColorBrush x:Key="PrimaryColorLightest" Color="#69e07a" />
+
+            <SolidColorBrush x:Key="TextColor" Color="#303030" />
+
+            <SolidColorBrush x:Key="AppBackgroundColor" Color="#ebebeb" />
+            <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#ffffff" />
+
+            <SolidColorBrush x:Key="MessageBackground" Color="#40FFFFFF" />
+
+            <SolidColorBrush x:Key="AppButtonForeground" Color="#ffffff" Opacity="0.75"/>
+            <SolidColorBrush x:Key="AppButtonPointerOver" Color="#ffffff" Opacity="0.1"/>
+            <SolidColorBrush x:Key="AppButtonPressed" Color="#ffffff" Opacity="0.2"/>
+            <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
+
+            <Color x:Key="MyAcrylicBrush" >#CC000000</Color>
+            <Color x:Key="MyAcrylicLightBrush" >#CC000000</Color>
+            <Color x:Key="MyInAppAcrylicBrush" >#99000000</Color>
         </ResourceDictionary>
 
     </ResourceDictionary.ThemeDictionaries>

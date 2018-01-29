@@ -168,9 +168,9 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Border 
+            <helpers:HostBackdropBackground 
                 Grid.RowSpan="2" 
-                helpers:XAMLHostBackdropHelper.Background="{Binding Source={ThemeResource MyAcrylicBrush}, Mode=OneWay}"/>
+                BackdropColor="{ThemeResource MyAcrylicBrush}" />
 
             <ScrollViewer
                 VerticalScrollBarVisibility="Auto">
