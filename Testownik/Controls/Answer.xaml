@@ -15,10 +15,16 @@
         VerticalAlignment="Stretch"
         HorizontalContentAlignment="Stretch">
         <Grid
-            x:Name="GridBlock"
-            Background="{Binding Brush, Mode=OneWay}"
+            Background="{ThemeResource BlockButtonBackground}"
             MinHeight="64">
-            <!--<TextBlock Text="{Binding Answer.Content, Mode=OneWay}" Margin="16 8" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center">-->
+
+            <Border
+                Background="{Binding ImageBackground, Mode=OneWay}" />
+
+            <Border 
+                Background="{ThemeResource CorrectAnswerBackground}" 
+                Visibility="{Binding CorrectVisibility}"/>
+            
             <ContentPresenter
                 Margin="16 8"
                 HorizontalAlignment="Center"
@@ -27,7 +33,7 @@
                 Content="{Binding Answer.Content.Value, Mode=OneWay}"
                 TextWrapping="Wrap"
                 AutomationProperties.AccessibilityView="Raw"/>
-            <!--</TextBlock>-->
+            
         </Grid>
     </controls:DropShadowPanel>
     

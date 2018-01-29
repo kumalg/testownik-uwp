@@ -7,11 +7,12 @@ using Windows.UI.Xaml.Media;
 namespace Testownik.Model {
     public class AnswerBlock : INotifyPropertyChanged {
         public IAnswer Answer { get; set; }
-        public Brush Brush { get; set; } = new SolidColorBrush(Colors.White);
+        public Brush ImageBackground { get; set; } = new SolidColorBrush(Colors.Transparent);
+        public Visibility CorrectVisibility { get; set; } = Visibility.Collapsed;
 
         public void MarkAsCorrect() {
-            Brush = (SolidColorBrush) Application.Current.Resources["GreenColorLightest"];
-            RaisePropertyChanged(nameof(Brush));
+            CorrectVisibility = Visibility.Visible;
+            RaisePropertyChanged(nameof(CorrectVisibility));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

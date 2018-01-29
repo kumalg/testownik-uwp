@@ -15,7 +15,7 @@
         VerticalAlignment="Stretch"
         HorizontalContentAlignment="Stretch">
         <Grid
-            Background="White"
+            Background="{ThemeResource BlockButtonBackground}"
             Width="320"
             Height="64">
             <StackPanel
@@ -25,6 +25,7 @@
                 <TextBlock
                     TextTrimming="CharacterEllipsis"
                     Text="{Binding Path}"
+                    Foreground="{ThemeResource TextColor}"
                     HorizontalAlignment="Right"/>
             </StackPanel>
         </Grid>

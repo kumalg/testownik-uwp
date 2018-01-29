@@ -22,6 +22,9 @@
 
             <SolidColorBrush x:Key="AppBackgroundColor" Color="#ebebeb" />
             <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#ffffff" />
+            <SolidColorBrush x:Key="BlockButtonBackground" Color="#ffffff" />
+
+            <SolidColorBrush x:Key="CorrectAnswerBackground" Color="#69e07a" />
 
             <SolidColorBrush x:Key="MessageBackground" Color="#40FFFFFF" />
 
@@ -36,8 +39,6 @@
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="HighContrast">
-            <SolidColorBrush x:Key="DragBackground" Color="Black" Opacity="0.7"/>
-
             <SolidColorBrush x:Key="SystemControlPageBackgroundBaseMediumBrush" Color="#9939b54a" />
             <SolidColorBrush x:Key="SystemBaseMediumColor " Color="#9939b54a" />
 
@@ -51,10 +52,16 @@
             <SolidColorBrush x:Key="PrimaryColorLighter" Color="#4dc65d" />
             <SolidColorBrush x:Key="PrimaryColorLightest" Color="#69e07a" />
 
-            <SolidColorBrush x:Key="TextColor" Color="#000000" />
+            <SolidColorBrush x:Key="TextColor" Color="#303030" />
 
             <SolidColorBrush x:Key="AppBackgroundColor" Color="#ebebeb" />
             <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#ffffff" />
+            <SolidColorBrush x:Key="BlockButtonBackground" Color="#ffffff" />
+
+            <SolidColorBrush x:Key="CorrectAnswerBackground" Color="#39b54a" />
+
+            <SolidColorBrush x:Key="MessageBackground" Color="#40FFFFFF" />
+
             <SolidColorBrush x:Key="AppButtonForeground" Color="#ffffff" Opacity="0.75"/>
             <SolidColorBrush x:Key="AppButtonPointerOver" Color="#ffffff" Opacity="0.1"/>
             <SolidColorBrush x:Key="AppButtonPressed" Color="#ffffff" Opacity="0.2"/>
@@ -83,6 +90,9 @@
 
             <SolidColorBrush x:Key="AppBackgroundColor" Color="#ebebeb" />
             <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#ffffff" />
+            <SolidColorBrush x:Key="BlockButtonBackground" Color="#ffffff" />
+
+            <SolidColorBrush x:Key="CorrectAnswerBackground" Color="#69e07a" />
 
             <SolidColorBrush x:Key="MessageBackground" Color="#40FFFFFF" />
             
@@ -110,21 +120,24 @@
             <SolidColorBrush x:Key="PrimaryColorLighter" Color="#4dc65d" />
             <SolidColorBrush x:Key="PrimaryColorLightest" Color="#69e07a" />
 
-            <SolidColorBrush x:Key="TextColor" Color="#303030" />
+            <SolidColorBrush x:Key="TextColor" Color="#eeeeee" />
 
-            <SolidColorBrush x:Key="AppBackgroundColor" Color="#ebebeb" />
-            <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#ffffff" />
+            <SolidColorBrush x:Key="AppBackgroundColor" Color="#202020" />
+            <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#303030" />
+            <SolidColorBrush x:Key="BlockButtonBackground" Color="#303030" />
+            
+            <SolidColorBrush x:Key="CorrectAnswerBackground" Color="#39b54a" />
 
-            <SolidColorBrush x:Key="MessageBackground" Color="#40FFFFFF" />
+            <SolidColorBrush x:Key="MessageBackground" Color="#90202020" />
 
             <SolidColorBrush x:Key="AppButtonForeground" Color="#ffffff" Opacity="0.75"/>
             <SolidColorBrush x:Key="AppButtonPointerOver" Color="#ffffff" Opacity="0.1"/>
             <SolidColorBrush x:Key="AppButtonPressed" Color="#ffffff" Opacity="0.2"/>
             <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
 
-            <Color x:Key="MyAcrylicBrush" >#CC000000</Color>
-            <Color x:Key="MyAcrylicLightBrush" >#CC000000</Color>
-            <Color x:Key="MyInAppAcrylicBrush" >#99000000</Color>
+            <Color x:Key="MyAcrylicBrush" >#EE202020</Color>
+            <Color x:Key="MyAcrylicLightBrush" >#EE191919</Color>
+            <Color x:Key="MyInAppAcrylicBrush" >#99191919</Color>
         </ResourceDictionary>
 
     </ResourceDictionary.ThemeDictionaries>

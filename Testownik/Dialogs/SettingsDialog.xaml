@@ -6,8 +6,7 @@
     mc:Ignorable="d"
     x:Uid="SettingsDialog"
     Loaded="ContentDialog_Loaded"
-    BorderThickness="0"
-    BorderBrush="Transparent"
+    Style="{StaticResource MyContentDialog}"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
 
     <StackPanel>

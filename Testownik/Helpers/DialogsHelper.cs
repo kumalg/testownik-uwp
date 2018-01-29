@@ -1,10 +1,10 @@
 ﻿using System;
-using Windows.UI.Xaml.Controls;
+using Testownik.Dialogs;
 
 namespace Testownik.Model.Helpers {
     public class DialogsHelper {
         public static async void ShowBasicMessageDialog(string message) {
-            var dialog = new ContentDialog() {
+            var dialog = new MessageDialog() {
                 Title = message,
                 PrimaryButtonText = "Zamknij"
             };

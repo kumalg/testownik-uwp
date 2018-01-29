@@ -8,9 +8,11 @@ using Testownik.Model;
 using Testownik.Model.Helpers;
 using Testownik.Models.Test;
 using Windows.System;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace Testownik {
@@ -68,7 +70,7 @@ namespace Testownik {
 
         protected override async void OnNavigatedFrom(NavigationEventArgs e) {
             if (!string.IsNullOrEmpty(TestController.FolderToken)) {
-                var dialog = new ContentDialog {
+                var dialog = new MessageDialog {
                     Title = "Czy chcesz zapisać aktualny stan?",
                     PrimaryButtonText = "Tak",
                     SecondaryButtonText = "Nie"
@@ -153,7 +155,7 @@ namespace Testownik {
             if (Question.Value is Question) {
                 MultiAnswers = null;
                 Answers = (Question.Value as Question).Answers
-                    .Select(i => new AnswerBlock { Answer = i })
+                    .Select(i => new AnswerBlock { Answer = i, ImageBackground = new SolidColorBrush((i.Content is ImageContent) ? Colors.White : Colors.Transparent)})
                     .OrderBy(a => Guid.NewGuid())
                     .ToList();
             }
