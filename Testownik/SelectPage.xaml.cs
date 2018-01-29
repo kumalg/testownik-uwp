@@ -179,12 +179,6 @@ namespace Testownik {
             handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void ApplicationInfoButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Frame is ThemeAwareFrame) {
-                var frame = ((ThemeAwareFrame)Frame);
-                ((ThemeAwareFrame)Frame).AppTheme = frame.AppTheme == ElementTheme.Dark ? ElementTheme.Light : ElementTheme.Dark;
-            }
-        }
+        private void ApplicationInfoButton_Click(object sender, RoutedEventArgs e) { }
     }
 }

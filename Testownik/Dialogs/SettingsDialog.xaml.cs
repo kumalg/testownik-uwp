@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Testownik.Model;
+using Testownik.Models;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Testownik.Dialogs {
@@ -10,7 +12,17 @@ namespace Testownik.Dialogs {
         public IList<int> MaxReoccurrences { get; } = new [] { 2, 3, 4, 5, 6, 7, 8, 9, 10 }.ToList();
 
         public SettingsDialog() {
-            this.InitializeComponent();
+            InitializeComponent();
+            InitializeThemeRadioButtons();
+        }
+
+        private void InitializeThemeRadioButtons() {
+            if (SettingsHelper.AppTheme == ElementTheme.Dark)
+                DarkThemeRadioButton.IsChecked = true;
+            else
+                LightThemeRadioButton.IsChecked = true;
+            DarkThemeRadioButton.Checked += DarkThemeRadioButton_Checked;
+            LightThemeRadioButton.Checked += LightThemeRadioButton_Checked;
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args) {
@@ -48,6 +60,16 @@ namespace Testownik.Dialogs {
             ReoccurrencesOnStartComboBox.SelectedIndex = onStartIndex;
             ReoccurrencesIfBadComboBox.SelectedIndex = onBadIndex;
             MaxReoccurrencesComboBox.SelectedIndex = onMaxIndex;
+        }
+
+        private void LightThemeRadioButton_Checked(object sender, RoutedEventArgs e) => SetTheme(ElementTheme.Light);
+        private void DarkThemeRadioButton_Checked(object sender, RoutedEventArgs e) => SetTheme(ElementTheme.Dark);
+
+        private void SetTheme(ElementTheme newTheme) {
+            SettingsHelper.AppTheme = newTheme;
+            var frame = (Window.Current.Content as Frame);
+            if (frame != null && frame is ThemeAwareFrame themeAwareFrame)
+                themeAwareFrame.AppTheme = newTheme;
         }
     }
 }

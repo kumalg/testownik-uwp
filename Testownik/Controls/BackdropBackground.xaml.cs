@@ -1,17 +1,16 @@
-﻿using System.Reflection;
+﻿using Microsoft.Toolkit.Uwp.UI.Animations;
+using System.Reflection;
 using Testownik.Services;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-// Szablon elementu Kontrolka użytkownika jest udokumentowany na stronie https://go.microsoft.com/fwlink/?LinkId=234236
-
-namespace Testownik.Helpers
+namespace Testownik.Controls
 {
-    public sealed partial class HostBackdropBackground : UserControl
+    public sealed partial class BackdropBackground : UserControl
     {
-        public HostBackdropBackground()
+        public BackdropBackground()
         {
             this.InitializeComponent();
             this.DataContext = this;
@@ -24,7 +23,7 @@ namespace Testownik.Helpers
         }
         
         public static readonly DependencyProperty BackdropColorProperty =
-            DependencyProperty.Register("BackdropColor", typeof(Color), typeof(HostBackdropBackground), new PropertyMetadata(Colors.Yellow, OnBackdropColorChanged));
+            DependencyProperty.Register("BackdropColor", typeof(Color), typeof(BackdropBackground), new PropertyMetadata(Colors.Yellow, OnBackdropColorChanged));
 
 
         private static void OnBackdropColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -44,9 +43,9 @@ namespace Testownik.Helpers
                 {
                     AcrylicBrush myBrush = new AcrylicBrush
                     {
-                        BackgroundSource = AcrylicBackgroundSource.HostBackdrop,
+                        BackgroundSource = AcrylicBackgroundSource.Backdrop,
                         TintColor = fullColor,
-                        FallbackColor = fullColor,
+                        FallbackColor = color,
                         TintOpacity = (double)color.A / 255d
                     };
 
@@ -54,7 +53,8 @@ namespace Testownik.Helpers
                 }
                 else
                 {
-                    backgroundProperty.SetValue(d, new SolidColorBrush(fullColor));
+                    backgroundProperty.SetValue(d, new SolidColorBrush(color));
+                    ((FrameworkElement)d).Blur(3, duration: 0).Start();
                 }
             }
         }

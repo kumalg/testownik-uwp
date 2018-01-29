@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -14,8 +15,8 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Testownik {
     public sealed partial class MainPage : Page, INotifyPropertyChanged {
-        public string appName = AppIdentity.AppName;
-        
+        public string appName = SystemInformation.ApplicationName;
+                
         public List<AnswerBlock> answers;
         public List<AnswerBlock> Answers {
             get => answers;

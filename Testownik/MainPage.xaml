@@ -1,18 +1,13 @@
 ﻿<Page x:Class="Testownik.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Testownik"
     MinWidth="512"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:models="using:Testownik.Models"
-      xmlns:helpers="using:Testownik.Helpers"
+    xmlns:toolkitControls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:test="using:Testownik.Models.Test"
     xmlns:conv="using:Testownik.Converters"
-    xmlns:elements="using:Testownik.Elements"
-    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:controls="using:Testownik.Controls"
     KeyDown="AnswersGridView_KeyDown"
     mc:Ignorable="d">
 
@@ -26,12 +21,12 @@
         </TransitionCollection>
     </Page.Transitions>
 
+    <Page.Resources>
+        <conv:LongToTimeStringConverter x:Name="LongToTimeStringConverter" />
+    </Page.Resources>
+    
     <Grid Background="{ThemeResource AppBackgroundColor}">
-
-        <Grid.Resources>
-            <conv:LongToTimeStringConverter x:Name="LongToTimeStringConverter" />
-        </Grid.Resources>
-
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <!-- TitleBar -->
@@ -64,7 +59,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <controls:DropShadowPanel BlurRadius="32"
+            <toolkitControls:DropShadowPanel BlurRadius="32"
                 ShadowOpacity="0.1"
                 OffsetX="0"
                 OffsetY="4"
@@ -95,7 +90,7 @@
                         <!--</TextBlock>-->
                     </StackPanel>
                 </Grid>
-            </controls:DropShadowPanel>
+            </toolkitControls:DropShadowPanel>
 
             <Border
                 Margin="0 0 0 16"
@@ -112,9 +107,8 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
                     <TextBlock
-                        Style="{ThemeResource ReoccurrenceTextBlockStyle}">
-                        Ponowne wystąpienia:
-                    </TextBlock>
+                        x:Uid="Reoccurrences"
+                        Style="{ThemeResource ReoccurrenceTextBlockStyle}" />
                     <TextBlock
                         Style="{ThemeResource ReoccurrenceValueTextBlockStyle}"
                         Text="{x:Bind ReoccurrencesOfQuestion, Mode=OneWay}"/>
@@ -135,7 +129,7 @@
 
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="test:IAnswer">
-                                <elements:Answer/>
+                                <controls:Answer/>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
@@ -168,7 +162,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <helpers:HostBackdropBackground 
+            <controls:HostBackdropBackground 
                 Grid.RowSpan="2" 
                 BackdropColor="{ThemeResource MyAcrylicBrush}" />
 
@@ -182,9 +176,8 @@
                         Margin="0 16"
                         HorizontalAlignment="Stretch">
                         <TextBlock
-                            Style="{ThemeResource StatisticsHeaderTextBlockStyle}">
-                            Udzielone odpowiedzi
-                        </TextBlock>
+                            x:Uid="GrantedAnswers"
+                            Style="{ThemeResource StatisticsHeaderTextBlockStyle}" />
                         <ProgressBar
                             Value="{x:Bind TestController.NumberOfCorrectAnswers, Mode=OneWay}"
                             Maximum="{x:Bind TestController.NumberOfAnswers, Mode=OneWay}"
@@ -208,9 +201,9 @@
                         Margin="0 16"
                         HorizontalAlignment="Stretch">
                         <TextBlock
-                            Style="{ThemeResource StatisticsHeaderTextBlockStyle}">
-                            Opanowane pytania
-                        </TextBlock>
+                            x:Uid="LearnedQuestions"
+                            Style="{ThemeResource StatisticsHeaderTextBlockStyle}" />
+
                         <ProgressBar
                             Value="{x:Bind TestController.NumberOfLearnedQuestions, Mode=OneWay}"
                             Maximum="{x:Bind TestController.NumberOfQuestions, Mode=OneWay}"
@@ -234,9 +227,8 @@
                         Margin="0 16"
                         HorizontalAlignment="Stretch">
                         <TextBlock
-                            Style="{ThemeResource StatisticsHeaderTextBlockStyle}">
-                            Liczba pytań
-                        </TextBlock>
+                            x:Uid="NumberOfQuestions"
+                            Style="{ThemeResource StatisticsHeaderTextBlockStyle}" />
                         <TextBlock
                             Text="{x:Bind TestController.NumberOfQuestions, Mode=OneWay}"
                             Style="{ThemeResource StatisticsContentTextBlockStyle}" />
@@ -246,17 +238,16 @@
                         Margin="0 16"
                         HorizontalAlignment="Stretch">
                         <TextBlock
-                            Style="{ThemeResource StatisticsHeaderTextBlockStyle}">
-                            Czas nauki
-                        </TextBlock>
+                            x:Uid="LearningTime"
+                            Style="{ThemeResource StatisticsHeaderTextBlockStyle}" />
                         <TextBlock
-                            Text="{x:Bind TestController.TimeString, Mode=OneWay}"
+                            Text="{x:Bind TestController.Time, Converter={StaticResource LongToTimeStringConverter}, Mode=OneWay}"
                             Style="{ThemeResource StatisticsContentTextBlockStyle}" />
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
 
-            <controls:DropShadowPanel
+            <toolkitControls:DropShadowPanel
                 Grid.RowSpan="2"
                 BlurRadius="32"
                 ShadowOpacity="0.2"
@@ -283,7 +274,7 @@
                         <SymbolIcon Symbol="Forward"/>
                     </Button>
                 </Grid>
-            </controls:DropShadowPanel>
+            </toolkitControls:DropShadowPanel>
 
             <StackPanel
                 Orientation="Horizontal"

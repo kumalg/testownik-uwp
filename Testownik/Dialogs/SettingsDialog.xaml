@@ -3,34 +3,45 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:helpers="using:Testownik.Helpers"
     mc:Ignorable="d"
-    Title="Ustawienia"
-    PrimaryButtonText="Zapisz"
-    SecondaryButtonText="Anuluj"
+    x:Uid="SettingsDialog"
     Loaded="ContentDialog_Loaded"
     BorderThickness="0"
     BorderBrush="Transparent"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
 
     <StackPanel>
-        <TextBlock>Liczba powtórzeń pytania na poczatku</TextBlock>
+        <TextBlock x:Uid="InitialOccurrences" />
         <ComboBox
             x:Name="ReoccurrencesOnStartComboBox"
             ItemsSource="{x:Bind ReoccurrencesOnStart, Mode=OneTime}">
         </ComboBox>
 
-        <TextBlock>Liczba dodatkowych powtórzeń przy błędnej odpowiedzi</TextBlock>
+        <TextBlock x:Uid="AdditionalOccurrencesOnInvalid" />
         <ComboBox
             x:Name="ReoccurrencesIfBadComboBox"
             ItemsSource="{x:Bind ReoccurrencesIfBad, Mode=OneTime}">
         </ComboBox>
 
-        <TextBlock>Maksymalna liczba powtórzeń</TextBlock>
+        <TextBlock x:Uid="OccurrenceLimit" />
         <ComboBox
             x:Name="MaxReoccurrencesComboBox"
             ItemsSource="{x:Bind MaxReoccurrences, Mode=OneTime}">
         </ComboBox>
+
+        <TextBlock x:Uid="Theme" />
+        <RadioButton x:Name="LightThemeRadioButton"
+                     GroupName="ThemeRadioButtons">
+            <RadioButton.Content>
+                <TextBlock x:Uid="ThemeLight"/>
+            </RadioButton.Content>
+        </RadioButton>
+        <RadioButton x:Name="DarkThemeRadioButton"
+                     GroupName="ThemeRadioButtons">
+            <RadioButton.Content>
+                <TextBlock x:Uid="ThemeDark"/>
+            </RadioButton.Content>
+        </RadioButton>
     </StackPanel>
 
 </ContentDialog>

@@ -1,4 +1,5 @@
 ﻿using Windows.Storage;
+using Windows.UI.Xaml;
 
 namespace Testownik.Model {
     public class SettingsHelper {
@@ -6,13 +7,16 @@ namespace Testownik.Model {
 
         public static void SetSettings() {
             if (LocalSettings.Values["reoccurrencesIfBad"] == null)
-                LocalSettings.Values["reoccurrencesIfBad"] = 2;
+                ReoccurrencesIfBad = 2;
 
             if (LocalSettings.Values["reoccurrencesOnStart"] == null)
-                LocalSettings.Values["reoccurrencesOnStart"] = 2;
+                ReoccurrencesOnStart = 2;
 
             if (LocalSettings.Values["maxReoccurrences"] == null)
-                LocalSettings.Values["maxReoccurrences"] = 10;
+                MaxReoccurrences = 10;
+
+            if (LocalSettings.Values["appTheme"] == null)
+                AppTheme = ElementTheme.Light;
         }
 
         public static int ReoccurrencesIfBad {
@@ -28,6 +32,23 @@ namespace Testownik.Model {
         public static int MaxReoccurrences {
             get => (int)LocalSettings.Values["maxReoccurrences"];
             set => LocalSettings.Values["maxReoccurrences"] = value;
+        }
+
+        public static ElementTheme AppTheme {
+            get {
+                switch (LocalSettings.Values["appTheme"]) {
+                    case "Dark": return ElementTheme.Dark;
+                    case "Light": return ElementTheme.Light;
+                    default: return ElementTheme.Default;
+                }
+            }
+            set {
+                switch (value) {
+                    case ElementTheme.Dark: LocalSettings.Values["appTheme"] = "Dark"; break;
+                    case ElementTheme.Light: LocalSettings.Values["appTheme"] = "Light"; break;
+                    default: LocalSettings.Values["appTheme"] = "Default"; break;
+                }
+            }
         }
     }
 }

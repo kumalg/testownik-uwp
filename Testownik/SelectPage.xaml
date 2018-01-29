@@ -1,16 +1,12 @@
 ﻿<Page x:Class="Testownik.SelectPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Testownik"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:elements="using:Testownik.Elements"
+    xmlns:controls="using:Testownik.Controls"
     xmlns:model="using:Testownik.Model"
     NavigationCacheMode="Enabled"
     AllowDrop="True"
-    xmlns:helpers="using:Testownik.Helpers"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"  
-    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     mc:Ignorable="d">
 
     <Page.Transitions>
@@ -23,20 +19,19 @@
         </TransitionCollection>
     </Page.Transitions>
 
-    <Grid Background="Yellow">
-        <helpers:HostBackdropBackground BackdropColor="{ThemeResource MyAcrylicLightBrush}" />
+    <Grid>
+        <controls:HostBackdropBackground BackdropColor="{ThemeResource MyAcrylicLightBrush}" />
 
         <StackPanel
             VerticalAlignment="Center"
             HorizontalAlignment="Center">
             <TextBlock
+                x:Uid="AppTitle"
                 FontSize="32"
                 FontWeight="SemiLight"
                 Margin="8"
-                HorizontalAlignment="Center">
-                Testownik
-            </TextBlock>
-            
+                HorizontalAlignment="Center" />
+
             <StackPanel
                 Orientation="Horizontal"
                 Margin="16 0"
@@ -97,7 +92,7 @@
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="model:FolderPath">
-                        <elements:Folder/>
+                        <controls:Folder/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
@@ -117,12 +112,11 @@
                         FontFamily="Segoe MDL2 Assets" 
                         Glyph="&#xE8E5;"/>
                     <TextBlock
+                        x:Uid="DropFiles"
                         FontSize="32"
                         Margin="0 16 0 0"
                         FontWeight="SemiLight"
-                        Foreground="{ThemeResource TextColor}">
-                        Upuść pliki
-                    </TextBlock>
+                        Foreground="{ThemeResource TextColor}" />
                 </StackPanel>
             </Grid>
         </Grid>
@@ -143,11 +137,10 @@
                         Height="64"
                         IsActive="False"/>
                     <TextBlock 
+                        x:Uid="Loading"
                         Margin="0 16 0 0"
                         HorizontalAlignment="Center" 
-                        Foreground="{ThemeResource TextColor}">
-                        Wczytywanie
-                    </TextBlock>
+                        Foreground="{ThemeResource TextColor}" />
                 </StackPanel>
             </Grid>
         </Grid>

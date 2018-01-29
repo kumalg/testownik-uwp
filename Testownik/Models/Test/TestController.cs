@@ -21,7 +21,6 @@ namespace Testownik.Models.Test {
         public int NumberOfLearnedQuestions { get; private set; } = 0;
         public int NumberOfRemainingQuestions { get; private set; } = 0;
         public long Time { get; private set; } = 0;
-        public string TimeString { get; private set; } = "00:00:00";
         private DispatcherTimer timer;
 
         public TestController(IDictionary<string, IQuestion> questions, string folderToken = "", IDictionary<string, int> previousState = null) {
@@ -44,18 +43,7 @@ namespace Testownik.Models.Test {
 
         private void RefreshTimer() {
             Time += timerInterval.Ticks;
-            TimeString = StringFromTime(Time);
             RaisePropertyChanged(nameof(Time));
-            RaisePropertyChanged(nameof(TimeString));
-        }
-
-        private string StringFromTime(long ticks) {
-            TimeSpan t = TimeSpan.FromTicks(Time);
-            return string.Format("{0:D2}:{1:D2}:{2:D2}",
-                t.Hours,
-                t.Minutes,
-                t.Seconds,
-                t.Milliseconds);
         }
 
         public TestController(string path) {

@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
+using Testownik.Helpers;
+using Testownik.Model;
 using Testownik.Models;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -23,6 +25,7 @@ namespace Testownik {
         public App() {
             this.InitializeComponent();
             AppCenter.Start("07b9dcb3-38f6-4413-9587-961e01b296df", typeof(Analytics));
+            RequestedTheme = SettingsHelper.AppTheme.ToApplicationTheme();
         }
 
         /// Extend acrylic into the title bar. 
