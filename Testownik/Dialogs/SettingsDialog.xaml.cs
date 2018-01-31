@@ -14,6 +14,7 @@ namespace Testownik.Dialogs {
         public SettingsDialog() {
             InitializeComponent();
             InitializeThemeRadioButtons();
+            RequestedTheme = SettingsHelper.AppTheme;
         }
 
         private void InitializeThemeRadioButtons() {
@@ -66,7 +67,7 @@ namespace Testownik.Dialogs {
         private void DarkThemeRadioButton_Checked(object sender, RoutedEventArgs e) => SetTheme(ElementTheme.Dark);
 
         private void SetTheme(ElementTheme newTheme) {
-            SettingsHelper.AppTheme = newTheme;
+            SettingsHelper.AppTheme = RequestedTheme = newTheme;
             var frame = (Window.Current.Content as Frame);
             if (frame != null && frame is ThemeAwareFrame themeAwareFrame)
                 themeAwareFrame.AppTheme = newTheme;

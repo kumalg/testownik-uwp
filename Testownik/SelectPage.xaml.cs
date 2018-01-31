@@ -179,6 +179,9 @@ namespace Testownik {
             handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void ApplicationInfoButton_Click(object sender, RoutedEventArgs e) { }
+        private async void ApplicationInfoButton_Click(object sender, RoutedEventArgs e) {
+            var dialog = new InfoDialog();
+            await dialog.ShowAsync();
+        }
     }
 }

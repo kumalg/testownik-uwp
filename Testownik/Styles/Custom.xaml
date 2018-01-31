@@ -298,7 +298,7 @@
 
     <!-- Content Dialog -->
     <Style TargetType="ContentDialog" x:Key="MyContentDialog">
-        <Setter Property="Foreground" Value="{ThemeResource SystemControlPageTextBaseHighBrush}" />
+        <Setter Property="Foreground" Value="{ThemeResource TextColor}" />
         <!--<Setter Property="Background" Value="{ThemeResource MyInAppAcrylicBrush}" />-->
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Top" />

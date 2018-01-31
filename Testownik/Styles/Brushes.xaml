@@ -21,6 +21,7 @@
             <SolidColorBrush x:Key="TextColor" Color="#303030" />
 
             <SolidColorBrush x:Key="AppBackgroundColor" Color="#ebebeb" />
+            <Color x:Key="AppBackgroundColorSemiTransparent">#99ebebeb"</Color>
             <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#ffffff" />
             <SolidColorBrush x:Key="BlockButtonBackground" Color="#ffffff" />
 
@@ -55,6 +56,7 @@
             <SolidColorBrush x:Key="TextColor" Color="#303030" />
 
             <SolidColorBrush x:Key="AppBackgroundColor" Color="#ebebeb" />
+            <Color x:Key="AppBackgroundColorSemiTransparent">#99ebebeb"</Color>
             <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#ffffff" />
             <SolidColorBrush x:Key="BlockButtonBackground" Color="#ffffff" />
 
@@ -89,6 +91,7 @@
             <SolidColorBrush x:Key="TextColor" Color="#303030" />
 
             <SolidColorBrush x:Key="AppBackgroundColor" Color="#ebebeb" />
+            <Color x:Key="AppBackgroundColorSemiTransparent">#99ebebeb"</Color>
             <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#ffffff" />
             <SolidColorBrush x:Key="BlockButtonBackground" Color="#ffffff" />
 
@@ -123,6 +126,7 @@
             <SolidColorBrush x:Key="TextColor" Color="#eeeeee" />
 
             <SolidColorBrush x:Key="AppBackgroundColor" Color="#202020" />
+            <Color x:Key="AppBackgroundColorSemiTransparent">#CC202020"</Color>
             <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#303030" />
             <SolidColorBrush x:Key="BlockButtonBackground" Color="#303030" />
             
@@ -135,7 +139,7 @@
             <SolidColorBrush x:Key="AppButtonPressed" Color="#ffffff" Opacity="0.2"/>
             <SolidColorBrush x:Key="AppButtonDisabledForeground" Color="#ffffff" Opacity="0.5"/>
 
-            <Color x:Key="MyAcrylicBrush" >#EE202020</Color>
+            <Color x:Key="MyAcrylicBrush" >#DD202020</Color>
             <Color x:Key="MyAcrylicLightBrush" >#EE191919</Color>
             <Color x:Key="MyInAppAcrylicBrush" >#99191919</Color>
         </ResourceDictionary>

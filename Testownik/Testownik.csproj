@@ -106,6 +106,7 @@
     <Compile Include="Controls\Folder.xaml.cs">
       <DependentUpon>Folder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\InfoDialog.xaml.cs" />
     <Compile Include="Dialogs\MessageDialog.xaml.cs">
       <DependentUpon>MessageDialog.xaml</DependentUpon>
     </Compile>
@@ -183,6 +184,10 @@
     <Page Include="Dialogs\MessageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\InfoDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\SettingsDialog.xaml">
       <SubType>Designer</SubType>
