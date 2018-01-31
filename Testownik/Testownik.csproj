@@ -18,7 +18,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>Testownik_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>545F67E24744F569CD4F2C8F95AF9E88D1C09B75</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>2860839F7F0129CA6A527DC33C4A633952EE52B4</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Auto</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
