@@ -21,82 +21,84 @@
 
     <Grid>
         <controls:HostBackdropBackground BackdropColor="{ThemeResource MyAcrylicLightBrush}" />
-
-        <StackPanel
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center">
-            <TextBlock
-                x:Uid="AppTitle"
-                FontSize="32"
-                FontWeight="SemiLight"
-                Margin="8"
-                HorizontalAlignment="Center" />
-
+        <ScrollViewer
+            VerticalScrollBarVisibility="Auto">
             <StackPanel
-                Orientation="Horizontal"
-                Margin="16 0"
-                HorizontalAlignment="Right">
-                <Button
-                    Click="FolderPickerButton_Click"
-                    RequestedTheme="Dark"
-                    Margin="4 16"
-                    Style="{ThemeResource FolderButton}"
-                    Width="176"
-                    Background="{ThemeResource PrimaryColor}"
-                    Foreground="White"
-                    HorizontalAlignment="Center">
-                    <SymbolIcon Symbol="NewFolder"/>
-                </Button>
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+                <TextBlock
+                    x:Uid="AppTitle"
+                    FontSize="32"
+                    FontWeight="SemiLight"
+                    Margin="8"
+                    HorizontalAlignment="Center" />
 
-                <Button
-                    Click="ApplicationInfoButton_Click"
-                    Margin="4 16"
-                    Style="{ThemeResource FolderButton}"
-                    Width="64"
-                    HorizontalAlignment="Center">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;"/>
-                </Button>
-                
-                <Button
-                    Click="SettingsButton_Click"
-                    Margin="4 16"
-                    Style="{ThemeResource FolderButton}"
-                    Width="64"
-                    HorizontalAlignment="Center">
-                    <SymbolIcon Symbol="Setting"/>
-                </Button>
-            </StackPanel>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Margin="16 0"
+                    HorizontalAlignment="Right">
+                    <Button
+                        Click="FolderPickerButton_Click"
+                        RequestedTheme="Dark"
+                        Margin="4 16"
+                        Style="{ThemeResource FolderButton}"
+                        Width="176"
+                        Background="{ThemeResource PrimaryColor}"
+                        Foreground="White"
+                        HorizontalAlignment="Center">
+                        <SymbolIcon Symbol="NewFolder"/>
+                    </Button>
 
-            <ListView
-                Padding="16 8 16 24"
-                HorizontalAlignment="Center"
-                SelectionMode="None"
-                ItemClick="RecentFolder_Click"
-                IsItemClickEnabled="True"
-                ItemsSource="{x:Bind FolderPaths, Mode=OneWay}">
+                    <Button
+                        Click="ApplicationInfoButton_Click"
+                        Margin="4 16"
+                        Style="{ThemeResource FolderButton}"
+                        Width="64"
+                        HorizontalAlignment="Center">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;"/>
+                    </Button>
 
-                <ListView.ItemContainerStyle>
-                    <Style
+                    <Button
+                        Click="SettingsButton_Click"
+                        Margin="4 16"
+                        Style="{ThemeResource FolderButton}"
+                        Width="64"
+                        HorizontalAlignment="Center">
+                        <SymbolIcon Symbol="Setting"/>
+                    </Button>
+                </StackPanel>
+
+                <ListView
+                    Padding="16 8 16 24"
+                    HorizontalAlignment="Center"
+                    SelectionMode="None"
+                    ItemClick="RecentFolder_Click"
+                    IsItemClickEnabled="True"
+                    ItemsSource="{x:Bind FolderPaths, Mode=OneWay}">
+
+                    <ListView.ItemContainerStyle>
+                        <Style
                         TargetType="ListViewItem">
-                        <Setter
+                            <Setter
                             Property="HorizontalContentAlignment"
                             Value="Stretch" />
-                        <Setter
+                            <Setter
                             Property="Padding"
                             Value="0" />
-                        <Setter
+                            <Setter
                             Property="Margin"
                             Value="4"/>
-                    </Style>
+                        </Style>
 
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="model:FolderPath">
-                        <controls:Folder/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="model:FolderPath">
+                            <controls:Folder/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
 
         <Grid x:Name="DragGrid"
             Visibility="Collapsed" >

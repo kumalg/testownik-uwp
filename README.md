@@ -1,3 +1,11 @@
 # Testownik
 
-[![Build status](https://build.appcenter.ms/v0.1/apps/1a257e15-20e6-4fc1-acda-a8f88ba3a759/branches/master/badge)](https://appcenter.ms)
+Source code for UWP app of 'Testownik'
+
+[![Build status](https://ci.appveyor.com/api/projects/status/ifab4osmpvwd998o?svg=true)](https://ci.appveyor.com/project/kumalg/testownik)
+
+## Microsoft Store
+[https://www.microsoft.com/store/apps/9N429ZCS67D9](https://www.microsoft.com/store/apps/9N429ZCS67D9)
+
+## Sample quiz
+If you want to see sample quiz, please press "T" key after launch.

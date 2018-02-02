@@ -20,7 +20,7 @@
     <PackageCertificateKeyFile>Testownik_StoreKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>2860839F7F0129CA6A527DC33C4A633952EE52B4</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxBundle>Auto</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -99,6 +99,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\LongExtensions.cs" />
     <Compile Include="Converters\LongToTimeStringConverter.cs" />
     <Compile Include="Controls\Answer.xaml.cs">
       <DependentUpon>Answer.xaml</DependentUpon>
@@ -106,6 +107,7 @@
     <Compile Include="Controls\Folder.xaml.cs">
       <DependentUpon>Folder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\TimeSpanExtensions.cs" />
     <Compile Include="Dialogs\InfoDialog.xaml.cs" />
     <Compile Include="Dialogs\MessageDialog.xaml.cs">
       <DependentUpon>MessageDialog.xaml</DependentUpon>

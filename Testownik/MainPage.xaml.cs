@@ -14,52 +14,53 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Testownik.Converters;
 
 namespace Testownik {
-    public sealed partial class MainPage : Page, INotifyPropertyChanged {
-        public string appName = SystemInformation.ApplicationName;
-                
-        public List<AnswerBlock> answers;
+    public sealed partial class MainPage : INotifyPropertyChanged {
+        public string AppName = SystemInformation.ApplicationName;
+
+        private List<AnswerBlock> _answers;
         public List<AnswerBlock> Answers {
-            get => answers;
+            get => _answers;
             set {
-                answers = value;
+                _answers = value;
                 RaisePropertyChanged(nameof(Answers));
             }
         }
 
-        public List<ComboBox> multiAnswers;
+        private List<ComboBox> _multiAnswers;
         public List<ComboBox> MultiAnswers {
-            get => multiAnswers;
+            get => _multiAnswers;
             set {
-                multiAnswers = value;
+                _multiAnswers = value;
                 RaisePropertyChanged(nameof(MultiAnswers));
             }
         }
 
-        public TestController testController;
+        private TestController _testController;
         public TestController TestController {
-            get => testController;
+            get => _testController;
             set {
-                testController = value;
+                _testController = value;
                 RaisePropertyChanged(nameof(TestController));
             }
         }
 
-        public KeyValuePair<string, IQuestion> question;
+        private KeyValuePair<string, IQuestion> _question;
         public KeyValuePair<string, IQuestion> Question {
-            get => question;
+            get => _question;
             set {
-                question = value;
+                _question = value;
                 RaisePropertyChanged(nameof(Question));
             }
         }
 
-        public int reoccurrencesOfQuestion;
+        private int _reoccurrencesOfQuestion;
         public int ReoccurrencesOfQuestion {
-            get => reoccurrencesOfQuestion;
+            get => _reoccurrencesOfQuestion;
             set {
-                reoccurrencesOfQuestion = value;
+                _reoccurrencesOfQuestion = value;
                 RaisePropertyChanged(nameof(ReoccurrencesOfQuestion));
             }
         }
@@ -85,7 +86,7 @@ namespace Testownik {
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             if (e.Parameter is TestController) {
                 TestController = (TestController)e.Parameter;
-                TestController.Start();
+                TestController.StartTimer();
                 NextQuestion();
             }
 
@@ -93,13 +94,14 @@ namespace Testownik {
                 // Show UI in title bar if opted-in and in-app backstack is not empty.
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
                     AppViewBackButtonVisibility.Visible;
-            } else {
+            }
+            else {
                 // Remove the UI from the title bar if in-app back stack is empty.
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
                     AppViewBackButtonVisibility.Collapsed;
             }
 
-            base.OnNavigatedTo (e);
+            base.OnNavigatedTo(e);
         }
 
         private void ShowAcceptAnswerButton() {
@@ -114,18 +116,19 @@ namespace Testownik {
 
         private void ButtonAcceptAnswer_Click(object sender, RoutedEventArgs e) {
             IEnumerable<string> selectedAnswers;
-            if (question.Value is Question)
+            if (_question.Value is Question)
                 selectedAnswers = AnswersGridView.SelectedItems.Cast<AnswerBlock>().Select(i => i.Answer.Key);
-            else if (question.Value is MultiQuestion)
-                selectedAnswers = AnswersListView.Items.Cast<ComboBox>().Select(i => i.SelectedValue == null ? "" : (i.SelectedValue as ComboBoxItem).Tag.ToString());
-            else selectedAnswers = new List<string>();
+            else if (_question.Value is MultiQuestion)
+                selectedAnswers = AnswersListView.Items?.Cast<ComboBox>().Select(i => i.SelectedValue == null ? "" : (i.SelectedValue as ComboBoxItem).Tag.ToString());
+            else
+                selectedAnswers = new List<string>();
 
             TestController.CheckAnswer(Question.Key, selectedAnswers);
 
             var gridViewItems = AnswersGridView
                 .Items
                 .Cast<AnswerBlock>()
-                .Where (i => question.Value.CorrectAnswerKeys.Contains(i.Answer.Key));
+                .Where(i => _question.Value.CorrectAnswerKeys.Contains(i.Answer.Key));
             foreach (var item in gridViewItems)
                 item.MarkAsCorrect();
 
@@ -135,14 +138,14 @@ namespace Testownik {
         private async void ButtonNextQuestion_Click(object sender, RoutedEventArgs e) {
             if (TestController.IsTestCompleted()) {
                 var contentDialog = new ContentDialog {
-                    Content = "Test zakończony!",
-                    SecondaryButtonText = "Wyjdź"
+                    Title = "Test zakończony!",
+                    Content = $"Czas: {_testController.Time.ToTimeString()}",
+                    PrimaryButtonText = "Wyjdź"
                 };
                 var result = await contentDialog.ShowAsync();
-                if (result == ContentDialogResult.Secondary) {
-                    Frame.GoBack();
-                }
-            } else {
+                Frame.GoBack();
+            }
+            else {
                 NextQuestion();
             }
         }
@@ -155,14 +158,14 @@ namespace Testownik {
             if (Question.Value is Question) {
                 MultiAnswers = null;
                 Answers = (Question.Value as Question).Answers
-                    .Select(i => new AnswerBlock { Answer = i, ImageBackground = new SolidColorBrush((i.Content is ImageContent) ? Colors.White : Colors.Transparent)})
+                    .Select(i => new AnswerBlock { Answer = i, ImageBackground = new SolidColorBrush((i.Content is ImageContent) ? Colors.White : Colors.Transparent) })
                     .OrderBy(a => Guid.NewGuid())
                     .ToList();
             }
             else if (Question.Value is MultiQuestion) {
                 Answers = null;
                 MultiAnswers = (Question.Value as MultiQuestion).Answers
-                    .Select( i => new ComboBox { ItemsSource = i.OrderBy(a => Guid.NewGuid()).Select(x => new ComboBoxItem { Content = x.Content.Value, Tag = x.Key }) } )
+                    .Select(i => new ComboBox { ItemsSource = i.OrderBy(a => Guid.NewGuid()).Select(x => new ComboBoxItem { Content = x.Content.Value, Tag = x.Key }) })
                     .ToList();
             }
 
@@ -187,7 +190,8 @@ namespace Testownik {
                     actualSelected.Remove(itemToChangeSelection);
                 else
                     actualSelected.Add(itemToChangeSelection);
-            } else if (e.Key == VirtualKey.X) {
+            }
+            else if (e.Key == VirtualKey.X) {
                 if (ButtonAcceptAnswer.Visibility == Visibility.Visible)
                     ButtonAcceptAnswer_Click(ButtonAcceptAnswer, null);
                 else if (ButtonNextQuestion.Visibility == Visibility.Visible)
@@ -199,6 +203,11 @@ namespace Testownik {
         private void RaisePropertyChanged(string propertyName) {
             var handler = PropertyChanged;
             handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private async void InfoButton_Click(object sender, RoutedEventArgs e) {
+            var dialog = new InfoDialog();
+            await dialog.ShowAsync();
         }
     }
 }

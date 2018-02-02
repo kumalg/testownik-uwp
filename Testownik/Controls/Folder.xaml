@@ -23,7 +23,6 @@
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center">
                 <TextBlock
-                    TextTrimming="CharacterEllipsis"
                     Text="{Binding Path}"
                     Foreground="{ThemeResource TextColor}"
                     HorizontalAlignment="Right"/>

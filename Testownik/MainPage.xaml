@@ -49,7 +49,7 @@
             <TextBlock x:Name="AppTitle"
                 Margin="12 0"
                 VerticalAlignment="Center"
-                Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind appName}" />
+                Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind AppName}" />
         </Grid>
         <!-- End of TitleBar -->
 
@@ -282,6 +282,7 @@
                 HorizontalAlignment="Right">
                 <Button
                     Style="{ThemeResource SettingsButton}"
+                    Click="InfoButton_Click"
                     Width="48"
                     Height="48">
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;"/>
