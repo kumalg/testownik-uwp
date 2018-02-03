@@ -11,12 +11,12 @@ You can download this app directly from [Microsoft Store](https://www.microsoft.
 ## Screenshots
 
 Dark theme:
-![Testownik/Screenshots/select_dark.png](https://github.com/kumalg/Testownik/Screenshots/select_dark.png)
-![Testownik/Screenshots/main_dark.png](https://github.com/kumalg/Testownik/Screenshots/main_dark.png)
+![Testownik/Screenshots/select_dark.png](https://github.com/kumalg/Testownik/blob/master/Screenshots/select_dark.png)
+![Testownik/Screenshots/main_dark.png](https://github.com/kumalg/Testownik/blob/master/Screenshots/main_dark.png)
 
 Light theme:
-![Testownik/Screenshots/select_light.png](https://github.com/kumalg/Testownik/Screenshots/select_light.png)
-![Testownik/Screenshots/main_light.png](https://github.com/kumalg/Testownik/Screenshots/main_light.png)
+![Testownik/Screenshots/select_light.png](https://github.com/kumalg/Testownik/blob/master/Screenshots/select_light.png)
+![Testownik/Screenshots/main_light.png](https://github.com/kumalg/Testownik/blob/master/Screenshots/main_light.png)
 
 ## Sample Quiz
 If you want to see sample quiz, please press "T" key after launch.
