@@ -1,9 +1,7 @@
-﻿using Windows.UI.Xaml.Controls;
-
-namespace Testownik.Controls {
-    public sealed partial class Folder : Page {
+﻿namespace Testownik.Controls {
+    public sealed partial class Folder {
         public Folder() {
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

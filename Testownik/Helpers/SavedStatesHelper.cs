@@ -1,17 +1,16 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Threading.Tasks;
-using Testownik.Models.Test;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
+using Newtonsoft.Json;
+using Testownik.Models;
+using Testownik.Models.Test;
 
-namespace Testownik.Model.Helpers {
+namespace Testownik.Helpers {
     public class SavedStatesHelper {
         public static async Task<JsonTestController> GetSavedStateOfTest(string token) {
             var folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("SavedStates", CreationCollisionOption.OpenIfExists);
-            var jsonFile = await folder.TryGetItemAsync(token) as IStorageFile;
-            if (jsonFile == null)
+            if (!(await folder.TryGetItemAsync(token) is IStorageFile jsonFile))
                 return null;
 
             var dialog = new ContentDialog {

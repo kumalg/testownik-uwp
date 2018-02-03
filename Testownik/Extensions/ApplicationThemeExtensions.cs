@@ -1,7 +1,7 @@
 ﻿using Windows.UI.Xaml;
 
-namespace Testownik.Helpers {
-    public static class ThemeHelper {
+namespace Testownik.Extensions {
+    public static class ApplicationThemeExtensions {
         public static ApplicationTheme ToApplicationTheme(this ElementTheme elementTheme) {
             switch (elementTheme) {
                 case ElementTheme.Dark:

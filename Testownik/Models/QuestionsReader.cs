@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Testownik.Models.Test;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
+using Testownik.Models.Test;
 
-namespace Testownik.Model {
-    class QuestionsReader {
+namespace Testownik.Models {
+    public class QuestionsReader {
         public static async Task<StorageFolder> FindFolderByPath(string path) {
             var folder = await StorageFolder.GetFolderFromPathAsync(path);
             return folder;
@@ -26,14 +26,14 @@ namespace Testownik.Model {
         }
 
         public static async Task<IReadOnlyCollection<StorageFile>> ReadFiles(StorageFolder folder) {
-            return await folder.GetFilesAsync ();
+            return await folder.GetFilesAsync();
         }
 
-        public async static Task<IDictionary<string, IQuestion>> ReadQuestions(IReadOnlyCollection<StorageFile> sortedFiles) {
+        public static async Task<IDictionary<string, IQuestion>> ReadQuestions(IReadOnlyCollection<StorageFile> sortedFiles) {
             var list = new Dictionary<string, IQuestion>();
 
             try {
-                foreach (StorageFile item in sortedFiles) {
+                foreach (var item in sortedFiles) {
                     if (item.FileType != ".txt")
                         continue;
 
@@ -41,45 +41,49 @@ namespace Testownik.Model {
                     if (question != null)
                         list.Add(item.Name, question);
                 }
-            } catch(Exception e) {
-
-            };
+            }
+            catch (Exception) { }
 
             return list;
         }
 
         public static async Task<string> ReadTextAsync(StorageFile file) {
-            IBuffer buffer = await FileIO.ReadBufferAsync(file);
-            DataReader reader = DataReader.FromBuffer(buffer);
-            byte[] fileContent = new byte[reader.UnconsumedBufferLength];
+            var buffer = await FileIO.ReadBufferAsync(file);
+            var reader = DataReader.FromBuffer(buffer);
+            var fileContent = new byte[reader.UnconsumedBufferLength];
             reader.ReadBytes(fileContent);
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            return GetEncoding(new byte[4] { fileContent[0], fileContent[1], fileContent[2], fileContent[3] }).GetString(fileContent, 0, fileContent.Length);
+            return GetEncoding(new[] { fileContent[0], fileContent[1], fileContent[2], fileContent[3] }).GetString(fileContent, 0, fileContent.Length);
         }
 
         public static Encoding GetEncoding(byte[] bom) {
             // Analyze the BOM
-            if (bom[0] == 0x2b && bom[1] == 0x2f && bom[2] == 0x76) return Encoding.UTF7;
-            if (bom[0] == 0xef && bom[1] == 0xbb && bom[2] == 0xbf) return Encoding.UTF8;
-            if (bom[0] == 0xff && bom[1] == 0xfe) return Encoding.Unicode; //UTF-16LE
-            if (bom[0] == 0xfe && bom[1] == 0xff) return Encoding.BigEndianUnicode; //UTF-16BE
-            if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
+            if (bom[0] == 0x2b && bom[1] == 0x2f && bom[2] == 0x76)
+                return Encoding.UTF7;
+            if (bom[0] == 0xef && bom[1] == 0xbb && bom[2] == 0xbf)
+                return Encoding.UTF8;
+            if (bom[0] == 0xff && bom[1] == 0xfe)
+                return Encoding.Unicode; //UTF-16LE
+            if (bom[0] == 0xfe && bom[1] == 0xff)
+                return Encoding.BigEndianUnicode; //UTF-16BE
+            if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff)
+                return Encoding.UTF32;
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            return Encoding.GetEncoding (1250);
+            return Encoding.GetEncoding(1250);
         }
 
         public static async Task<IQuestion> ReadQuestion(StorageFile file, IReadOnlyCollection<StorageFile> allFiles) {
-            string text = await ReadTextAsync(file);
+            var text = await ReadTextAsync(file);
 
             var lines = text
                 .Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
             if (lines.First().StartsWith("X"))
                 return ParseQuestion(lines, allFiles);
-            else if (lines.First().StartsWith("Y"))
+            if (lines.First().StartsWith("Y"))
                 return ParseMultiQuestion(lines, allFiles);
-            else return null;
+            return null;
         }
 
         private static Question ParseQuestion(string[] lines, IReadOnlyCollection<StorageFile> allFiles) {
@@ -98,8 +102,7 @@ namespace Testownik.Model {
                 .Select((i, index) => CreateAnswer(i, index.ToString(), allFiles))
                 .ToList();
 
-            return new Question
-            {
+            return new Question {
                 Content = content,
                 Answers = answers,
                 CorrectAnswerKeys = correctAnswerKeys
@@ -120,7 +123,6 @@ namespace Testownik.Model {
                 .Skip(2)
                 .Select((i, index) => Regex.Split(i, @";;")
                                         .Where(s => s != String.Empty)
-                                        //.Select((subI, subIndex) => CreateAnswer(subI, $"{index}_{subIndex + 1}", allFiles))
                                         .Select((subI, subIndex) => new Answer { Content = new ComboBoxContent(subI), Key = $"{index}_{subIndex + 1}" } as IAnswer)
                                         .ToList())
                 .ToList();
@@ -140,18 +142,16 @@ namespace Testownik.Model {
         }
 
         private static IContent ParseContent(string content, IReadOnlyCollection<StorageFile> allFiles) {
-            if (content.StartsWith("[img]")) {
-                var name = content.ToLower();
-                var startIndex = name.IndexOf("[img]") + "[img]".Length;
-                var endIndex = name.IndexOf("[/img]");
-                name = name.Substring(startIndex, endIndex - startIndex);
-
-                StorageFile file = allFiles.FirstOrDefault(i => i.Name.ToLower() == name);
-                return new ImageContent(file);
-            }
-            else {
+            if (!content.StartsWith("[img]"))
                 return new TextContent(content);
-            }
+
+            var name = content.ToLower();
+            var startIndex = name.IndexOf("[img]") + "[img]".Length;
+            var endIndex = name.IndexOf("[/img]");
+            name = name.Substring(startIndex, endIndex - startIndex);
+
+            var file = allFiles.FirstOrDefault(i => i.Name.ToLower() == name);
+            return new ImageContent(file);
         }
     }
 }

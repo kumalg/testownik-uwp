@@ -1,4 +1,5 @@
-﻿<Page x:Class="Testownik.MainPage"
+﻿<Page
+    x:Class="Testownik.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     MinWidth="512"
@@ -15,28 +16,34 @@
         <TransitionCollection>
             <NavigationThemeTransition>
                 <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                    <CommonNavigationTransitionInfo/>
+                    <CommonNavigationTransitionInfo />
                 </NavigationThemeTransition.DefaultNavigationTransitionInfo>
             </NavigationThemeTransition>
         </TransitionCollection>
     </Page.Transitions>
 
     <Page.Resources>
-        <conv:LongToTimeStringConverter x:Name="LongToTimeStringConverter" />
+        <conv:LongToTimeStringConverter
+            x:Name="LongToTimeStringConverter" />
     </Page.Resources>
-    
-    <Grid Background="{ThemeResource AppBackgroundColor}">
-        
+
+    <Grid
+        Background="{ThemeResource AppBackgroundColor}">
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition
+                Height="Auto" />
             <!-- TitleBar -->
-            <RowDefinition Height="*"/>
+            <RowDefinition
+                Height="*" />
             <!-- App -->
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <!-- TitleBar -->
@@ -46,20 +53,25 @@
             Grid.ColumnSpan="2"
             Background="{ThemeResource AppBackgroundColor}"
             Canvas.ZIndex="998">
-            <TextBlock x:Name="AppTitle"
+            <TextBlock
+                x:Name="AppTitle"
                 Margin="12 0"
                 VerticalAlignment="Center"
-                Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind AppName}" />
+                Style="{ThemeResource CaptionTextBlockStyle}"
+                Text="{x:Bind AppName}" />
         </Grid>
         <!-- End of TitleBar -->
 
         <Grid
             Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="*" />
             </Grid.RowDefinitions>
-            <toolkitControls:DropShadowPanel BlurRadius="32"
+            <toolkitControls:DropShadowPanel
+                BlurRadius="32"
                 ShadowOpacity="0.1"
                 OffsetX="0"
                 OffsetY="4"
@@ -80,7 +92,7 @@
                             Foreground="{ThemeResource TextColor}"
                             Content="{x:Bind Question.Value.Content.Value, Mode=OneWay}"
                             TextWrapping="WrapWholeWords"
-                            AutomationProperties.AccessibilityView="Raw"/>
+                            AutomationProperties.AccessibilityView="Raw" />
                         <!--<TextBlock
                             Margin="64 0"
                             Foreground="{ThemeResource TextColor}"
@@ -111,16 +123,17 @@
                         Style="{ThemeResource ReoccurrenceTextBlockStyle}" />
                     <TextBlock
                         Style="{ThemeResource ReoccurrenceValueTextBlockStyle}"
-                        Text="{x:Bind ReoccurrencesOfQuestion, Mode=OneWay}"/>
+                        Text="{x:Bind ReoccurrencesOfQuestion, Mode=OneWay}" />
                 </StackPanel>
             </Border>
 
             <ScrollViewer
                 VerticalScrollBarVisibility="Auto"
                 Grid.Row="1">
-                
+
                 <Grid>
-                    <GridView x:Name="AnswersGridView"
+                    <GridView
+                        x:Name="AnswersGridView"
                         VerticalAlignment="Top"
                         Style="{ThemeResource AnswersGridView}"
                         ItemsSource="{x:Bind Answers, Mode=OneWay}"
@@ -128,13 +141,15 @@
                         SelectionMode="Multiple">
 
                         <GridView.ItemTemplate>
-                            <DataTemplate x:DataType="test:IAnswer">
-                                <controls:Answer/>
+                            <DataTemplate
+                                x:DataType="test:IAnswer">
+                                <controls:Answer />
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
 
-                    <ListView x:Name="AnswersListView"
+                    <ListView
+                        x:Name="AnswersListView"
                         VerticalAlignment="Top"
                         ItemsSource="{x:Bind MultiAnswers, Mode=OneWay}"
                         Margin="32"
@@ -158,12 +173,14 @@
             Width="256px">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="Auto" />
             </Grid.RowDefinitions>
 
-            <controls:HostBackdropBackground 
-                Grid.RowSpan="2" 
+            <controls:HostBackdropBackground
+                Grid.RowSpan="2"
                 BackdropColor="{ThemeResource MyAcrylicBrush}" />
 
             <ScrollViewer
@@ -258,20 +275,24 @@
                 VerticalAlignment="Bottom"
                 Margin="-32 0 0 48">
                 <Grid>
-                    <Button x:Name="ButtonAcceptAnswer"
+                    <Button
+                        x:Name="ButtonAcceptAnswer"
                         Click="ButtonAcceptAnswer_Click"
                         Style="{ThemeResource RoundedButton}"
                         Width="64"
                         Height="64">
-                        <SymbolIcon Symbol="Accept"/>
+                        <SymbolIcon
+                            Symbol="Accept" />
                     </Button>
-                    <Button x:Name="ButtonNextQuestion"
+                    <Button
+                        x:Name="ButtonNextQuestion"
                         Visibility="Collapsed"
                         Click="ButtonNextQuestion_Click"
                         Style="{ThemeResource RoundedButton}"
                         Width="64"
                         Height="64">
-                        <SymbolIcon Symbol="Forward"/>
+                        <SymbolIcon
+                            Symbol="Forward" />
                     </Button>
                 </Grid>
             </toolkitControls:DropShadowPanel>
@@ -285,14 +306,17 @@
                     Click="InfoButton_Click"
                     Width="48"
                     Height="48">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;"/>
+                    <FontIcon
+                        FontFamily="Segoe MDL2 Assets"
+                        Glyph="&#xE946;" />
                 </Button>
                 <Button
                     Style="{ThemeResource SettingsButton}"
                     Click="SettingsButton_Click"
                     Width="48"
                     Height="48">
-                    <SymbolIcon Symbol="Setting"/>
+                    <SymbolIcon
+                        Symbol="Setting" />
                 </Button>
             </StackPanel>
         </Grid>

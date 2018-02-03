@@ -1,7 +1,7 @@
 ﻿using Windows.Storage;
 using Windows.UI.Xaml;
 
-namespace Testownik.Model {
+namespace Testownik.Helpers {
     public class SettingsHelper {
         private static readonly ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
 
@@ -37,16 +37,25 @@ namespace Testownik.Model {
         public static ElementTheme AppTheme {
             get {
                 switch (LocalSettings.Values["appTheme"]) {
-                    case "Dark": return ElementTheme.Dark;
-                    case "Light": return ElementTheme.Light;
-                    default: return ElementTheme.Default;
+                    case "Dark":
+                        return ElementTheme.Dark;
+                    case "Light":
+                        return ElementTheme.Light;
+                    default:
+                        return ElementTheme.Default;
                 }
             }
             set {
                 switch (value) {
-                    case ElementTheme.Dark: LocalSettings.Values["appTheme"] = "Dark"; break;
-                    case ElementTheme.Light: LocalSettings.Values["appTheme"] = "Light"; break;
-                    default: LocalSettings.Values["appTheme"] = "Default"; break;
+                    case ElementTheme.Dark:
+                        LocalSettings.Values["appTheme"] = "Dark";
+                        break;
+                    case ElementTheme.Light:
+                        LocalSettings.Values["appTheme"] = "Light";
+                        break;
+                    default:
+                        LocalSettings.Values["appTheme"] = "Default";
+                        break;
                 }
             }
         }

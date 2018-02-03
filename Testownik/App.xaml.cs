@@ -1,8 +1,6 @@
 ﻿using System;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
-using Testownik.Helpers;
-using Testownik.Model;
 using Testownik.Models;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -12,6 +10,8 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Testownik.Extensions;
+using Testownik.Helpers;
 
 namespace Testownik {
     /// <summary>
@@ -23,15 +23,15 @@ namespace Testownik {
         /// wykonywanego i jest logicznym odpowiednikiem metod main() lub WinMain().
         /// </summary>
         public App() {
-            this.InitializeComponent();
+            InitializeComponent();
             AppCenter.Start("07b9dcb3-38f6-4413-9587-961e01b296df", typeof(Analytics));
             RequestedTheme = SettingsHelper.AppTheme.ToApplicationTheme();
         }
 
         /// Extend acrylic into the title bar. 
-        private void ExtendAcrylicIntoTitleBar () {
+        private void ExtendAcrylicIntoTitleBar() {
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.ButtonBackgroundColor = Colors.Transparent;
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
@@ -52,9 +52,9 @@ namespace Testownik {
             //titleBar.ButtonInactiveBackgroundColor = Windows.UI.Colors.SeaGreen;
         }
 
-        private void App_BackRequested (object sender,
+        private void App_BackRequested(object sender,
             Windows.UI.Core.BackRequestedEventArgs e) {
-            Frame rootFrame = Window.Current.Content as Frame;
+            var rootFrame = Window.Current.Content as Frame;
             if (rootFrame == null)
                 return;
 
@@ -62,7 +62,7 @@ namespace Testownik {
             // already been handled .
             if (rootFrame.CanGoBack && e.Handled == false) {
                 e.Handled = true;
-                rootFrame.GoBack ();
+                rootFrame.GoBack();
             }
         }
 
@@ -72,7 +72,7 @@ namespace Testownik {
         /// </summary>
         /// <param name="e">Szczegóły dotyczące żądania uruchomienia i procesu.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e) {
-            Frame rootFrame = Window.Current.Content as Frame;
+            var rootFrame = Window.Current.Content as Frame;
 
             // Nie powtarzaj inicjowania aplikacji, gdy w oknie znajduje się już zawartość,
             // upewnij się tylko, że okno jest aktywne
@@ -105,7 +105,7 @@ namespace Testownik {
                 ExtendAcrylicIntoTitleBar();
             }
         }
-       
+
         /// <summary>
         /// Wywoływane, gdy nawigacja do konkretnej strony nie powiedzie się
         /// </summary>
@@ -123,7 +123,7 @@ namespace Testownik {
         /// <param name="sender">Źródło żądania wstrzymania.</param>
         /// <param name="e">Szczegóły żądania wstrzymania.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e) {
-            var deferral = e.SuspendingOperation.GetDeferral ();
+            var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Zapisz stan aplikacji i zatrzymaj wszelkie aktywności w tle
             deferral.Complete();
         }

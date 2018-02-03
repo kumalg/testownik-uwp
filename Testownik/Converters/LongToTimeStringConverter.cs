@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
+using Testownik.Extensions;
 
 namespace Testownik.Converters {
     public class LongToTimeStringConverter : IValueConverter {

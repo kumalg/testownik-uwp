@@ -7,12 +7,12 @@ namespace Testownik.Models.Test {
     public class ImageContent : IContent {
         public object Value {
             get {
-                if (image == null)
-                    image = new Image() {
+                if (_image == null)
+                    _image = new Image {
                         Stretch = Windows.UI.Xaml.Media.Stretch.None
                     };
                 SetNewBitmapImage();
-                return image;
+                return _image;
             }
         }
         public StorageFile File { get; set; }
@@ -21,15 +21,15 @@ namespace Testownik.Models.Test {
             File = file;
         }
 
-        private Image image;
-        private BitmapImage bitmapImage;
+        private Image _image;
+        private BitmapImage _bitmapImage;
         private async void SetNewBitmapImage() {
-            if (bitmapImage != null || File == null)
+            if (_bitmapImage != null || File == null)
                 return;
 
-            bitmapImage = new BitmapImage();
-            bitmapImage.SetSource(await File.OpenAsync(FileAccessMode.Read));
-            image.Source = bitmapImage;
+            _bitmapImage = new BitmapImage();
+            _bitmapImage.SetSource(await File.OpenAsync(FileAccessMode.Read));
+            _image.Source = _bitmapImage;
         }
     }
 }

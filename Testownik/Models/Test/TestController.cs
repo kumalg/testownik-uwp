@@ -2,31 +2,28 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Testownik.Model;
 using Windows.UI.Xaml;
+using Testownik.Helpers;
 
-namespace Testownik.Models.Test
-{
-    public class TestController : INotifyPropertyChanged
-    {
-        private static TimeSpan timerInterval = TimeSpan.FromSeconds(1);
-        private Random random = new Random();
+namespace Testownik.Models.Test {
+    public class TestController : INotifyPropertyChanged {
+        private static TimeSpan _timerInterval = TimeSpan.FromSeconds(1);
+        private readonly Random _random = new Random();
 
         public IDictionary<string, IQuestion> Questions { get; set; }
         public IDictionary<string, int> Reoccurrences { get; set; }
 
         public string FolderToken { get; private set; } = "";
-        public int NumberOfQuestions { get; private set; } = 0;
-        public int NumberOfAnswers { get; private set; } = 0;
-        public int NumberOfCorrectAnswers { get; private set; } = 0;
-        public int NumberOfBadAnswers { get; private set; } = 0;
-        public int NumberOfLearnedQuestions { get; private set; } = 0;
-        public int NumberOfRemainingQuestions { get; private set; } = 0;
-        public long Time { get; private set; } = 0;
-        private DispatcherTimer timer;
+        public int NumberOfQuestions { get; private set; }
+        public int NumberOfAnswers { get; private set; }
+        public int NumberOfCorrectAnswers { get; private set; }
+        public int NumberOfBadAnswers { get; private set; }
+        public int NumberOfLearnedQuestions { get; private set; }
+        public int NumberOfRemainingQuestions { get; private set; }
+        public long Time { get; private set; }
+        private DispatcherTimer _timer;
 
-        public TestController(IDictionary<string, IQuestion> questions, string folderToken = "", IDictionary<string, int> previousState = null)
-        {
+        public TestController(IDictionary<string, IQuestion> questions, string folderToken = "", IDictionary<string, int> previousState = null) {
             FolderToken = folderToken;
             Questions = questions;
             NumberOfQuestions = questions.Count;
@@ -35,54 +32,38 @@ namespace Testownik.Models.Test
             PrepareTimer();
         }
 
-        public void PrepareTimer()
-        {
-            timer = new DispatcherTimer { Interval = timerInterval };
-            timer.Tick += (s, e) => { RefreshTimer(); };
+        public void PrepareTimer() {
+            _timer = new DispatcherTimer { Interval = _timerInterval };
+            _timer.Tick += (s, e) => { RefreshTimer(); };
         }
 
-        public void StartTimer()
-        {
-            timer.Start();
+        public void StartTimer() {
+            _timer.Start();
         }
 
-        public void StopTimer()
-        {
-            timer.Stop();
+        public void StopTimer() {
+            _timer.Stop();
         }
 
-        private void RefreshTimer()
-        {
-            Time += timerInterval.Ticks;
+        private void RefreshTimer() {
+            Time += _timerInterval.Ticks;
             RaisePropertyChanged(nameof(Time));
         }
+        
+        public TestController() { }
 
-        public TestController(string path)
-        {
-
-        }
-
-        public TestController()
-        {
-
-        }
-
-        public void CheckAnswer(string key, IEnumerable<string> answerKeys)
-        {
+        public void CheckAnswer(string key, IEnumerable<string> answerKeys) {
             NumberOfAnswers++;
             RaisePropertyChanged(nameof(NumberOfAnswers));
-            if (!Questions.ContainsKey(key))
-            {
+            if (!Questions.ContainsKey(key)) {
 
             }
-            else if (Questions[key].CorrectAnswerKeys.OrderBy(i => i).SequenceEqual(answerKeys.OrderBy(i => i)))
-            {
+            else if (Questions[key].CorrectAnswerKeys.OrderBy(i => i).SequenceEqual(answerKeys.OrderBy(i => i))) {
                 Reoccurrences[key] -= 1;
                 NumberOfCorrectAnswers++;
                 RaisePropertyChanged(nameof(NumberOfCorrectAnswers));
             }
-            else
-            {
+            else {
                 Reoccurrences[key] += SettingsHelper.ReoccurrencesIfBad;
                 if (Reoccurrences[key] > SettingsHelper.MaxReoccurrences)
                     Reoccurrences[key] = SettingsHelper.MaxReoccurrences;
@@ -90,8 +71,7 @@ namespace Testownik.Models.Test
                 NumberOfBadAnswers++;
                 RaisePropertyChanged(nameof(NumberOfBadAnswers));
             }
-            if (Reoccurrences.ContainsKey(key) && Reoccurrences[key] == 0)
-            {
+            if (Reoccurrences.ContainsKey(key) && Reoccurrences[key] == 0) {
                 NumberOfLearnedQuestions++;
                 RaisePropertyChanged(nameof(NumberOfLearnedQuestions));
                 NumberOfRemainingQuestions--;
@@ -101,8 +81,7 @@ namespace Testownik.Models.Test
                 StopTimer();
         }
 
-        public bool IsTestCompleted()
-        {
+        public bool IsTestCompleted() {
             return Reoccurrences.All(i => i.Value == 0);
         }
 
@@ -110,16 +89,14 @@ namespace Testownik.Models.Test
             ? Reoccurrences[key]
             : 0;
 
-        public KeyValuePair<string, IQuestion> RandQuestion()
-        {
+        public KeyValuePair<string, IQuestion> RandQuestion() {
             var remainingQuestions = Questions.Where(q => ReoccurrencesOfQuestion(q.Key) != 0);
-            if (!remainingQuestions.Any())
-                return new KeyValuePair<string, IQuestion>(string.Empty, new Question());
-            return remainingQuestions.ElementAt(random.Next(remainingQuestions.Count()));
+            return !remainingQuestions.Any() 
+                ? new KeyValuePair<string, IQuestion>(string.Empty, new Question()) 
+                : remainingQuestions.ElementAt(_random.Next(remainingQuestions.Count()));
         }
 
-        internal static TestController GenerateRand()
-        {
+        internal static TestController GenerateRand() {
             var questions = new Dictionary<string, IQuestion> {
                 {
                     "001.txt",
@@ -158,10 +135,8 @@ namespace Testownik.Models.Test
             return new TestController(questions);
         }
 
-        public JsonTestController ToJson()
-        {
-            var test = new JsonTestController
-            {
+        public JsonTestController ToJson() {
+            var test = new JsonTestController {
                 Reoccurrences = Reoccurrences,
                 NumberOfQuestions = NumberOfQuestions,
                 NumberOfAnswers = NumberOfAnswers,
@@ -174,11 +149,9 @@ namespace Testownik.Models.Test
             return test;
         }
 
-        public static TestController FromJson(JsonTestController jsonTestController, IDictionary<string, IQuestion> questions, string token)
-        {
+        public static TestController FromJson(JsonTestController jsonTestController, IDictionary<string, IQuestion> questions, string token) {
             //TODO should recalculate integers instead of get from json
-            var test = new TestController
-            {
+            var test = new TestController {
                 FolderToken = token,
                 Questions = questions,
                 Reoccurrences = jsonTestController.Reoccurrences, //TODO only reoccurrences where key is in questions
@@ -195,8 +168,7 @@ namespace Testownik.Models.Test
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string propertyName)
-        {
+        private void RaisePropertyChanged(string propertyName) {
             var handler = PropertyChanged;
             handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

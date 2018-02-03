@@ -21,7 +21,7 @@
             <SolidColorBrush x:Key="TextColor" Color="#303030" />
 
             <SolidColorBrush x:Key="AppBackgroundColor" Color="#ebebeb" />
-            <Color x:Key="AppBackgroundColorSemiTransparent">#99ebebeb"</Color>
+            <Color x:Key="AppBackgroundColorSemiTransparent">#99ebebeb</Color>
             <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#ffffff" />
             <SolidColorBrush x:Key="BlockButtonBackground" Color="#ffffff" />
 
@@ -56,7 +56,7 @@
             <SolidColorBrush x:Key="TextColor" Color="#303030" />
 
             <SolidColorBrush x:Key="AppBackgroundColor" Color="#ebebeb" />
-            <Color x:Key="AppBackgroundColorSemiTransparent">#99ebebeb"</Color>
+            <Color x:Key="AppBackgroundColorSemiTransparent">#99ebebeb</Color>
             <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#ffffff" />
             <SolidColorBrush x:Key="BlockButtonBackground" Color="#ffffff" />
 
@@ -91,7 +91,7 @@
             <SolidColorBrush x:Key="TextColor" Color="#303030" />
 
             <SolidColorBrush x:Key="AppBackgroundColor" Color="#ebebeb" />
-            <Color x:Key="AppBackgroundColorSemiTransparent">#99ebebeb"</Color>
+            <Color x:Key="AppBackgroundColorSemiTransparent">#99ebebeb</Color>
             <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#ffffff" />
             <SolidColorBrush x:Key="BlockButtonBackground" Color="#ffffff" />
 
@@ -126,7 +126,7 @@
             <SolidColorBrush x:Key="TextColor" Color="#eeeeee" />
 
             <SolidColorBrush x:Key="AppBackgroundColor" Color="#202020" />
-            <Color x:Key="AppBackgroundColorSemiTransparent">#CC202020"</Color>
+            <Color x:Key="AppBackgroundColorSemiTransparent">#CC202020</Color>
             <SolidColorBrush x:Key="AppBackgroundLighterColor" Color="#303030" />
             <SolidColorBrush x:Key="BlockButtonBackground" Color="#303030" />
             

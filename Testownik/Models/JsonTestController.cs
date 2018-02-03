@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Testownik.Model {
+namespace Testownik.Models {
     public class JsonTestController {
         public IDictionary<string, int> Reoccurrences { get; set; }
 

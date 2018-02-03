@@ -99,7 +99,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\LongExtensions.cs" />
+    <Compile Include="Dialogs\InfoDialog.xaml.cs">
+      <DependentUpon>InfoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\ApplicationThemeExtensions.cs" />
+    <Compile Include="Extensions\LongExtensions.cs" />
     <Compile Include="Converters\LongToTimeStringConverter.cs" />
     <Compile Include="Controls\Answer.xaml.cs">
       <DependentUpon>Answer.xaml</DependentUpon>
@@ -107,8 +111,7 @@
     <Compile Include="Controls\Folder.xaml.cs">
       <DependentUpon>Folder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\TimeSpanExtensions.cs" />
-    <Compile Include="Dialogs\InfoDialog.xaml.cs" />
+    <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Dialogs\MessageDialog.xaml.cs">
       <DependentUpon>MessageDialog.xaml</DependentUpon>
     </Compile>
@@ -121,7 +124,6 @@
     <Compile Include="Controls\BackdropBackground.xaml.cs">
       <DependentUpon>BackdropBackground.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ThemeHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -183,13 +185,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\MessageDialog.xaml">
+    <Page Include="Dialogs\InfoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\InfoDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Dialogs\MessageDialog.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\SettingsDialog.xaml">
       <SubType>Designer</SubType>

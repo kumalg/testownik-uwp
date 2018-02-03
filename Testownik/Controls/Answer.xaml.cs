@@ -1,9 +1,7 @@
-﻿using Windows.UI.Xaml.Controls;
-
-namespace Testownik.Controls {
-    public sealed partial class Answer : UserControl {
+﻿namespace Testownik.Controls {
+    public sealed partial class Answer {
         public Answer() {
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

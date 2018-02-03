@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Testownik.Model;
 using Testownik.Models;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Testownik.Helpers;
 
 namespace Testownik.Dialogs {
-    public sealed partial class SettingsDialog : ContentDialog {
-        public IList<int> ReoccurrencesOnStart { get; } = new [] { 1, 2, 3, 4, 5 }.ToList();
-        public IList<int> ReoccurrencesIfBad { get; } = new [] { 0, 1, 2, 3, 4 }.ToList();
-        public IList<int> MaxReoccurrences { get; } = new [] { 2, 3, 4, 5, 6, 7, 8, 9, 10 }.ToList();
+    public sealed partial class SettingsDialog {
+        public IList<int> ReoccurrencesOnStart { get; } = new[] { 1, 2, 3, 4, 5 }.ToList();
+        public IList<int> ReoccurrencesIfBad { get; } = new[] { 0, 1, 2, 3, 4 }.ToList();
+        public IList<int> MaxReoccurrences { get; } = new[] { 2, 3, 4, 5, 6, 7, 8, 9, 10 }.ToList();
 
         public SettingsDialog() {
             InitializeComponent();
@@ -53,7 +53,7 @@ namespace Testownik.Dialogs {
             SettingsHelper.MaxReoccurrences = MaxReoccurrences.ElementAt(index);
         }
 
-        private void ContentDialog_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+        private void ContentDialog_Loaded(object sender, RoutedEventArgs e) {
             var onStartIndex = ReoccurrencesOnStart.IndexOf(SettingsHelper.ReoccurrencesOnStart);
             var onBadIndex = ReoccurrencesIfBad.IndexOf(SettingsHelper.ReoccurrencesIfBad);
             var onMaxIndex = MaxReoccurrences.IndexOf(SettingsHelper.MaxReoccurrences);

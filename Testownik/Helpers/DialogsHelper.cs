@@ -1,10 +1,10 @@
 ﻿using System;
 using Testownik.Dialogs;
 
-namespace Testownik.Model.Helpers {
+namespace Testownik.Helpers {
     public class DialogsHelper {
         public static async void ShowBasicMessageDialog(string message) {
-            var dialog = new MessageDialog() {
+            var dialog = new MessageDialog {
                 Title = message,
                 PrimaryButtonText = "Zamknij"
             };

@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:controls="using:Testownik.Controls"
-    xmlns:local="using:Testownik.Styles">
+    xmlns:controls="using:Testownik.Controls">
     
     <!-- Rounded ProgressBar -->
     <Style x:Key="RoundedProgressBar" TargetType="ProgressBar">

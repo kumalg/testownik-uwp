@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
-using Testownik.Models.Test;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+using Testownik.Models.Test;
 
-namespace Testownik.Model {
+namespace Testownik.Models {
     public class AnswerBlock : INotifyPropertyChanged {
         public IAnswer Answer { get; set; }
         public Brush ImageBackground { get; set; } = new SolidColorBrush(Colors.Transparent);

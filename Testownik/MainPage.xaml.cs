@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Testownik.Dialogs;
-using Testownik.Model;
-using Testownik.Model.Helpers;
 using Testownik.Models.Test;
 using Windows.System;
 using Windows.UI;
@@ -14,7 +12,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Testownik.Converters;
+using Testownik.Extensions;
+using Testownik.Helpers;
+using Testownik.Models;
 
 namespace Testownik {
     public sealed partial class MainPage : INotifyPropertyChanged {
@@ -119,7 +119,9 @@ namespace Testownik {
             if (_question.Value is Question)
                 selectedAnswers = AnswersGridView.SelectedItems.Cast<AnswerBlock>().Select(i => i.Answer.Key);
             else if (_question.Value is MultiQuestion)
-                selectedAnswers = AnswersListView.Items?.Cast<ComboBox>().Select(i => i.SelectedValue == null ? "" : (i.SelectedValue as ComboBoxItem).Tag.ToString());
+                selectedAnswers = AnswersListView.Items?.Cast<ComboBox>().Select(i => i.SelectedValue == null 
+                    ? "" 
+                    : (i.SelectedValue as ComboBoxItem)?.Tag.ToString());
             else
                 selectedAnswers = new List<string>();
 
@@ -142,7 +144,7 @@ namespace Testownik {
                     Content = $"Czas: {_testController.Time.ToTimeString()}",
                     PrimaryButtonText = "Wyjdź"
                 };
-                var result = await contentDialog.ShowAsync();
+                await contentDialog.ShowAsync();
                 Frame.GoBack();
             }
             else {

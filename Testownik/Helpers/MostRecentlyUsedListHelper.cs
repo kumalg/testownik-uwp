@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
+using Testownik.Models;
 
-namespace Testownik.Model.Helpers {
+namespace Testownik.Helpers {
     public class MostRecentlyUsedListHelper {
         public static FolderPath Add(IStorageItem folder) {
             var mru = StorageApplicationPermissions.MostRecentlyUsedList;

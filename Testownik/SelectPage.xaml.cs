@@ -6,9 +6,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Testownik.Dialogs;
-using Testownik.Model;
-using Testownik.Model.Helpers;
-using Testownik.Models;
 using Testownik.Models.Test;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
@@ -17,14 +14,16 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Testownik.Helpers;
+using Testownik.Models;
 
 namespace Testownik {
-    public sealed partial class SelectPage : Page, INotifyPropertyChanged {
-        public ObservableCollection<FolderPath> folderPaths = new ObservableCollection<FolderPath>(MostRecentlyUsedListHelper.AsFolderPathIEnumerable());
+    public sealed partial class SelectPage : INotifyPropertyChanged {
+        private ObservableCollection<FolderPath> _folderPaths = new ObservableCollection<FolderPath>(MostRecentlyUsedListHelper.AsFolderPathIEnumerable());
         public ObservableCollection<FolderPath> FolderPaths {
-            get => folderPaths;
+            get => _folderPaths;
             set {
-                folderPaths = value;
+                _folderPaths = value;
                 RaisePropertyChanged(nameof(FolderPaths));
             }
         }
@@ -40,7 +39,7 @@ namespace Testownik {
                 Frame.Navigate(typeof(MainPage), testController);
             };
         }
-        
+
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
                 AppViewBackButtonVisibility.Collapsed;
@@ -126,8 +125,8 @@ namespace Testownik {
             var previousState = await SavedStatesHelper.GetSavedStateOfTest(token);
             HideLoadingView();
 
-            var testController =  previousState != null
-                ? TestController.FromJson(previousState, questions, token) 
+            var testController = previousState != null
+                ? TestController.FromJson(previousState, questions, token)
                 : new TestController(questions, token);
             Frame.Navigate(typeof(MainPage), testController);
         }
@@ -141,7 +140,7 @@ namespace Testownik {
 
             return folderPath.Token;
         }
-        
+
 
         // Overlay Views Section     
 
