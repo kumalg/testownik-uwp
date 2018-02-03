@@ -18,10 +18,20 @@ namespace Testownik.Helpers {
             return folderPathItem;
         }
 
+        public static void Remove(string token) {
+            var mru = StorageApplicationPermissions.MostRecentlyUsedList;
+            if (mru.ContainsItem(token))
+                mru.Remove(token);
+        }
+
         public static async Task<StorageFolder> GetFolderAsync(string token) {
             var mru = StorageApplicationPermissions.MostRecentlyUsedList;
-            var folder = await mru.GetFolderAsync(token);
-            return folder;
+            try {
+                return await mru.GetFolderAsync(token);
+            }
+            catch {
+                return null;
+            }
         }
 
         public static IEnumerable<FolderPath> AsFolderPathIEnumerable() {

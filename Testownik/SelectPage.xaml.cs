@@ -100,6 +100,20 @@ namespace Testownik {
             var folder = await MostRecentlyUsedListHelper.GetFolderAsync(folderPath.Token);
             if (folder != null)
                 SelectFolder(folder);
+            else
+                RemoveNotExistingFolder(folderPath.Token);
+        }
+
+        private void RemoveNotExistingFolder(string token) {
+            DialogsHelper.ShowBasicMessageDialog("Folder nie istnieje");
+            MostRecentlyUsedListHelper.Remove(token);
+            RemoveNotExistingFolderFromList(token);
+        }
+
+        private void RemoveNotExistingFolderFromList(string token) {
+            var element = FolderPaths.FirstOrDefault(i => i.Token == token);
+            if (element != null)
+                FolderPaths.Remove(element);
         }
 
         private async void SettingsButton_Click(object sender, RoutedEventArgs e) {
