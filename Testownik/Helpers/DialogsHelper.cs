@@ -3,7 +3,7 @@ using Testownik.Dialogs;
 
 namespace Testownik.Helpers {
     public class DialogsHelper {
-        public static async void ShowBasicMessageDialog(string message) {
+        public static async void ShowBasicMessageDialogAsync(string message) {
             var dialog = new MessageDialog {
                 Title = message,
                 PrimaryButtonText = "Zamknij"

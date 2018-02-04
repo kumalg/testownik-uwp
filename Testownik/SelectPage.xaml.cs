@@ -13,6 +13,7 @@ using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Testownik.Helpers;
 using Testownik.Models;
@@ -69,7 +70,7 @@ namespace Testownik {
                 HideLoadingView();
 
                 if (questions == null || !questions.Any()) {
-                    DialogsHelper.ShowBasicMessageDialog("Brak pytań w bazie");
+                    DialogsHelper.ShowBasicMessageDialogAsync("Brak pytań w bazie");
                     return;
                 }
 
@@ -89,6 +90,13 @@ namespace Testownik {
 
         // End of Drag&Drop Section
 
+        private void Item_RightTapped(object sender, RightTappedRoutedEventArgs e) => FlyoutsHelper.ShowFlyoutBase(sender);
+        private void Item_DragStarting(object sender, DragStartingEventArgs e) => FlyoutsHelper.ShowFlyoutBase(sender);
+
+        private void RecentFoldersListViewItem_Click(object sender, RoutedEventArgs e) {
+            if (e.OriginalSource is FrameworkElement frameworkElement && frameworkElement.DataContext is FolderPath folderPath)
+                RemoveRecentFolder(folderPath.Token);
+        }
 
         private void FolderPickerButton_Click(object sender, RoutedEventArgs e) => SelectFolder();
 
@@ -100,17 +108,18 @@ namespace Testownik {
             var folder = await MostRecentlyUsedListHelper.GetFolderAsync(folderPath.Token);
             if (folder != null)
                 SelectFolder(folder);
-            else
-                RemoveNotExistingFolder(folderPath.Token);
+            else {
+                DialogsHelper.ShowBasicMessageDialogAsync("Folder nie istnieje");
+                RemoveRecentFolder(folderPath.Token);
+            }
         }
 
-        private void RemoveNotExistingFolder(string token) {
-            DialogsHelper.ShowBasicMessageDialog("Folder nie istnieje");
+        private void RemoveRecentFolder(string token) {
             MostRecentlyUsedListHelper.Remove(token);
-            RemoveNotExistingFolderFromList(token);
+            RemoveRecentFolderFromList(token);
         }
 
-        private void RemoveNotExistingFolderFromList(string token) {
+        private void RemoveRecentFolderFromList(string token) {
             var element = FolderPaths.FirstOrDefault(i => i.Token == token);
             if (element != null)
                 FolderPaths.Remove(element);
@@ -131,7 +140,7 @@ namespace Testownik {
             var questions = await QuestionsReader.ReadQuestions(files);
             if (questions == null || !questions.Any()) {
                 HideLoadingView();
-                DialogsHelper.ShowBasicMessageDialog("Brak pytań w bazie");
+                DialogsHelper.ShowBasicMessageDialogAsync("Brak pytań w bazie");
                 return;
             }
 

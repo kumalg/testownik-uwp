@@ -84,8 +84,8 @@ namespace Testownik {
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
-            if (e.Parameter is TestController) {
-                TestController = (TestController)e.Parameter;
+            if (e.Parameter is TestController controller) {
+                TestController = controller;
                 TestController.StartTimer();
                 NextQuestion();
             }
@@ -139,7 +139,7 @@ namespace Testownik {
 
         private async void ButtonNextQuestion_Click(object sender, RoutedEventArgs e) {
             if (TestController.IsTestCompleted()) {
-                var contentDialog = new ContentDialog {
+                var contentDialog = new MessageDialog {
                     Title = "Test zakończony!",
                     Content = $"Czas: {_testController.Time.ToTimeString()}",
                     PrimaryButtonText = "Wyjdź"

@@ -100,7 +100,18 @@
                     <ListView.ItemTemplate>
                         <DataTemplate
                             x:DataType="models:FolderPath">
-                            <controls:Folder />
+                            <Grid
+                                RightTapped="Item_RightTapped"
+                                DragStarting="Item_DragStarting">
+                                <FlyoutBase.AttachedFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem 
+                                            Text="Usuń"
+                                            Click="RecentFoldersListViewItem_Click"/>
+                                    </MenuFlyout>
+                                </FlyoutBase.AttachedFlyout>
+                                <controls:Folder />
+                            </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
