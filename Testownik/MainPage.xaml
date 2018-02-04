@@ -16,7 +16,7 @@
         <TransitionCollection>
             <NavigationThemeTransition>
                 <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                    <CommonNavigationTransitionInfo />
+                    <DrillInNavigationTransitionInfo />
                 </NavigationThemeTransition.DefaultNavigationTransitionInfo>
             </NavigationThemeTransition>
         </TransitionCollection>
@@ -27,13 +27,13 @@
             x:Name="LongToTimeStringConverter" />
     </Page.Resources>
 
-    <Grid
-        Background="{ThemeResource AppBackgroundColor}">
-
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition
                 Height="Auto" />
             <!-- TitleBar -->
+            <RowDefinition
+                Height="Auto" />
             <RowDefinition
                 Height="*" />
             <!-- App -->
@@ -46,12 +46,15 @@
                 Width="Auto" />
         </Grid.ColumnDefinitions>
 
+        <controls:HostBackdropBackground
+            Grid.RowSpan="2"
+            BackdropColor="{ThemeResource MyAcrylicLightBrush}" />
+
         <!-- TitleBar -->
         <Grid
             Height="31"
             Padding="50 0 0 0"
             Grid.ColumnSpan="2"
-            Background="{ThemeResource AppBackgroundColor}"
             Canvas.ZIndex="998">
             <TextBlock
                 Margin="12 0"
@@ -63,139 +66,159 @@
 
         <Grid
             Grid.Row="1"
-            Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition
-                    Height="Auto" />
-                <RowDefinition
-                    Height="*" />
-            </Grid.RowDefinitions>
-            <toolkitControls:DropShadowPanel
-                BlurRadius="32"
-                ShadowOpacity="0.1"
-                OffsetX="0"
-                OffsetY="4"
-                Color="Black"
-                VerticalAlignment="Top"
-                HorizontalContentAlignment="Stretch">
-                <Grid
-                    MinHeight="96"
-                    HorizontalAlignment="Stretch"
-                    Background="{ThemeResource AppBackgroundColor}">
-                    <ContentPresenter
-                        Margin="64 16"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        Foreground="{ThemeResource TextColor}"
-                        Content="{x:Bind Question.Value.Content.Value, Mode=OneWay}"
-                        TextWrapping="WrapWholeWords"
-                        AutomationProperties.AccessibilityView="Raw" />
-                </Grid>
-            </toolkitControls:DropShadowPanel>
-            <StackPanel
-                Grid.Row="1"
-                Canvas.ZIndex="100"
+            Grid.Column="0"
+            MinHeight="96"
+            HorizontalAlignment="Stretch">
+
+            <ContentPresenter
+                Margin="64 16"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Bottom">
-                <toolkitControls:DropShadowPanel
+                VerticalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                Foreground="{ThemeResource TextColor}"
+                Content="{x:Bind Question.Value.Content.Value, Mode=OneWay}"
+                TextWrapping="WrapWholeWords"
+                AutomationProperties.AccessibilityView="Raw" />
+        </Grid>
+
+        <toolkitControls:DropShadowPanel
+            HorizontalContentAlignment="Stretch"
+            Canvas.ZIndex="1000"
+            Grid.Row="2"
+            Grid.Column="0"
+            BlurRadius="32"
+            ShadowOpacity="0.2"
+            Color="Black">
+            <Grid
+                Background="{ThemeResource AppBackgroundColor}">
+                <StackPanel
+                    Canvas.ZIndex="100"
                     HorizontalAlignment="Center"
-                    BlurRadius="32"
-                    ShadowOpacity="0.1"
-                    OffsetX="0"
-                    OffsetY="8"
-                    Color="Black">
-                    <Border
-                        Margin="0 0 0 8"
-                        MinHeight="32"
-                        Padding="16 0"
-                        CornerRadius="16"
-                        Background="{ThemeResource AppBackgroundColor}">
-                        <StackPanel
-                            Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center">
-                            <TextBlock
-                                Style="{ThemeResource ReoccurrenceTextBlockStyle}"
-                                Text="{x:Bind Question.Key, Mode=OneWay}" />
-                        </StackPanel>
-                    </Border>
-                </toolkitControls:DropShadowPanel>
-                <toolkitControls:DropShadowPanel
-                    HorizontalAlignment="Center"
-                    BlurRadius="32"
-                    ShadowOpacity="0.1"
-                    OffsetX="0"
-                    OffsetY="8"
-                    Color="Black">
-                    <Border
-                        Margin="0 0 0 16"
-                        MinHeight="32"
-                        Padding="16 0"
-                        CornerRadius="16"
-                        Background="{ThemeResource AppBackgroundColor}">
-                        <StackPanel
-                            Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center">
-                            <TextBlock
-                                x:Uid="Reoccurrences"
-                                Style="{ThemeResource ReoccurrenceTextBlockStyle}" />
-                            <TextBlock
-                                Style="{ThemeResource ReoccurrenceValueTextBlockStyle}"
-                                Text="{x:Bind ReoccurrencesOfQuestion, Mode=OneWay}" />
-                        </StackPanel>
-                    </Border>
-                </toolkitControls:DropShadowPanel>
-            </StackPanel>
+                    VerticalAlignment="Bottom">
+                    <toolkitControls:DropShadowPanel
+                        HorizontalAlignment="Center"
+                        BlurRadius="32"
+                        ShadowOpacity="0.1"
+                        OffsetX="0"
+                        OffsetY="8"
+                        Color="Black">
+                        <Border
+                            Margin="0 0 0 8"
+                            MinHeight="32"
+                            Padding="16 0"
+                            CornerRadius="16"
+                            Background="{ThemeResource AppBackgroundColor}">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                                <TextBlock
+                                    Style="{ThemeResource ReoccurrenceTextBlockStyle}"
+                                    Text="{x:Bind Question.Key, Mode=OneWay}" />
+                            </StackPanel>
+                        </Border>
+                    </toolkitControls:DropShadowPanel>
+                    <toolkitControls:DropShadowPanel
+                        HorizontalAlignment="Center"
+                        BlurRadius="32"
+                        ShadowOpacity="0.1"
+                        OffsetX="0"
+                        OffsetY="8"
+                        Color="Black">
+                        <Border
+                            Margin="0 0 0 16"
+                            MinHeight="32"
+                            Padding="16 0"
+                            CornerRadius="16"
+                            Background="{ThemeResource AppBackgroundColor}">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                                <TextBlock
+                                    x:Uid="Reoccurrences"
+                                    Style="{ThemeResource ReoccurrenceTextBlockStyle}" />
+                                <TextBlock
+                                    Style="{ThemeResource ReoccurrenceValueTextBlockStyle}"
+                                    Text="{x:Bind ReoccurrencesOfQuestion, Mode=OneWay}" />
+                            </StackPanel>
+                        </Border>
+                    </toolkitControls:DropShadowPanel>
+                </StackPanel>
 
-            <ScrollViewer
-                VerticalScrollBarVisibility="Auto"
-                Grid.Row="1">
+                <ScrollViewer
+                    VerticalScrollBarVisibility="Auto">
 
-                <Grid>
-                    <GridView
-                        x:Name="AnswersGridView"
-                        Padding="0 0 0 64"
-                        VerticalAlignment="Top"
-                        Style="{ThemeResource AnswersGridView}"
-                        ItemsSource="{x:Bind Answers, Mode=OneWay}"
-                        Margin="32"
-                        SelectionMode="Multiple">
+                    <Grid>
+                        <GridView
+                            x:Name="AnswersGridView"
+                            Padding="0 0 0 64"
+                            VerticalAlignment="Top"
+                            Style="{ThemeResource AnswersGridView}"
+                            ItemsSource="{x:Bind Answers, Mode=OneWay}"
+                            Margin="32"
+                            SelectionMode="Multiple">
 
-                        <GridView.ItemTemplate>
-                            <DataTemplate
-                                x:DataType="test:IAnswer">
-                                <controls:Answer />
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
+                            <GridView.ItemTemplate>
+                                <DataTemplate
+                                    x:DataType="test:IAnswer">
+                                    <controls:Answer />
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
 
-                    <ListView
-                        x:Name="AnswersListView"
-                        Padding="0 0 0 64"
-                        VerticalAlignment="Top"
-                        ItemsSource="{x:Bind MultiAnswers, Mode=OneWay}"
-                        Margin="32"
-                        SelectionMode="None">
+                        <ListView
+                            x:Name="AnswersListView"
+                            Padding="0 0 0 64"
+                            VerticalAlignment="Top"
+                            ItemsSource="{x:Bind MultiAnswers, Mode=OneWay}"
+                            Margin="32"
+                            SelectionMode="None">
 
-                        <!--<ListView.ItemTemplate>
+                            <!--<ListView.ItemTemplate>
                             <DataTemplate >
                                 <ComboBox ItemsSource="{Binding}"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>-->
-                    </ListView>
-                </Grid>
+                        </ListView>
+                    </Grid>
 
-            </ScrollViewer>
-        </Grid>
+                </ScrollViewer>
+
+                <Grid
+                    Canvas.ZIndex="1999"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="0 0 -32 48">
+                    <Button
+                        x:Name="ButtonAcceptAnswer"
+                        Click="ButtonAcceptAnswer_Click"
+                        Style="{ThemeResource RoundedButton}"
+                        Width="64"
+                        Height="64">
+                        <SymbolIcon
+                            Symbol="Accept" />
+                    </Button>
+                    <Button
+                        x:Name="ButtonNextQuestion"
+                        Visibility="Collapsed"
+                        Click="ButtonNextQuestion_Click"
+                        Style="{ThemeResource RoundedButton}"
+                        Width="64"
+                        Height="64">
+                        <SymbolIcon
+                            Symbol="Forward" />
+                    </Button>
+                </Grid>
+            </Grid>
+        </toolkitControls:DropShadowPanel>
 
         <Grid
-            Canvas.ZIndex="999"
+            Margin="-16 0 0 0"
             Grid.Row="0"
-            Grid.RowSpan="2"
+            Grid.RowSpan="3"
             Grid.Column="1"
-            Width="256px">
+            Width="300px">
 
             <Grid.RowDefinitions>
                 <RowDefinition
@@ -209,6 +232,7 @@
                 BackdropColor="{ThemeResource MyAcrylicBrush}" />
 
             <ScrollViewer
+                Padding="16 0 0 0"
                 Grid.Row="0"
                 VerticalScrollBarVisibility="Auto">
 
@@ -227,9 +251,9 @@
                             Foreground="{ThemeResource PrimaryColor}"
                             Style="{StaticResource RoundedProgressBar}"
                             Height="8"
-                            Margin="48 8" />
+                            Margin="64 8" />
                         <Grid
-                            Margin="48 0">
+                            Margin="64 0">
                             <TextBlock
                                 Text="{x:Bind TestController.NumberOfCorrectAnswers, Mode=OneWay}"
                                 Style="{ThemeResource ProgressBarCaptionTextBlockStyle}" />
@@ -253,9 +277,9 @@
                             Foreground="{ThemeResource PrimaryColor}"
                             Style="{StaticResource RoundedProgressBar}"
                             Height="8"
-                            Margin="48 8" />
+                            Margin="64 8" />
                         <Grid
-                            Margin="48 0">
+                            Margin="64 0">
                             <TextBlock
                                 Text="{x:Bind TestController.NumberOfLearnedQuestions, Mode=OneWay}"
                                 Style="{ThemeResource ProgressBarCaptionTextBlockStyle}" />
@@ -290,7 +314,8 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <toolkitControls:DropShadowPanel
+            <!--<toolkitControls:DropShadowPanel
+                Canvas.ZIndex="1999"
                 Grid.Row="0"
                 Grid.RowSpan="2"
                 BlurRadius="32"
@@ -322,13 +347,14 @@
                             Symbol="Forward" />
                     </Button>
                 </Grid>
-            </toolkitControls:DropShadowPanel>
+            </toolkitControls:DropShadowPanel>-->
 
             <StackPanel
                 Orientation="Horizontal"
                 Grid.Row="1"
                 HorizontalAlignment="Right">
                 <Button
+                    Foreground="{ThemeResource TextColor}"
                     Style="{ThemeResource SettingsButton}"
                     Click="InfoButton_Click"
                     Width="48"
@@ -338,6 +364,7 @@
                         Glyph="&#xE946;" />
                 </Button>
                 <Button
+                    Foreground="{ThemeResource TextColor}"
                     Style="{ThemeResource SettingsButton}"
                     Click="SettingsButton_Click"
                     Width="48"

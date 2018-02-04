@@ -17,7 +17,7 @@ namespace Testownik {
     /// <summary>
     /// Zapewnia zachowanie specyficzne dla aplikacji, aby uzupełnić domyślną klasę aplikacji.
     /// </summary>
-    sealed partial class App : Application {
+    sealed partial class App {
         /// <summary>
         /// Inicjuje pojedynczy obiekt aplikacji. Jest to pierwszy wiersz napisanego kodu
         /// wykonywanego i jest logicznym odpowiednikiem metod main() lub WinMain().
@@ -28,34 +28,9 @@ namespace Testownik {
             RequestedTheme = SettingsHelper.AppTheme.ToApplicationTheme();
         }
 
-        /// Extend acrylic into the title bar. 
-        private void ExtendAcrylicIntoTitleBar() {
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-
-            // Set active window colors
-            titleBar.ForegroundColor = Colors.Gray;
-            //titleBar.BackgroundColor = Windows.UI.Colors.Green;
-            titleBar.ButtonForegroundColor = Colors.White;
-            //titleBar.ButtonBackgroundColor = Windows.UI.Colors.SeaGreen;
-            titleBar.ButtonHoverForegroundColor = Colors.White;
-            //titleBar.ButtonHoverBackgroundColor = Windows.UI.Colors.DarkSeaGreen;
-            titleBar.ButtonPressedForegroundColor = Colors.Gray;
-            //titleBar.ButtonPressedBackgroundColor = Windows.UI.Colors.LightGreen;
-
-            // Set inactive window colors
-            titleBar.InactiveForegroundColor = Colors.Gray;
-            //titleBar.InactiveBackgroundColor = Windows.UI.Colors.SeaGreen;
-            titleBar.ButtonInactiveForegroundColor = Colors.Gray;
-            //titleBar.ButtonInactiveBackgroundColor = Windows.UI.Colors.SeaGreen;
-        }
-
-        private void App_BackRequested(object sender,
+        private static void App_BackRequested(object sender,
             Windows.UI.Core.BackRequestedEventArgs e) {
-            var rootFrame = Window.Current.Content as Frame;
-            if (rootFrame == null)
+            if (!(Window.Current.Content is Frame rootFrame))
                 return;
 
             // Navigate back if possible, and if the event has not 
@@ -102,7 +77,7 @@ namespace Testownik {
                 Window.Current.Activate();
 
                 // Extend acrylic
-                ExtendAcrylicIntoTitleBar();
+                ThemeHelper.ExtendAcrylicIntoTitleBar();
             }
         }
 

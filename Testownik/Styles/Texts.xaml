@@ -5,7 +5,7 @@
     <Style x:Key="StatisticsHeaderTextBlockStyle" TargetType="TextBlock">
         <Setter Property="Margin" Value="16 4" />
         <Setter Property="TextAlignment" Value="Center" />
-        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Foreground" Value="{ThemeResource TextColor}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
@@ -19,8 +19,8 @@
     </Style>
 
     <Style x:Key="ProgressBarCaptionTextBlockStyle" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{ThemeResource TextColorSemi}" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
 

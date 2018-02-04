@@ -125,6 +125,7 @@
       <DependentUpon>BackdropBackground.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\FlyoutsHelper.cs" />
+    <Compile Include="Helpers\ThemeHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

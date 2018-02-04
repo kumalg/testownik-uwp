@@ -9,33 +9,30 @@
 
     <controls:DropShadowPanel
         BlurRadius="32"
-        ShadowOpacity="0.1"
+        ShadowOpacity="0.15"
         OffsetX="0"
-        OffsetY="4"
+        OffsetY="8"
         Color="Black"
         VerticalAlignment="Stretch"
         HorizontalContentAlignment="Stretch">
-        <Grid
+        <Border
             Background="{ThemeResource BlockButtonBackground}"
             MinHeight="64">
-
-            <Border
-                Background="{Binding ImageBackground, Mode=OneWay}" />
-
-            <Border
-                Background="{ThemeResource CorrectAnswerBackground}"
-                Visibility="{Binding CorrectVisibility}" />
-
-            <ContentPresenter
-                Margin="16 8"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Foreground="{ThemeResource TextColor}"
-                Content="{Binding Answer.Content.Value, Mode=OneWay}"
-                TextWrapping="Wrap"
-                AutomationProperties.AccessibilityView="Raw" />
-
-        </Grid>
+            <Grid>
+                <Grid
+                    Background="{Binding ImageBackground, Mode=OneWay}" />
+                <Grid
+                    Background="{ThemeResource CorrectAnswerBackground}"
+                    Visibility="{Binding CorrectVisibility}" />
+                <ContentPresenter
+                    Margin="16 8"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextColor}"
+                    Content="{Binding Answer.Content.Value, Mode=OneWay}"
+                    TextWrapping="Wrap"
+                    AutomationProperties.AccessibilityView="Raw" />
+            </Grid>
+        </Border>
     </controls:DropShadowPanel>
-
 </UserControl>

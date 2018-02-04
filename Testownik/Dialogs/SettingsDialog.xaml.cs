@@ -68,9 +68,11 @@ namespace Testownik.Dialogs {
 
         private void SetTheme(ElementTheme newTheme) {
             SettingsHelper.AppTheme = RequestedTheme = newTheme;
-            var frame = (Window.Current.Content as Frame);
-            if (frame != null && frame is ThemeAwareFrame themeAwareFrame)
-                themeAwareFrame.AppTheme = newTheme;
+            if (!(Window.Current.Content is Frame frame) || !(frame is ThemeAwareFrame themeAwareFrame))
+                return;
+
+            themeAwareFrame.AppTheme = newTheme;
+            ThemeHelper.ExtendAcrylicIntoTitleBar();
         }
     }
 }
