@@ -139,11 +139,7 @@ namespace Testownik {
 
         private async void ButtonNextQuestion_Click(object sender, RoutedEventArgs e) {
             if (TestController.IsTestCompleted()) {
-                var contentDialog = new MessageDialog {
-                    Title = "Test zakończony!",
-                    Content = $"Czas: {_testController.Time.ToTimeString()}",
-                    PrimaryButtonText = "Wyjdź"
-                };
+                var contentDialog = new TestFinishedContentDialog(_testController.Time);
                 await contentDialog.ShowAsync();
                 Frame.GoBack();
             }
@@ -198,6 +194,11 @@ namespace Testownik {
                     ButtonAcceptAnswer_Click(ButtonAcceptAnswer, null);
                 else if (ButtonNextQuestion.Visibility == Visibility.Visible)
                     ButtonNextQuestion_Click(ButtonNextQuestion, null);
+            }
+            else if (e.Key == VirtualKey.D) {
+                FocusTracker.Visibility = FocusTracker.Visibility == Visibility.Visible
+                    ? Visibility.Collapsed
+                    : Visibility.Visible;
             }
         }
 

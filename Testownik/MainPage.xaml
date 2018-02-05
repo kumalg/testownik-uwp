@@ -9,6 +9,7 @@
     xmlns:test="using:Testownik.Models.Test"
     xmlns:conv="using:Testownik.Converters"
     xmlns:controls="using:Testownik.Controls"
+    xmlns:developerTools="using:Microsoft.Toolkit.Uwp.DeveloperTools"
     KeyDown="AnswersGridView_KeyDown"
     mc:Ignorable="d">
 
@@ -49,6 +50,18 @@
         <controls:HostBackdropBackground
             Grid.RowSpan="2"
             BackdropColor="{ThemeResource MyAcrylicLightBrush}" />
+
+        <!-- Focus Tracker -->
+        <developerTools:FocusTracker
+            x:Name="FocusTracker"
+            Visibility="Collapsed"
+            Canvas.ZIndex="9999"
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="2"
+            IsActive="True"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Left" />
+        <!-- End Of Focus Tracker -->
 
         <!-- TitleBar -->
         <Grid
@@ -152,11 +165,10 @@
                     <Grid>
                         <GridView
                             x:Name="AnswersGridView"
-                            Padding="0 0 0 64"
                             VerticalAlignment="Top"
                             Style="{ThemeResource AnswersGridView}"
                             ItemsSource="{x:Bind Answers, Mode=OneWay}"
-                            Margin="32"
+                            Margin="32 32 32 96"
                             SelectionMode="Multiple">
 
                             <GridView.ItemTemplate>
@@ -169,10 +181,10 @@
 
                         <ListView
                             x:Name="AnswersListView"
-                            Padding="0 0 0 64"
+                            Padding="0 0 0 0"
                             VerticalAlignment="Top"
                             ItemsSource="{x:Bind MultiAnswers, Mode=OneWay}"
-                            Margin="32"
+                            Margin="32 32 32 96"
                             SelectionMode="None">
 
                             <!--<ListView.ItemTemplate>

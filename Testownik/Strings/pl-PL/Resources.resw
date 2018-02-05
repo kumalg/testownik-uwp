@@ -159,6 +159,12 @@
   <data name="SettingsDialog.Title" xml:space="preserve">
     <value>Ustawienia</value>
   </data>
+  <data name="TestFinished.Text" xml:space="preserve">
+    <value>Test zakończony!</value>
+  </data>
+  <data name="TestFinishedContentDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Zamknij</value>
+  </data>
   <data name="Theme.Text" xml:space="preserve">
     <value>Motyw</value>
   </data>
@@ -167,5 +173,8 @@
   </data>
   <data name="ThemeLight.Text" xml:space="preserve">
     <value>Jasny</value>
+  </data>
+  <data name="Time.Text" xml:space="preserve">
+    <value>Czas:</value>
   </data>
 </root>
