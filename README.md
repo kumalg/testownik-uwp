@@ -6,7 +6,7 @@
 
 ## Installation
 
-You can download this app directly from [Microsoft Store](https://www.microsoft.com/store/apps/9N429ZCS67D9)
+You can download and install this app directly from [Microsoft Store](https://www.microsoft.com/store/apps/9N429ZCS67D9)
 
 ## Screenshots
 
@@ -20,5 +20,11 @@ Light theme:
 
 ## Usage
 
+### Keyboard Support
+Testownik also provided keyboard support while test is running. You can use <kbd>1</kbd> - <kbd>9</kbd> keys to select/unselect answer choices and <kbd>X</kbd> key to accept answer.
+
 ### Sample Quiz
-If you want to see sample quiz, please press <kbd>T</kbd> key after launch.
+If You want to see sample quiz, please press <kbd>T</kbd> key after launch.
+
+### Focus Tracker
+For development purposes, Testownik have Focus Tracker in test page. To activate it, please select <kbd>D</kbd> key.
