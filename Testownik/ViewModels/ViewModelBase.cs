@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Testownik.Annotations;
 
 namespace Testownik.ViewModels {
     public class ViewModelBase : INotifyPropertyChanged {

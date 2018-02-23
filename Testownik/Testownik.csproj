@@ -105,8 +105,7 @@
     <Compile Include="Dialogs\InfoDialog.xaml.cs">
       <DependentUpon>InfoDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\ApplicationThemeExtensions.cs" />
-    <Compile Include="Extensions\LongExtensions.cs" />
+    <Compile Include="Helpers\ApplicationThemeHelper.cs" />
     <Compile Include="Converters\LongToTimeStringConverter.cs" />
     <Compile Include="Controls\Answer.xaml.cs">
       <DependentUpon>Answer.xaml</DependentUpon>
@@ -114,7 +113,7 @@
     <Compile Include="Controls\Folder.xaml.cs">
       <DependentUpon>Folder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\TimeSpanExtensions.cs" />
+    <Compile Include="Helpers\TimeSpanExtensions.cs" />
     <Compile Include="Dialogs\MessageDialog.xaml.cs">
       <DependentUpon>MessageDialog.xaml</DependentUpon>
     </Compile>
@@ -160,7 +159,7 @@
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\PlatformApiService.cs" />
-    <Compile Include="Views\TestView.xaml.cs">    
+    <Compile Include="Views\TestView.xaml.cs">
       <DependentUpon>TestView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -267,7 +266,9 @@
       <Version>4.4.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

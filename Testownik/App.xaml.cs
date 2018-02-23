@@ -10,7 +10,6 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Testownik.Extensions;
 using Testownik.Helpers;
 
 namespace Testownik {
