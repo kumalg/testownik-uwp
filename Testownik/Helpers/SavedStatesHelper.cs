@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Controls;
 using Newtonsoft.Json;
 using Testownik.Models;
@@ -8,9 +10,10 @@ using Testownik.Models.Test;
 
 namespace Testownik.Helpers {
     public class SavedStatesHelper {
-        public static async Task<JsonTestController> GetSavedStateOfTest(string token) {
-            var folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("SavedStates", CreationCollisionOption.OpenIfExists);
-            if (!(await folder.TryGetItemAsync(token) is IStorageFile jsonFile))
+        public static string SavedStateFileName = "saved.state";
+
+        public static async Task<JsonTestController> GetSavedStateOfTest(StorageFolder folder) {
+            if (!(await folder.TryGetItemAsync(SavedStateFileName) is IStorageFile jsonFile))
                 return null;
 
             var dialog = new ContentDialog {
@@ -33,9 +36,21 @@ namespace Testownik.Helpers {
                 return;
 
             var reocurrencesJson = JsonConvert.SerializeObject(testController.ToJson());
-            var folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("SavedStates", CreationCollisionOption.OpenIfExists);
-            var jsonFile = await folder.CreateFileAsync(testController.FolderToken, CreationCollisionOption.OpenIfExists);
-            await FileIO.WriteTextAsync(jsonFile, reocurrencesJson);
+            var folder = await MostRecentlyUsedListHelper.GetFolderAsync(testController.FolderToken);
+            if ((folder.Attributes & FileAttributes.ReadOnly) == 0) {
+                var jsonFile = await folder.CreateFileAsync(SavedStateFileName, CreationCollisionOption.OpenIfExists);
+                await FileIO.WriteTextAsync(jsonFile, reocurrencesJson);
+            }
+            else {
+                var savePicker = new FileSavePicker {
+                    SuggestedStartLocation = PickerLocationId.Desktop,
+                    SuggestedFileName = "saved"
+                };
+                savePicker.FileTypeChoices.Add("Zapis stanu", new List<string> { ".state" });
+                var jsonFile = await savePicker.PickSaveFileAsync();
+                if (jsonFile != null)
+                    await FileIO.WriteTextAsync(jsonFile, reocurrencesJson);
+            }
         }
     }
 }

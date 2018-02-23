@@ -57,7 +57,6 @@ namespace Testownik {
                 ShowLoadingView();
 
                 var storageItems = await e.DataView.GetStorageItemsAsync();
-                IDictionary<string, IQuestion> questions;
 
                 var folder = storageItems.FirstOrDefault(i => i is IStorageFolder);
                 if (folder != null) {
@@ -65,7 +64,7 @@ namespace Testownik {
                     return;
                 }
 
-                questions = await QuestionsReader.ReadQuestions(storageItems.Where(i => i is IStorageFile).Cast<StorageFile>().ToList());
+                var questions = await QuestionsReader.ReadQuestions(storageItems.Where(i => i is IStorageFile).Cast<StorageFile>().ToList());
 
                 HideLoadingView();
 
@@ -145,7 +144,7 @@ namespace Testownik {
             }
 
             var token = UpdateRecentlyUsedFoldersList(folder);
-            var previousState = await SavedStatesHelper.GetSavedStateOfTest(token);
+            var previousState = await SavedStatesHelper.GetSavedStateOfTest(folder);
             HideLoadingView();
 
             var testController = previousState != null
