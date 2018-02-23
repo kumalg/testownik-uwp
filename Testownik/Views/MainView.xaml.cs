@@ -1,12 +1,8 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Animations;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Testownik.Dialogs;
-using Testownik.Models.Test;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.System;
@@ -15,10 +11,13 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Toolkit.Uwp.UI.Animations;
+using Testownik.Dialogs;
 using Testownik.Helpers;
 using Testownik.Models;
+using Testownik.Models.Test;
 
-namespace Testownik {
+namespace Testownik.Views {
     public sealed partial class SelectPage : INotifyPropertyChanged {
         private ObservableCollection<FolderPath> _folderPaths = new ObservableCollection<FolderPath>(MostRecentlyUsedListHelper.AsFolderPathIEnumerable());
         public ObservableCollection<FolderPath> FolderPaths {
@@ -33,11 +32,11 @@ namespace Testownik {
             InitializeComponent();
             SettingsHelper.SetSettings();
             Window.Current.Dispatcher.AcceleratorKeyActivated += (d, e) => {
-                if (e.VirtualKey != VirtualKey.T || Frame.CurrentSourcePageType == typeof(MainPage))
+                if (e.VirtualKey != VirtualKey.T || Frame.CurrentSourcePageType == typeof(TestView))
                     return;
 
                 var testController = TestController.GenerateRand();
-                Frame.Navigate(typeof(MainPage), testController);
+                Frame.Navigate(typeof(TestView), testController);
             };
         }
 
@@ -48,7 +47,7 @@ namespace Testownik {
         }
 
 
-        // Drag&Drop Section
+        #region Drag&Drop
 
         protected override async void OnDrop(DragEventArgs e) {
             HideDragView();
@@ -57,7 +56,6 @@ namespace Testownik {
                 ShowLoadingView();
 
                 var storageItems = await e.DataView.GetStorageItemsAsync();
-                IDictionary<string, IQuestion> questions;
 
                 var folder = storageItems.FirstOrDefault(i => i is IStorageFolder);
                 if (folder != null) {
@@ -65,7 +63,7 @@ namespace Testownik {
                     return;
                 }
 
-                questions = await QuestionsReader.ReadQuestions(storageItems.Where(i => i is IStorageFile).Cast<StorageFile>().ToList());
+                var questions = await QuestionsReader.ReadQuestions(storageItems.Where(i => i is IStorageFile).Cast<StorageFile>().ToList());
 
                 HideLoadingView();
 
@@ -75,7 +73,7 @@ namespace Testownik {
                 }
 
                 var testController = new TestController(questions);
-                Frame.Navigate(typeof(MainPage), testController);
+                Frame.Navigate(typeof(TestView), testController);
             }
         }
 
@@ -88,7 +86,7 @@ namespace Testownik {
             HideDragView();
         }
 
-        // End of Drag&Drop Section
+        #endregion
 
         private void Item_RightTapped(object sender, RightTappedRoutedEventArgs e) => FlyoutsHelper.ShowFlyoutBase(sender);
         private void Item_DragStarting(object sender, DragStartingEventArgs e) => FlyoutsHelper.ShowFlyoutBase(sender);
@@ -151,7 +149,7 @@ namespace Testownik {
             var testController = previousState != null
                 ? TestController.FromJson(previousState, questions, token)
                 : new TestController(questions, token);
-            Frame.Navigate(typeof(MainPage), testController);
+            Frame.Navigate(typeof(TestView), testController);
         }
 
         private string UpdateRecentlyUsedFoldersList(IStorageItem folder) {
@@ -168,28 +166,28 @@ namespace Testownik {
         // Overlay Views Section     
 
         private async void HideLoadingView() {
-            await HideView(LoadingGrid, LoadingInfo, LoadingBlurGrid);
+            await HideViewTask(LoadingGrid, LoadingInfo, LoadingBlurGrid);
             ProgressRing.IsActive = false;
         }
 
         private async void ShowLoadingView() {
             ProgressRing.IsActive = true;
-            await ShowView(LoadingGrid, LoadingInfo, LoadingBlurGrid);
+            await ShowViewTask(LoadingGrid, LoadingInfo, LoadingBlurGrid);
         }
 
-        private async void HideDragView() => await HideView(DragGrid, DragInfo, DragBlurGrid);
-        private async void ShowDragView() => await ShowView(DragGrid, DragInfo, DragBlurGrid);
+        private async void HideDragView() => await HideViewTask(DragGrid, DragInfo, DragBlurGrid);
+        private async void ShowDragView() => await ShowViewTask(DragGrid, DragInfo, DragBlurGrid);
 
-        private async Task HideView(Grid view, Grid info, Grid blur) {
-            info.Fade(value: 0f, duration: 500, delay: 0).StartAsync();
-            await blur.Blur(value: 0, duration: 500, delay: 0).StartAsync();
+        private static async Task HideViewTask(Grid view, Grid info, Grid blur) {
+            info.Fade().Start();
+            await blur.Blur().StartAsync();
             view.Visibility = Visibility.Collapsed;
         }
 
-        private async Task ShowView(Grid view, Grid info, Grid blur) {
+        private static async Task ShowViewTask(Grid view, Grid info, Grid blur) {
             view.Visibility = Visibility.Visible;
-            info.Fade(value: 1f, duration: 500, delay: 0).StartAsync();
-            await blur.Blur(value: 10, duration: 500, delay: 0).StartAsync();
+            info.Fade(value: 1f).Start();
+            await blur.Blur(value: 10f).StartAsync();
         }
 
         // End of Overlay Views Section     
