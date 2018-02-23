@@ -96,7 +96,7 @@ namespace Testownik.Models.Test {
                 : remainingQuestions.ElementAt(_random.Next(remainingQuestions.Count()));
         }
 
-        internal static TestController GenerateRand() {
+        internal static TestController GenerateSample() {
             var questions = new Dictionary<string, IQuestion> {
                 {
                     "001.txt",

@@ -172,15 +172,5 @@ namespace Testownik.ViewModels {
             ButtonAcceptAnswerVisibility = Visibility.Collapsed;
             ButtonNextQuestionVisibility = Visibility.Visible;
         }
-
-        public async void ShowInfoDialog() {
-            var dialog = new InfoDialog();
-            await dialog.ShowAsync();
-        }
-
-        public async void ShowSettingsDialog() {
-            var dialog = new SettingsDialog();
-            await dialog.ShowAsync();
-        }
     }
 }

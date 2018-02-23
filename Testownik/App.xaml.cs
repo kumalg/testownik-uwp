@@ -70,7 +70,7 @@ namespace Testownik {
                     // Kiedy stos nawigacji nie jest przywrócony, przejdź do pierwszej strony,
                     // konfigurując nową stronę przez przekazanie wymaganych informacji jako
                     // parametr
-                    rootFrame.Navigate(typeof(Views.SelectPage), e.Arguments);
+                    rootFrame.Navigate(typeof(Views.MainView), e.Arguments);
                 }
                 // Upewnij się, ze bieżące okno jest aktywne
                 Window.Current.Activate();
