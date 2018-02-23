@@ -40,7 +40,7 @@
                     Margin="16 0"
                     HorizontalAlignment="Right">
                     <Button
-                        Click="{Binding SelectFolderClick}"
+                        Click="{x:Bind ViewModel.SelectFolderClick}"
                         RequestedTheme="Dark"
                         Margin="4 16"
                         Style="{ThemeResource FolderButton}"
@@ -53,7 +53,7 @@
                     </Button>
 
                     <Button
-                        Click="{Binding ShowInfoDialog}"
+                        Click="{x:Bind ViewModel.ShowInfoDialog}"
                         Margin="4 16"
                         Style="{ThemeResource FolderButton}"
                         Width="64"
@@ -64,7 +64,7 @@
                     </Button>
 
                     <Button
-                        Click="{Binding ShowSettingsDialog}"
+                        Click="{x:Bind ViewModel.ShowSettingsDialog}"
                         Margin="4 16"
                         Style="{ThemeResource FolderButton}"
                         Width="64"
@@ -80,7 +80,7 @@
                     SelectionMode="None"
                     ItemClick="RecentFolder_Click"
                     IsItemClickEnabled="True"
-                    ItemsSource="{Binding FolderPaths, Mode=OneWay}">
+                    ItemsSource="{x:Bind ViewModel.FolderPaths, Mode=OneWay}">
 
                     <ListView.ItemContainerStyle>
                         <Style
@@ -162,7 +162,7 @@
                         Foreground="{ThemeResource PrimaryColor}"
                         Width="64"
                         Height="64"
-                        IsActive="{Binding IsProgressRingActive, Mode=OneWay}" />
+                        IsActive="{x:Bind ViewModel.IsProgressRingActive, Mode=OneWay}" />
                     <TextBlock
                         x:Uid="Loading"
                         Margin="0 16 0 0"
